@@ -46,12 +46,15 @@ draft_type := $(suffix $(firstword $(wildcard $(draft).md $(draft).org $(draft).
 
 ## Targets
 
-.PHONY: latest txt html pdf submit diff clean update ghpages
+.PHONY: latest txt html pdf submit diff clean update ghpages README.txt
 
 latest: txt html
 txt: $(draft).txt
 html: $(draft).html
 pdf: $(draft).pdf
+
+README.txt: txt
+	cp $(draft).txt README.txt
 
 
 idnits: $(draft).txt
