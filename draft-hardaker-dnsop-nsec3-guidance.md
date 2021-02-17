@@ -109,7 +109,13 @@ wish to deploy zones without a hash value at all.
 
 # Security Considerations
 
+This entire document discusses security considerations with various
+parameters selections of NSEC3 and NSEC3PARAM fields.
+
 # Operational Considerations
+
+This entire document discusses operational considerations with various
+parameters selections of NSEC3 and NSEC3PARAM fields.
 
 --- back
 
