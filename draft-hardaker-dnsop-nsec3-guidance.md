@@ -61,7 +61,10 @@ parameters considering these factors.
    in BCP 14 {{RFC2119}} {{?RFC8174}} when, and only when, they appear
    in all capitals, as shown here.
 
-# Parameter guidance
+# Recommendation for zone publishers
+
+The following sections describe recommendations for setting parameters
+for NSEC3 and NSEC3PARAM.
 
 ## Algorithms
 
@@ -106,6 +109,14 @@ be noted that the use of salts doesn't prevent against guess based
 approaches in offline attacks -- only against memorization hash based
 lookups.  Thus, the added value is minimal enough that operators may
 wish to deploy zones without a hash value at all.
+
+# Recommendation for validating resolvers
+
+Because validating resolvers have the biggest burden when validating
+NSEC3 records, this document recommends that validating resolvers
+SHOULD return a SERVFAIL when processing NSEC3 records with iterations
+larger than 100.  Note that this significantly decreases the
+requirements originally specified in Section 10.3 of {{RFC5155}}.
 
 # Security Considerations
 
