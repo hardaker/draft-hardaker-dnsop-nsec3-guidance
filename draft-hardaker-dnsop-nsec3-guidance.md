@@ -109,17 +109,45 @@ hashing algorithm.
 
 ## Salt
 
-Salts add yet another layer of protection against offline, stored
-dictionary attacks by using randomly generated values when creating
-new records.  The length and usage of a salt value has little
-operational concerns beyond bandwidth requirements for transmitting
-the salt.  Thus, the primary consideration is whether or not there is
-a security benefit to deploying signed zones with salt values.
-Operators may choose to use a salt for this reason, though it should
-be noted that the use of salts doesn't prevent against guess based
-approaches in offline attacks -- only against memorization hash based
-lookups.  Thus, the added value is minimal enough that operators may
-wish to deploy zones without a hash value at all.
+Salts add yet another layer of protection against offline, stored dictionary
+attacks by incorporating randomly generated values into the hashed names in the
+NSEC3 chain.
+
+It should be noted the the hashed names already include the fully-qualified
+name of each zone, so no single pre-computed set of tables works to speed up
+dictionary attacks against multiple target zones.  An attacker must perform any
+such precomputations separately for each target zone.
+
+Consequently, the additional salt field is only effective when changed
+regularly, by forcing a would-be dictionary attacker to repeatedly compute new
+tables (or just do trial and error without the benefits of precomputation).
+
+Changing the salt value requires the construction of a complete new chain
+for the domain, either when resigning the entire file, or incrementally
+in the background, with the new salt only activated once every name
+in the chain has been rederived based on the new salt.
+
+Most users of NSEC3 publish static salt values that never change.  These are of
+no security benefit, and are best avoided by leaving the salt value empty (zero
+length, represented as a "-" in master zone file format).
+
+# Best-practice for zone publishers
+
+In short, for most zones, the recommended NSEC3 parameters are as
+shown below:
+
+    ; SHA-1, no opt-out, no extra iterations, empty salt:
+    ;
+    bcp.example. IN NSEC3PARAM 1 0 0 -
+
+For very large (e.g. 10 million plus unsigned delegations) and only sparsely
+signed zones, where the majority of the records are insecure delegations, use
+of opt-out may be justified.  In such (large TLD or similar) zones the
+alternative parameters are:
+
+    ; SHA-1, with opt-out, no extra iterations, empty salt:
+    ;
+    example. IN NSEC3PARAM 1 1 0 -
 
 # Recommendation for validating resolvers
 
