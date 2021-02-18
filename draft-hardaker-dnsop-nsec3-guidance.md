@@ -29,38 +29,40 @@ informative:
 
 --- abstract
 
-NSEC3 {{RFC5155}} is a DNSSEC {{RC4035}} mechanism for proof of non-existence.
-Unlike the case with NSEC {{RFC4035}}, NSEC3 proofs avoid directly disclosing
-consecutive pairs of nodes in proofs that a specific name or a specific record
-type for a given name does not exist.  This document provides guidance on
-setting NSEC3 parameters based on recent operational deployment experience.
+NSEC3 is a DNSSEC mechanism providing proof of non-existence by
+promising there are no names that exist between two domainnames within
+a zone.  Unlike its counterpart NSEC, NSEC3 avoids directly disclosing
+the bounding domainname pairs.  This document provides guidance on
+setting NSEC3 parameters based on recent operational deployment
+experience.
 
 --- middle
 
 # Introduction
 
-As with NSEC, NSEC3 denial of existence proofs of consist of signed DNS records
-that establish the non-existence of a given name or associated Resource Record
-Type (RRTYPE) in a DNSSEC signed zone.  In the case of NSEC3, however, the
-names of valid nodes in the zone are obfuscated through (possibly iterated)
-hashing via SHA-1 (other algorithms could be specified, but are unlikely to
-merit or see deployment).
+As with NSEC {{RFC4035}}, NSEC3 {{RFC5155}} provides proof of
+non-existence that consists of signed DNS records establishing the
+non-existence of a given name or associated Resource Record Type
+(RRTYPE) in a DNSSEC {{RC4035}} signed zone.  In the case of NSEC3,
+however, the names of valid nodes in the zone are obfuscated through
+(possibly multiple iterations of) hashing via SHA-1. (currently only
+SHA-1 is in use within the Internet).
 
-NSEC3 also provides opt-out support, allowing for blocks of many unsigned
-delegations to be covered by a single NSEC3 record.  This allows large (TLD or
-similar primarily delegation) zones to only sign as many NSEC3 records as there
-are signed RRsets in the zone.  With opt-out, unsigned delegations do require
-additional NSEC3 records.  This comes at the cost of reduced tamper-resistance
-for the unsigned delegations, an NSEC3 proof shows only that the requested name
-is either unsigned or does not exist.
+NSEC3 also provides "opt-out support", allowing for blocks of unsigned
+delegations to be covered by a single NSEC3 record.  Opt-out blocks
+allow large registries to only sign as many NSEC3 records as there are
+signed DS or other RRsets in the zone -- with opt-out, unsigned
+delegations don't require additional NSEC3 records.  This sacrifices 
+the tamper-resistance proof of non-existence offered by NSEC3 in order
+to reduce memory and CPU overheads.
 
-NSEC3 records have a number of tunable parameters that are typically specified
-(mostly for the benefit of secondary nameservers) via an NSEC3PARAM record at
-the zone apex.  These parameters are the Hash Algorithm, processing Flags, the
-number of hash Iterations and the Salt.  Each of these has security and
-operational considerations that impact both zone owners and validating
-resolvers.  This document provides some best-practice recommendations for
-setting the NSEC3 parameters.
+NSEC3 records have a number of tunable parameters that are specified
+via an NSEC3PARAM record at the zone apex.  These parameters are the
+Hash Algorithm, processing Flags, the number of hash Iterations and
+the Salt.  Each of these has security and operational considerations
+that impact both zone owners and validating resolvers.  This document
+provides some best-practice recommendations for setting the NSEC3
+parameters.
 
 ## Requirements notation
 
