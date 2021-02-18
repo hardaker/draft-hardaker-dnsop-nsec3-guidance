@@ -10,7 +10,7 @@ Expires: August 22, 2021                                 Bloomberg, L.P.
 
 
                  Guidance for NSEC3 parameter settings
-                 draft-hardaker-dnsop-nsec3-guidance-00
+                 draft-hardaker-dnsop-nsec3-guidance-01
 
 Abstract
 
@@ -70,15 +70,16 @@ Table of Contents
      2.2.  Flags . . . . . . . . . . . . . . . . . . . . . . . . . .   3
      2.3.  Iterations  . . . . . . . . . . . . . . . . . . . . . . .   3
      2.4.  Salt  . . . . . . . . . . . . . . . . . . . . . . . . . .   3
-   3.  Recommendation for validating resolvers . . . . . . . . . . .   4
-   4.  Security Considerations . . . . . . . . . . . . . . . . . . .   4
-   5.  Operational Considerations  . . . . . . . . . . . . . . . . .   4
-   6.  References  . . . . . . . . . . . . . . . . . . . . . . . . .   4
-     6.1.  Normative References  . . . . . . . . . . . . . . . . . .   4
-     6.2.  Informative References  . . . . . . . . . . . . . . . . .   5
-   Appendix A.  Acknowledgments  . . . . . . . . . . . . . . . . . .   5
-   Appendix B.  Github Version of this document  . . . . . . . . . .   5
-   Authors' Addresses  . . . . . . . . . . . . . . . . . . . . . . .   5
+   3.  Best-practice for zone publishers . . . . . . . . . . . . . .   4
+   4.  Recommendation for validating resolvers . . . . . . . . . . .   5
+   5.  Security Considerations . . . . . . . . . . . . . . . . . . .   5
+   6.  Operational Considerations  . . . . . . . . . . . . . . . . .   5
+   7.  References  . . . . . . . . . . . . . . . . . . . . . . . . .   5
+     7.1.  Normative References  . . . . . . . . . . . . . . . . . .   5
+     7.2.  Informative References  . . . . . . . . . . . . . . . . .   5
+   Appendix A.  Acknowledgments  . . . . . . . . . . . . . . . . . .   6
+   Appendix B.  Github Version of this document  . . . . . . . . . .   6
+   Authors' Addresses  . . . . . . . . . . . . . . . . . . . . . . .   6
 
 1.  Introduction
 
@@ -105,7 +106,6 @@ Table of Contents
    that impact both zone owners and validating resolvers.  This document
    provides some best-practice recommendations for setting the NSEC3
    parameters.
-
 
 
 
@@ -160,8 +160,8 @@ Internet-Draft                    title                    February 2021
 2.4.  Salt
 
    Salts add yet another layer of protection against offline, stored
-   dictionary attacks by using randomly generated values when creating
-   new records.  The length and usage of a salt value has little
+   dictionary attacks by combining the value to be hashed (in our case,
+   a DNS domainname) with a randomly generated value.  This prevents
 
 
 
@@ -170,16 +170,63 @@ Hardaker & Dukhovni      Expires August 22, 2021                [Page 3]
 Internet-Draft                    title                    February 2021
 
 
-   operational concerns beyond bandwidth requirements for transmitting
-   the salt.  Thus, the primary consideration is whether or not there is
-   a security benefit to deploying signed zones with salt values.
-   Operators may choose to use a salt for this reason, though it should
-   be noted that the use of salts doesn't prevent against guess based
-   approaches in offline attacks - only against memorization hash based
-   lookups.  Thus, the added value is minimal enough that operators may
-   wish to deploy zones without a hash value at all.
+   advosaries from building up and remembering a dictionary of values
+   that can translate a hash output back to the value that it derived
+   from.
 
-3.  Recommendation for validating resolvers
+   In the case of DNS, it should be noted the hashed names placed in
+   NSEC3 records already include the fully-qualified domain name from
+   each zone.  Thus, no single pre-computed table works to speed up
+   dictionary attacks against multiple target zones.  An attacker is
+   required to compute a complete dictionary per zone, which is
+   expensive in both storage and CPU time.
+
+   To protect against a dictionary being built and used for a target
+   zone, an additional salt field can be included and changed on a
+   regular basis, forcing a would-be attacker to repeatedly compute a
+   new dictionary (or just do trial and error without the benefits of
+   precomputation).
+
+   Changing a zone's salt value requires the construction of a complete
+   new NSEC3 chain.  This is true both when resigning the entire zone at
+   once, or incrementally signing it in the background where the new
+   salt is only activated once every name in the chain has been
+   completed.
+
+   Most users of NSEC3 publish static salt values that never change.
+   This provides no added security benefit (because the complete fully
+   qualified domain name is already unique).  If no rotation is planned,
+   operators are encouraged to forgo the salt entirely by using a zero-
+   length salt value instead (represented as a "-" in the presentation
+   format).
+
+3.  Best-practice for zone publishers
+
+   In short, for most zones, the recommended NSEC3 parameters are as
+   shown below:
+
+   ; SHA-1, no opt-out, no extra iterations, empty salt:
+   ;
+   bcp.example. IN NSEC3PARAM 1 0 0 -
+
+   For very large (e.g. 10 million plus unsigned delegations) and only
+   sparsely signed zones, where the majority of the records are insecure
+   delegations, use of opt-out may be justified.  In such (large TLD or
+   similar) zones the alternative parameters are:
+
+   ; SHA-1, with opt-out, no extra iterations, empty salt:
+   ;
+   example. IN NSEC3PARAM 1 1 0 -
+
+
+
+
+Hardaker & Dukhovni      Expires August 22, 2021                [Page 4]
+
+Internet-Draft                    title                    February 2021
+
+
+4.  Recommendation for validating resolvers
 
    Because there has been a large growth of open (public) DNSSEC
    validating resolvers that are subject to compute resource constraints
@@ -190,19 +237,19 @@ Internet-Draft                    title                    February 2021
    larger than 100.  Note that this significantly decreases the
    requirements originally specified in Section 10.3 of [RFC5155].
 
-4.  Security Considerations
+5.  Security Considerations
 
    This entire document discusses security considerations with various
    parameters selections of NSEC3 and NSEC3PARAM fields.
 
-5.  Operational Considerations
+6.  Operational Considerations
 
    This entire document discusses operational considerations with
    various parameters selections of NSEC3 and NSEC3PARAM fields.
 
-6.  References
+7.  References
 
-6.1.  Normative References
+7.1.  Normative References
 
    [RFC2119]  Bradner, S., "Key words for use in RFCs to Indicate
               Requirement Levels", BCP 14, RFC 2119,
@@ -219,18 +266,21 @@ Internet-Draft                    title                    February 2021
               Existence", RFC 5155, DOI 10.17487/RFC5155, March 2008,
               <https://www.rfc-editor.org/info/rfc5155>.
 
-
-
-Hardaker & Dukhovni      Expires August 22, 2021                [Page 4]
-
-Internet-Draft                    title                    February 2021
-
-
-6.2.  Informative References
+7.2.  Informative References
 
    [RFC8174]  Leiba, B., "Ambiguity of Uppercase vs Lowercase in RFC
               2119 Key Words", BCP 14, RFC 8174, DOI 10.17487/RFC8174,
               May 2017, <https://www.rfc-editor.org/info/rfc8174>.
+
+
+
+
+
+
+Hardaker & Dukhovni      Expires August 22, 2021                [Page 5]
+
+Internet-Draft                    title                    February 2021
+
 
 Appendix A.  Acknowledgments
 
@@ -277,4 +327,10 @@ Authors' Addresses
 
 
 
-Hardaker & Dukhovni      Expires August 22, 2021                [Page 5]
+
+
+
+
+
+
+Hardaker & Dukhovni      Expires August 22, 2021                [Page 6]
