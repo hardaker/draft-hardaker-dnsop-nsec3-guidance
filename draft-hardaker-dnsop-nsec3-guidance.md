@@ -109,27 +109,36 @@ hashing algorithm.
 
 ## Salt
 
-Salts add yet another layer of protection against offline, stored dictionary
-attacks by incorporating randomly generated values into the hashed names in the
-NSEC3 chain.
+Salts add yet another layer of protection against offline, stored
+dictionary attacks by combining the value to be hashed (in our case, a
+DNS domainname) with a randomly generated value.  This prevents
+advosaries from building up and remembering a dictionary of values
+that can translate a hash output back to the value that it derived from.
 
-It should be noted the the hashed names already include the fully-qualified
-name of each zone, so no single pre-computed set of tables works to speed up
-dictionary attacks against multiple target zones.  An attacker must perform any
-such precomputations separately for each target zone.
+In the case of DNS, it should be noted the hashed names placed in
+NSEC3 records already include the fully-qualified domain name from
+each zone.  Thus, no single pre-computed table works to speed up
+dictionary attacks against multiple target zones.  An attacker is
+required to compute a complete dictionary per zone, which is expensive
+in both storage and CPU time.
 
-Consequently, the additional salt field is only effective when changed
-regularly, by forcing a would-be dictionary attacker to repeatedly compute new
-tables (or just do trial and error without the benefits of precomputation).
+To protect against a dictionary being built and used for a target
+zone, an additional salt field can be included and changed on a
+regular basis, forcing a would-be attacker to repeatedly compute a new
+dictionary (or just do trial and error without the benefits of
+precomputation).
 
-Changing the salt value requires the construction of a complete new chain
-for the domain, either when resigning the entire file, or incrementally
-in the background, with the new salt only activated once every name
-in the chain has been rederived based on the new salt.
+Changing a zone's salt value requires the construction of a complete
+new NSEC3 chain.  This is true both when resigning the entire zone at
+once, or incrementally signing it in the background where the new salt
+is only activated once every name in the chain has been completed.
 
-Most users of NSEC3 publish static salt values that never change.  These are of
-no security benefit, and are best avoided by leaving the salt value empty (zero
-length, represented as a "-" in master zone file format).
+Most users of NSEC3 publish static salt values that never change.
+This provides no added security benefit (because the complete fully
+qualified domain name is already unique).  If no rotation is planned,
+operators are encouraged to forgo the salt entirely by using a
+zero-length salt value instead (represented as a "-" in the 
+presentation format).
 
 # Best-practice for zone publishers
 
