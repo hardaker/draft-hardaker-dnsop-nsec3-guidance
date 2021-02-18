@@ -112,7 +112,7 @@ hashing algorithm.
 Salts add yet another layer of protection against offline, stored
 dictionary attacks by combining the value to be hashed (in our case, a
 DNS domainname) with a randomly generated value.  This prevents
-advosaries from building up and remembering a dictionary of values
+adversaries from building up and remembering a dictionary of values
 that can translate a hash output back to the value that it derived from.
 
 In the case of DNS, it should be noted the hashed names placed in
