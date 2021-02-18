@@ -112,11 +112,14 @@ wish to deploy zones without a hash value at all.
 
 # Recommendation for validating resolvers
 
-Because validating resolvers have the biggest burden when validating
-NSEC3 records, this document recommends that validating resolvers
-SHOULD return a SERVFAIL when processing NSEC3 records with iterations
-larger than 100.  Note that this significantly decreases the
-requirements originally specified in Section 10.3 of {{RFC5155}}.
+Because there has been a large growth of open (public) DNSSEC
+validating resolvers that are subject to compute resource constraints
+when handling requests from anonymous clients, this document
+recommends that validating resolvers should change their behaviour
+with respect to large iteration values.  Validating resolvers SHOULD
+return a SERVFAIL when processing NSEC3 records with iterations larger
+than 100.  Note that this significantly decreases the requirements
+originally specified in Section 10.3 of {{RFC5155}}.
 
 # Security Considerations
 
