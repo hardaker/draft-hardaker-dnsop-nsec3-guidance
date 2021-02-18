@@ -5,7 +5,7 @@
 Network Working Group                                        W. Hardaker
 Internet-Draft                                                   USC/ISI
 Intended status: Best Current Practice                       V. Dukhovni
-Expires: August 22, 2021                                     Independent
+Expires: August 22, 2021                                 Bloomberg, L.P.
                                                        February 18, 2021
 
 
@@ -14,11 +14,12 @@ Expires: August 22, 2021                                     Independent
 
 Abstract
 
-   NSEC3 records provides an alternate to NSEC records and offers
-   security-by-obscurity privacy protection of DNS zone records
-   protected by DNSSEC.  This document provides guidance with respect to
-   setting NSEC3 parameters based on recent operational deployment
-   experience.
+   NSEC3 is a DNSSEC mechanism providing proof of non-existence by
+   promising there are no names that exist between two domainnames
+   within a zone.  Unlike its counterpart NSEC, NSEC3 avoids directly
+   disclosing the bounding domainname pairs.  This document provides
+   guidance on setting NSEC3 parameters based on recent operational
+   deployment experience.
 
 Status of This Memo
 
@@ -52,7 +53,6 @@ Copyright Notice
 
 
 
-
 Hardaker & Dukhovni      Expires August 22, 2021                [Page 1]
 
 Internet-Draft                    title                    February 2021
@@ -64,7 +64,7 @@ Internet-Draft                    title                    February 2021
 Table of Contents
 
    1.  Introduction  . . . . . . . . . . . . . . . . . . . . . . . .   2
-     1.1.  Requirements notation . . . . . . . . . . . . . . . . . .   2
+     1.1.  Requirements notation . . . . . . . . . . . . . . . . . .   3
    2.  Recommendation for zone publishers  . . . . . . . . . . . . .   3
      2.1.  Algorithms  . . . . . . . . . . . . . . . . . . . . . . .   3
      2.2.  Flags . . . . . . . . . . . . . . . . . . . . . . . . . .   3
@@ -75,36 +75,36 @@ Table of Contents
    5.  Operational Considerations  . . . . . . . . . . . . . . . . .   4
    6.  References  . . . . . . . . . . . . . . . . . . . . . . . . .   4
      6.1.  Normative References  . . . . . . . . . . . . . . . . . .   4
-     6.2.  Informative References  . . . . . . . . . . . . . . . . .   4
+     6.2.  Informative References  . . . . . . . . . . . . . . . . .   5
    Appendix A.  Acknowledgments  . . . . . . . . . . . . . . . . . .   5
    Appendix B.  Github Version of this document  . . . . . . . . . .   5
    Authors' Addresses  . . . . . . . . . . . . . . . . . . . . . . .   5
 
 1.  Introduction
 
-   NSEC3 [RFC5155] adds a second option for proof of non existence
-   support for DNSSEC specifications [RFC4035] through the creation of
-   NSEC3 records.  These records obfuscate linking domain names using
-   hashing algorithms.  NSEC3 also provides opt-in support, allowing for
-   ranges of records that do not fall into proof-of-non-existence ranges
-   typically deployed by large registration zones.
+   As with NSEC [RFC4035], NSEC3 [RFC5155] provides proof of non-
+   existence that consists of signed DNS records establishing the non-
+   existence of a given name or associated Resource Record Type (RRTYPE)
+   in a DNSSEC [RFC4035] signed zone.  In the case of NSEC3, however,
+   the names of valid nodes in the zone are obfuscated through (possibly
+   multiple iterations of) hashing via SHA-1. (currently only SHA-1 is
+   in use within the Internet).
 
-   Parameters specifying how NSEC3 records are published within a zone
-   are published in an NSEC3PARAM record at the apex of their zone.
-   These paremeters are the Hash Algorithm, processing Flags, the number
-   of hash Iterations and the Salt.  Each of these has security and
-   operational considerations that impact both zone owners and
-   validating resolvers.  This document provides some recommendations on
-   selecting parameters considering these factors.
+   NSEC3 also provides "opt-out support", allowing for blocks of
+   unsigned delegations to be covered by a single NSEC3 record.  Opt-out
+   blocks allow large registries to only sign as many NSEC3 records as
+   there are signed DS or other RRsets in the zone - with opt-out,
+   unsigned delegations don't require additional NSEC3 records.  This
+   sacrifices the tamper-resistance proof of non-existence offered by
+   NSEC3 in order to reduce memory and CPU overheads.
 
-1.1.  Requirements notation
-
-   The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT",
-   "SHOULD", "SHOULD NOT", "RECOMMENDED", "NOT RECOMMENDED", "MAY", and
-   "OPTIONAL" in this document are to be interpreted as described in BCP
-   14 [RFC2119] [RFC8174] when, and only when, they appear in all
-   capitals, as shown here.
-
+   NSEC3 records have a number of tunable parameters that are specified
+   via an NSEC3PARAM record at the zone apex.  These parameters are the
+   Hash Algorithm, processing Flags, the number of hash Iterations and
+   the Salt.  Each of these has security and operational considerations
+   that impact both zone owners and validating resolvers.  This document
+   provides some best-practice recommendations for setting the NSEC3
+   parameters.
 
 
 
@@ -113,6 +113,14 @@ Hardaker & Dukhovni      Expires August 22, 2021                [Page 2]
 
 Internet-Draft                    title                    February 2021
 
+
+1.1.  Requirements notation
+
+   The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT",
+   "SHOULD", "SHOULD NOT", "RECOMMENDED", "NOT RECOMMENDED", "MAY", and
+   "OPTIONAL" in this document are to be interpreted as described in BCP
+   14 [RFC2119] [RFC8174] when, and only when, they appear in all
+   capitals, as shown here.
 
 2.  Recommendation for zone publishers
 
@@ -154,6 +162,14 @@ Internet-Draft                    title                    February 2021
    Salts add yet another layer of protection against offline, stored
    dictionary attacks by using randomly generated values when creating
    new records.  The length and usage of a salt value has little
+
+
+
+Hardaker & Dukhovni      Expires August 22, 2021                [Page 3]
+
+Internet-Draft                    title                    February 2021
+
+
    operational concerns beyond bandwidth requirements for transmitting
    the salt.  Thus, the primary consideration is whether or not there is
    a security benefit to deploying signed zones with salt values.
@@ -162,13 +178,6 @@ Internet-Draft                    title                    February 2021
    approaches in offline attacks - only against memorization hash based
    lookups.  Thus, the added value is minimal enough that operators may
    wish to deploy zones without a hash value at all.
-
-
-
-Hardaker & Dukhovni      Expires August 22, 2021                [Page 3]
-
-Internet-Draft                    title                    February 2021
-
 
 3.  Recommendation for validating resolvers
 
@@ -210,21 +219,18 @@ Internet-Draft                    title                    February 2021
               Existence", RFC 5155, DOI 10.17487/RFC5155, March 2008,
               <https://www.rfc-editor.org/info/rfc5155>.
 
-6.2.  Informative References
-
-   [RFC8174]  Leiba, B., "Ambiguity of Uppercase vs Lowercase in RFC
-              2119 Key Words", BCP 14, RFC 8174, DOI 10.17487/RFC8174,
-              May 2017, <https://www.rfc-editor.org/info/rfc8174>.
-
-
-
-
 
 
 Hardaker & Dukhovni      Expires August 22, 2021                [Page 4]
 
 Internet-Draft                    title                    February 2021
 
+
+6.2.  Informative References
+
+   [RFC8174]  Leiba, B., "Ambiguity of Uppercase vs Lowercase in RFC
+              2119 Key Words", BCP 14, RFC 8174, DOI 10.17487/RFC8174,
+              May 2017, <https://www.rfc-editor.org/info/rfc8174>.
 
 Appendix A.  Acknowledgments
 
@@ -246,15 +252,9 @@ Authors' Addresses
 
 
    Viktor Dukhovni
-   Independent
+   Bloomberg, L.P.
 
    Email: ietf-dane@dukhovni.org
-
-
-
-
-
-
 
 
 
