@@ -65,18 +65,19 @@ Table of Contents
 
    1.  Introduction  . . . . . . . . . . . . . . . . . . . . . . . .   2
      1.1.  Requirements notation . . . . . . . . . . . . . . . . . .   2
-   2.  Parameter guidance  . . . . . . . . . . . . . . . . . . . . .   3
+   2.  Recommendation for zone publishers  . . . . . . . . . . . . .   3
      2.1.  Algorithms  . . . . . . . . . . . . . . . . . . . . . . .   3
      2.2.  Flags . . . . . . . . . . . . . . . . . . . . . . . . . .   3
      2.3.  Iterations  . . . . . . . . . . . . . . . . . . . . . . .   3
      2.4.  Salt  . . . . . . . . . . . . . . . . . . . . . . . . . .   3
-   3.  Security Considerations . . . . . . . . . . . . . . . . . . .   4
-   4.  Operational Considerations  . . . . . . . . . . . . . . . . .   4
-   5.  References  . . . . . . . . . . . . . . . . . . . . . . . . .   4
-     5.1.  Normative References  . . . . . . . . . . . . . . . . . .   4
-     5.2.  Informative References  . . . . . . . . . . . . . . . . .   4
+   3.  Recommendation for validating resolvers . . . . . . . . . . .   4
+   4.  Security Considerations . . . . . . . . . . . . . . . . . . .   4
+   5.  Operational Considerations  . . . . . . . . . . . . . . . . .   4
+   6.  References  . . . . . . . . . . . . . . . . . . . . . . . . .   4
+     6.1.  Normative References  . . . . . . . . . . . . . . . . . .   4
+     6.2.  Informative References  . . . . . . . . . . . . . . . . .   4
    Appendix A.  Acknowledgments  . . . . . . . . . . . . . . . . . .   4
-   Appendix B.  Github Version of this document  . . . . . . . . . .   4
+   Appendix B.  Github Version of this document  . . . . . . . . . .   5
    Authors' Addresses  . . . . . . . . . . . . . . . . . . . . . . .   5
 
 1.  Introduction
@@ -108,13 +109,15 @@ Table of Contents
 
 
 
-
 Hardaker & Dukhovni      Expires August 21, 2021                [Page 2]
 
 Internet-Draft                    title                    February 2021
 
 
-2.  Parameter guidance
+2.  Recommendation for zone publishers
+
+   The following sections describe recommendations for setting
+   parameters for NSEC3 and NSEC3PARAM.
 
 2.1.  Algorithms
 
@@ -162,27 +165,32 @@ Internet-Draft                    title                    February 2021
 
 
 
-
-
-
 Hardaker & Dukhovni      Expires August 21, 2021                [Page 3]
 
 Internet-Draft                    title                    February 2021
 
 
-3.  Security Considerations
+3.  Recommendation for validating resolvers
+
+   Because validating resolvers have the biggest burden when validating
+   NSEC3 records, this document recommends that validating resolvers
+   SHOULD return a SERVFAIL when processing NSEC3 records with
+   iterations larger than 100.  Note that this significantly decreases
+   the requirements originally specified in Section 10.3 of [RFC5155].
+
+4.  Security Considerations
 
    This entire document discusses security considerations with various
    parameters selections of NSEC3 and NSEC3PARAM fields.
 
-4.  Operational Considerations
+5.  Operational Considerations
 
    This entire document discusses operational considerations with
    various parameters selections of NSEC3 and NSEC3PARAM fields.
 
-5.  References
+6.  References
 
-5.1.  Normative References
+6.1.  Normative References
 
    [RFC2119]  Bradner, S., "Key words for use in RFCs to Indicate
               Requirement Levels", BCP 14, RFC 2119,
@@ -199,7 +207,7 @@ Internet-Draft                    title                    February 2021
               Existence", RFC 5155, DOI 10.17487/RFC5155, March 2008,
               <https://www.rfc-editor.org/info/rfc5155>.
 
-5.2.  Informative References
+6.2.  Informative References
 
    [RFC8174]  Leiba, B., "Ambiguity of Uppercase vs Lowercase in RFC
               2119 Key Words", BCP 14, RFC 8174, DOI 10.17487/RFC8174,
@@ -209,14 +217,6 @@ Appendix A.  Acknowledgments
 
    dns-operations discussion participants
 
-Appendix B.  Github Version of this document
-
-   While this document is under development, it can be viewed, tracked,
-   issued, pushed with PRs, ... here:
-
-   https://github.com/hardaker/draft-hardaker-dnsop-nsec3-guidance
-
-
 
 
 
@@ -225,6 +225,13 @@ Hardaker & Dukhovni      Expires August 21, 2021                [Page 4]
 
 Internet-Draft                    title                    February 2021
 
+
+Appendix B.  Github Version of this document
+
+   While this document is under development, it can be viewed, tracked,
+   issued, pushed with PRs, ... here:
+
+   https://github.com/hardaker/draft-hardaker-dnsop-nsec3-guidance
 
 Authors' Addresses
 
@@ -238,13 +245,6 @@ Authors' Addresses
    Independent
 
    Email: ietf-dane@dukhovni.org
-
-
-
-
-
-
-
 
 
 

@@ -75,15 +75,7 @@ diff:
 	git diff $(draft).txt
 
 
-README.md: $(draft).txt
-	@echo \`\`\` >> $@
-	@cat $(draft).txt >> $@
-	@echo \`\`\` >> $@
-	@echo massaged $(draft).txt into $@
-
-commit: $(draft).txt README.md
-	@echo "Making README.md and committing and pushing to github. Run 'make tag' to add and push a tag."
-	@echo '**Important:** Read CONTRIBUTING.md before submitting feedback or contributing' > README.md
+commit: $(draft).txt
 	read -p "Commit message: " msg; \
 	git commit -a -m "$$msg";
 	@git push
@@ -152,6 +144,3 @@ endif
 	-git checkout -qf "$(GIT_ORIG)"
 	-rm -rf $(GHPAGES_TMP)
 endif
-
-README.md: draft-pwouters-powerbind.txt
-	(echo '```' ; cat $< ; echo '```') > README.md
