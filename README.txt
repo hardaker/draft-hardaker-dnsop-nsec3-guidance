@@ -5,8 +5,8 @@
 Network Working Group                                        W. Hardaker
 Internet-Draft                                                   USC/ISI
 Intended status: Best Current Practice                       V. Dukhovni
-Expires: August 21, 2021                                     Independent
-                                                       February 17, 2021
+Expires: August 22, 2021                                     Independent
+                                                       February 18, 2021
 
 
                  Guidance for NSEC3 parameter settings
@@ -35,7 +35,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on August 21, 2021.
+   This Internet-Draft will expire on August 22, 2021.
 
 Copyright Notice
 
@@ -53,7 +53,7 @@ Copyright Notice
 
 
 
-Hardaker & Dukhovni      Expires August 21, 2021                [Page 1]
+Hardaker & Dukhovni      Expires August 22, 2021                [Page 1]
 
 Internet-Draft                    title                    February 2021
 
@@ -76,7 +76,7 @@ Table of Contents
    6.  References  . . . . . . . . . . . . . . . . . . . . . . . . .   4
      6.1.  Normative References  . . . . . . . . . . . . . . . . . .   4
      6.2.  Informative References  . . . . . . . . . . . . . . . . .   4
-   Appendix A.  Acknowledgments  . . . . . . . . . . . . . . . . . .   4
+   Appendix A.  Acknowledgments  . . . . . . . . . . . . . . . . . .   5
    Appendix B.  Github Version of this document  . . . . . . . . . .   5
    Authors' Addresses  . . . . . . . . . . . . . . . . . . . . . . .   5
 
@@ -109,7 +109,7 @@ Table of Contents
 
 
 
-Hardaker & Dukhovni      Expires August 21, 2021                [Page 2]
+Hardaker & Dukhovni      Expires August 22, 2021                [Page 2]
 
 Internet-Draft                    title                    February 2021
 
@@ -165,18 +165,21 @@ Internet-Draft                    title                    February 2021
 
 
 
-Hardaker & Dukhovni      Expires August 21, 2021                [Page 3]
+Hardaker & Dukhovni      Expires August 22, 2021                [Page 3]
 
 Internet-Draft                    title                    February 2021
 
 
 3.  Recommendation for validating resolvers
 
-   Because validating resolvers have the biggest burden when validating
-   NSEC3 records, this document recommends that validating resolvers
-   SHOULD return a SERVFAIL when processing NSEC3 records with
-   iterations larger than 100.  Note that this significantly decreases
-   the requirements originally specified in Section 10.3 of [RFC5155].
+   Because there has been a large growth of open (public) DNSSEC
+   validating resolvers that are subject to compute resource constraints
+   when handling requests from anonymous clients, this document
+   recommends that validating resolvers should change their behaviour
+   with respect to large iteration values.  Validating resolvers SHOULD
+   return a SERVFAIL when processing NSEC3 records with iterations
+   larger than 100.  Note that this significantly decreases the
+   requirements originally specified in Section 10.3 of [RFC5155].
 
 4.  Security Considerations
 
@@ -213,18 +216,19 @@ Internet-Draft                    title                    February 2021
               2119 Key Words", BCP 14, RFC 8174, DOI 10.17487/RFC8174,
               May 2017, <https://www.rfc-editor.org/info/rfc8174>.
 
-Appendix A.  Acknowledgments
-
-   dns-operations discussion participants
 
 
 
 
 
-Hardaker & Dukhovni      Expires August 21, 2021                [Page 4]
+Hardaker & Dukhovni      Expires August 22, 2021                [Page 4]
 
 Internet-Draft                    title                    February 2021
 
+
+Appendix A.  Acknowledgments
+
+   dns-operations discussion participants
 
 Appendix B.  Github Version of this document
 
@@ -273,8 +277,4 @@ Authors' Addresses
 
 
 
-
-
-
-
-Hardaker & Dukhovni      Expires August 21, 2021                [Page 5]
+Hardaker & Dukhovni      Expires August 22, 2021                [Page 5]
