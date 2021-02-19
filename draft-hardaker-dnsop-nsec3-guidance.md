@@ -130,7 +130,8 @@ only the initial hash value should be placed into a DNS zone's NSEC3
 records.
 
 TODO: discuss the authoritative overhead of needing to find the right
-range for new random strings coming in.
+range for new random strings coming in.  Note white-lies online
+signing differences.
 
 ## Salt
 
