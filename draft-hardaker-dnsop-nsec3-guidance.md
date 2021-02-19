@@ -1,7 +1,7 @@
 ---
 title: "Guidance for NSEC3 parameter settings"
 abbrev: title
-docname: draft-hardaker-dnsop-nsec3-guidance-01
+docname: draft-hardaker-dnsop-nsec3-guidance-02
 category: bcp
 ipr: trust200902
 

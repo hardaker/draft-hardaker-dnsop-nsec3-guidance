@@ -10,7 +10,7 @@ Expires: August 23, 2021                                 Bloomberg, L.P.
 
 
                  Guidance for NSEC3 parameter settings
-                 draft-hardaker-dnsop-nsec3-guidance-01
+                 draft-hardaker-dnsop-nsec3-guidance-02
 
 Abstract
 
