@@ -129,6 +129,9 @@ zone owners SHOULD use an iteration value of 0 (zero), indicating that
 only the initial hash value should be placed into a DNS zone's NSEC3
 records.
 
+TODO: discuss the authoritative overhead of needing to find the right
+range for new random strings coming in.
+
 ## Salt
 
 Salts add yet another layer of protection against offline, stored
