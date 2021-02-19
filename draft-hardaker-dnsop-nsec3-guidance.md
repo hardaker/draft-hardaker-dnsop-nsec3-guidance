@@ -192,7 +192,7 @@ than 100.  Note that this significantly decreases the requirements
 originally specified in Section 10.3 of {{RFC5155}}.
 
 Validating resolvers returning a SERVFAIL in this situation SHOULD
-return an Extended DNS Error {RFC8914} EDNS0 option of value [TBD].
+return an Extended DNS Error (EDE) {RFC8914} EDNS0 option of value [TBD].
 
 # Security Considerations
 
