@@ -169,6 +169,9 @@ return a SERVFAIL when processing NSEC3 records with iterations larger
 than 100.  Note that this significantly decreases the requirements
 originally specified in Section 10.3 of {{RFC5155}}.
 
+Validating resolvers returning a SERVFAIL in this situation SHOULD
+return an Extended DNS Error {RFC8914} EDNS0 option of value [TBD].
+
 # Security Considerations
 
 This entire document discusses security considerations with various
@@ -178,6 +181,18 @@ parameters selections of NSEC3 and NSEC3PARAM fields.
 
 This entire document discusses operational considerations with various
 parameters selections of NSEC3 and NSEC3PARAM fields.
+
+# IANA Considerations
+
+This document requests a new allocation in the "Extended DNS Error
+Codes" of the "Domain Name System (DNS) Parameters" registration
+table with the following characteristics:
+
+INFO-CODE: TBD
+
+Purpose: Unsupported NSEC3 iterations value
+
+Reference: this document
 
 --- back
 
