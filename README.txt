@@ -5,8 +5,8 @@
 Network Working Group                                        W. Hardaker
 Internet-Draft                                                   USC/ISI
 Intended status: Best Current Practice                       V. Dukhovni
-Expires: August 22, 2021                                 Bloomberg, L.P.
-                                                       February 18, 2021
+Expires: August 23, 2021                                 Bloomberg, L.P.
+                                                       February 19, 2021
 
 
                  Guidance for NSEC3 parameter settings
@@ -36,7 +36,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on August 22, 2021.
+   This Internet-Draft will expire on August 23, 2021.
 
 Copyright Notice
 
@@ -53,7 +53,7 @@ Copyright Notice
 
 
 
-Hardaker & Dukhovni      Expires August 22, 2021                [Page 1]
+Hardaker & Dukhovni      Expires August 23, 2021                [Page 1]
 
 Internet-Draft                    title                    February 2021
 
@@ -69,17 +69,18 @@ Table of Contents
      2.1.  Algorithms  . . . . . . . . . . . . . . . . . . . . . . .   3
      2.2.  Flags . . . . . . . . . . . . . . . . . . . . . . . . . .   3
      2.3.  Iterations  . . . . . . . . . . . . . . . . . . . . . . .   3
-     2.4.  Salt  . . . . . . . . . . . . . . . . . . . . . . . . . .   3
-   3.  Best-practice for zone publishers . . . . . . . . . . . . . .   4
+     2.4.  Salt  . . . . . . . . . . . . . . . . . . . . . . . . . .   4
+   3.  Best-practice for zone publishers . . . . . . . . . . . . . .   5
    4.  Recommendation for validating resolvers . . . . . . . . . . .   5
    5.  Security Considerations . . . . . . . . . . . . . . . . . . .   5
-   6.  Operational Considerations  . . . . . . . . . . . . . . . . .   5
-   7.  References  . . . . . . . . . . . . . . . . . . . . . . . . .   5
-     7.1.  Normative References  . . . . . . . . . . . . . . . . . .   5
-     7.2.  Informative References  . . . . . . . . . . . . . . . . .   5
+   6.  Operational Considerations  . . . . . . . . . . . . . . . . .   6
+   7.  IANA Considerations . . . . . . . . . . . . . . . . . . . . .   6
+   8.  References  . . . . . . . . . . . . . . . . . . . . . . . . .   6
+     8.1.  Normative References  . . . . . . . . . . . . . . . . . .   6
+     8.2.  Informative References  . . . . . . . . . . . . . . . . .   6
    Appendix A.  Acknowledgments  . . . . . . . . . . . . . . . . . .   6
-   Appendix B.  Github Version of this document  . . . . . . . . . .   6
-   Authors' Addresses  . . . . . . . . . . . . . . . . . . . . . . .   6
+   Appendix B.  Github Version of this document  . . . . . . . . . .   7
+   Authors' Addresses  . . . . . . . . . . . . . . . . . . . . . . .   7
 
 1.  Introduction
 
@@ -104,15 +105,17 @@ Table of Contents
    Hash Algorithm, processing Flags, the number of hash Iterations and
    the Salt.  Each of these has security and operational considerations
    that impact both zone owners and validating resolvers.  This document
-   provides some best-practice recommendations for setting the NSEC3
-   parameters.
 
 
 
-Hardaker & Dukhovni      Expires August 22, 2021                [Page 2]
+
+Hardaker & Dukhovni      Expires August 23, 2021                [Page 2]
 
 Internet-Draft                    title                    February 2021
 
+
+   provides some best-practice recommendations for setting the NSEC3
+   parameters.
 
 1.1.  Requirements notation
 
@@ -147,30 +150,52 @@ Internet-Draft                    title                    February 2021
 
 2.3.  Iterations
 
-   Generally increasing the number of iterations offers little improved
-   protections for modern machinery.  Although Section 10.3 of [RFC5155]
-   specifies upper bounds for the number hash iterations to use, there
-   is no published guidance on good values to select.  Because hashing
-   provides only moderate protection, as shown recently in academic
-   studies of NSEC3 protected zones (tbd: insert ref), this document
-   recommends using an iteration value of 0 (zero).  This leaves the
-   creating and verifying hashes with just one application of the
-   hashing algorithm.
+   NSEC3 records are created by first hashing the input domain and then
+   repeating that hashing algorithm a number of times based on the
+   iterations parameter in the NSEC3PARM and NSEC3 records.  The first
+   hash is typically sufficient to discourage zone enumeration performed
+   by "zone walking" an NSEC or NSEC3 chain.  Only determined parties
+   with significant resources are likely to try and uncover hashed
+   values, regardless of the number of additional iterations performed.
+   If an adversary really wants to expend significant CPU resources to
+   mount an offline dictionary attack on a zone's NSEC3 chain, they'll
+   likely be able to find most of the "guessable" names despite any
+   level of additional hashing iterations.
+
+
+
+
+Hardaker & Dukhovni      Expires August 23, 2021                [Page 3]
+
+Internet-Draft                    title                    February 2021
+
+
+   Most names published in the DNS are rarely secret or unpredictable.
+   They are published to be memorable, used and consumed by humans.
+   They are often recorded in many other network logs such as email
+   logs, certificate transparency logs, web page links, intrusion
+   detection systems, malware scanners, email archives, etc.  Many times
+   a simple dictionary of commonly used domain names prefixes (www, ftp,
+   mail, imap, login, database, etc) can be used to quickly reveal a
+   large number of labels within a zone.  Because of this, there are
+   increasing performance costs yet diminishing returns associated with
+   applying additional hash iterations beyond the first.
+
+   Although Section 10.3 of [RFC5155] specifies upper bounds for the
+   number of hash iterations to use, there is no published guidance for
+   zone owners about good values to select.  Because hashing provides
+   only moderate protection, as shown recently in academic studies of
+   NSEC3 protected zones (tbd: insert ref), this document recommends
+   that zone owners SHOULD use an iteration value of 0 (zero),
+   indicating that only the initial hash value should be placed into a
+   DNS zone's NSEC3 records.
 
 2.4.  Salt
 
    Salts add yet another layer of protection against offline, stored
    dictionary attacks by combining the value to be hashed (in our case,
    a DNS domainname) with a randomly generated value.  This prevents
-
-
-
-Hardaker & Dukhovni      Expires August 22, 2021                [Page 3]
-
-Internet-Draft                    title                    February 2021
-
-
-   advosaries from building up and remembering a dictionary of values
+   adversaries from building up and remembering a dictionary of values
    that can translate a hash output back to the value that it derived
    from.
 
@@ -192,6 +217,14 @@ Internet-Draft                    title                    February 2021
    once, or incrementally signing it in the background where the new
    salt is only activated once every name in the chain has been
    completed.
+
+
+
+
+Hardaker & Dukhovni      Expires August 23, 2021                [Page 4]
+
+Internet-Draft                    title                    February 2021
+
 
    Most users of NSEC3 publish static salt values that never change.
    This provides no added security benefit (because the complete fully
@@ -218,14 +251,6 @@ Internet-Draft                    title                    February 2021
    ;
    example. IN NSEC3PARAM 1 1 0 -
 
-
-
-
-Hardaker & Dukhovni      Expires August 22, 2021                [Page 4]
-
-Internet-Draft                    title                    February 2021
-
-
 4.  Recommendation for validating resolvers
 
    Because there has been a large growth of open (public) DNSSEC
@@ -237,19 +262,46 @@ Internet-Draft                    title                    February 2021
    larger than 100.  Note that this significantly decreases the
    requirements originally specified in Section 10.3 of [RFC5155].
 
+   Validating resolvers returning a SERVFAIL in this situation SHOULD
+   return an Extended DNS Error {RFC8914} EDNS0 option of value [TBD].
+
 5.  Security Considerations
 
    This entire document discusses security considerations with various
    parameters selections of NSEC3 and NSEC3PARAM fields.
+
+
+
+
+
+
+
+
+Hardaker & Dukhovni      Expires August 23, 2021                [Page 5]
+
+Internet-Draft                    title                    February 2021
+
 
 6.  Operational Considerations
 
    This entire document discusses operational considerations with
    various parameters selections of NSEC3 and NSEC3PARAM fields.
 
-7.  References
+7.  IANA Considerations
 
-7.1.  Normative References
+   This document requests a new allocation in the "Extended DNS Error
+   Codes" of the "Domain Name System (DNS) Parameters" registration
+   table with the following characteristics:
+
+   INFO-CODE: TBD
+
+   Purpose: Unsupported NSEC3 iterations value
+
+   Reference: this document
+
+8.  References
+
+8.1.  Normative References
 
    [RFC2119]  Bradner, S., "Key words for use in RFCs to Indicate
               Requirement Levels", BCP 14, RFC 2119,
@@ -266,25 +318,25 @@ Internet-Draft                    title                    February 2021
               Existence", RFC 5155, DOI 10.17487/RFC5155, March 2008,
               <https://www.rfc-editor.org/info/rfc5155>.
 
-7.2.  Informative References
+8.2.  Informative References
 
    [RFC8174]  Leiba, B., "Ambiguity of Uppercase vs Lowercase in RFC
               2119 Key Words", BCP 14, RFC 8174, DOI 10.17487/RFC8174,
               May 2017, <https://www.rfc-editor.org/info/rfc8174>.
 
-
-
-
-
-
-Hardaker & Dukhovni      Expires August 22, 2021                [Page 5]
-
-Internet-Draft                    title                    February 2021
-
-
 Appendix A.  Acknowledgments
 
    dns-operations discussion participants
+
+
+
+
+
+
+Hardaker & Dukhovni      Expires August 23, 2021                [Page 6]
+
+Internet-Draft                    title                    February 2021
+
 
 Appendix B.  Github Version of this document
 
@@ -333,4 +385,8 @@ Authors' Addresses
 
 
 
-Hardaker & Dukhovni      Expires August 22, 2021                [Page 6]
+
+
+
+
+Hardaker & Dukhovni      Expires August 23, 2021                [Page 7]
