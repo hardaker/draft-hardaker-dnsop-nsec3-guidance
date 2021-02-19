@@ -293,11 +293,11 @@ Internet-Draft                    title                    February 2021
    Codes" of the "Domain Name System (DNS) Parameters" registration
    table with the following characteristics:
 
-   INFO-CODE: TBD
+   o  INFO-CODE: TBD
 
-   Purpose: Unsupported NSEC3 iterations value
+   o  Purpose: Unsupported NSEC3 iterations value
 
-   Reference: this document
+   o  Reference: this document
 
 8.  References
 

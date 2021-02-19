@@ -210,11 +210,9 @@ This document requests a new allocation in the "Extended DNS Error
 Codes" of the "Domain Name System (DNS) Parameters" registration
 table with the following characteristics:
 
-INFO-CODE: TBD
-
-Purpose: Unsupported NSEC3 iterations value
-
-Reference: this document
++ INFO-CODE: TBD
++ Purpose: Unsupported NSEC3 iterations value
++ Reference: this document
 
 --- back
 
