@@ -49,12 +49,12 @@ however, the names of valid nodes in the zone are obfuscated through
 SHA-1 is in use within the Internet).
 
 NSEC3 also provides "opt-out support", allowing for blocks of unsigned
-delegations to be covered by a single NSEC3 record.  Opt-out blocks
-allow large registries to only sign as many NSEC3 records as there are
-signed DS or other RRsets in the zone -- with opt-out, unsigned
-delegations don't require additional NSEC3 records.  This sacrifices 
-the tamper-resistance proof of non-existence offered by NSEC3 in order
-to reduce memory and CPU overheads.
+delegations to be covered by a single NSEC3 record.  Use of the
+opt-out feature allow large registries to only sign as many NSEC3
+records as there are signed DS or other RRsets in the zone -- with
+opt-out, unsigned delegations don't require additional NSEC3 records.
+This sacrifices the tamper-resistance proof of non-existence offered
+by NSEC3 in order to reduce memory and CPU overheads.
 
 NSEC3 records have a number of tunable parameters that are specified
 via an NSEC3PARAM record at the zone apex.  These parameters are the
