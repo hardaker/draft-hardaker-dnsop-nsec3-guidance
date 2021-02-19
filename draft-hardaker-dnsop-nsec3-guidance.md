@@ -97,29 +97,37 @@ advantage of DNSSEC's proof-of-non-existence support.
 
 ## Iterations
 
-NSEC3 records always hash the input domain name at least once.  The iterations
-parameter of NSEC3PARAM and NSEC3 records specifies the number of
-__additional__ iterations to apply.  The first round of hashing is typically
-sufficient to discourage _casual_ zone enumeration by all but the most
-determined parties.
+NSEC3 records are created by first hashing the input domain and then
+repeating that hashing algorithm a number of times based on the
+iterations parameter in the NSEC3PARM and NSEC3 records.  The first
+hash is typically sufficient to discourage zone enumeration performed
+by "zone walking" an NSEC or NSEC3 chain.  Only determined parties
+with significant resources are likely to try and uncover hashed
+values, regardless of the number of additional iterations performed.
+If an adversary really wants to expend significant CPU resources to
+mount an offline dictionary attack on a zone's NSEC3 chain, they'll
+likely be able to find most of the "guessable" names despite any
+level of additional hashing iterations.
 
-On the other hand, if someone really wants to expend significant CPU resources
-to mount an offline dictionary attack on a zone's NSEC3 chain, they'll likely
-be able to find most of the "guessable" names despite any reasonable additional
-iteration count.
+Most names published in the DNS are rarely secret or unpredictable.
+They are published to be memorable, used and consumed by humans.  They
+are often recorded in many other network logs such as email logs,
+certificate transparency logs, web page links, intrusion detection
+systems, malware scanners, email archives, etc.  Many times a simple
+dictionary of commonly used domain names prefixes (www, ftp, mail,
+imap, login, database, etc) can be used to quickly reveal a large
+number of labels within a zone.  Because of this, there are increasing
+performance costs yet diminishing returns associated with applying
+additional hash iterations beyond the first.
 
-Names published in DNS zone files are rarely secret or unpredictable, they are
-published to be used, and often found in certificate transparency logs, links
-on web pages, etc., or simply guessed.  There are diminishing returns and
-performance costs for any additional hash iterations beyond the first.
-
-Although Section 10.3 of {{RFC5155}} specifies upper bounds for the number of
-hash iterations to use, there is no published guidance on good values to
-select.  Because hashing provides only moderate protection, as shown recently
-in academic studies of NSEC3 protected zones (tbd: insert ref), this document
-recommends using an iteration value of 0 (zero).  This optimises the generation
-and verification of hashes by using just the initial application of the hashing
-algorithm. 
+Although Section 10.3 of {{RFC5155}} specifies upper bounds for the
+number of hash iterations to use, there is no published guidance for
+zone owners about good values to select.  Because hashing provides
+only moderate protection, as shown recently in academic studies of
+NSEC3 protected zones (tbd: insert ref), this document recommends that
+zone owners SHOULD use an iteration value of 0 (zero), indicating that
+only the initial hash value should be placed into a DNS zone's NSEC3
+records.
 
 ## Salt
 
