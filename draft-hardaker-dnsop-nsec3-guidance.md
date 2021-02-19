@@ -113,12 +113,12 @@ published to be used, and often found in certificate transparency logs, links
 on web pages, etc., or simply guessed.  There are diminishing returns and
 performance costs for any additional hash iterations beyond the first.
 
-Although Section 10.3 of {{RFC5155}} specifies upper bounds for the number hash
-iterations to use, there is no published guidance on good values to select.
-Because hashing provides only moderate protection, as shown recently in
-academic studies of NSEC3 protected zones (tbd: insert ref), this document
+Although Section 10.3 of {{RFC5155}} specifies upper bounds for the number of
+hash iterations to use, there is no published guidance on good values to
+select.  Because hashing provides only moderate protection, as shown recently
+in academic studies of NSEC3 protected zones (tbd: insert ref), this document
 recommends using an iteration value of 0 (zero).  This optimises the generation
-and verification of hashes by using just one application of the hashing
+and verification of hashes by using just the initial application of the hashing
 algorithm. 
 
 ## Salt
