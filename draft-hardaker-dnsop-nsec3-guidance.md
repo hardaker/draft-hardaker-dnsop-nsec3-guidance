@@ -97,15 +97,29 @@ advantage of DNSSEC's proof-of-non-existence support.
 
 ## Iterations
 
-Generally increasing the number of iterations offers little improved
-protections for modern machinery.  Although Section 10.3 of
-{{RFC5155}} specifies upper bounds for the number hash iterations to
-use, there is no published guidance on good values to select.  Because
-hashing provides only moderate protection, as shown recently in
-academic studies of NSEC3 protected zones (tbd: insert ref), this
-document recommends using an iteration value of 0 (zero).  This leaves
-the creating and verifying hashes with just one application of the
-hashing algorithm. 
+NSEC3 records always hash the input domain name at least once.  The iterations
+parameter of NSEC3PARAM and NSEC3 records specifies the number of
+__additional__ iterations to apply.  The first round of hashing is typically
+sufficient to discourage _casual_ zone enumeration by all but the most
+determined parties.
+
+On the other hand, if someone really wants to expend significant CPU resources
+to mount an offline dictionary attack on a zone's NSEC3 chain, they'll likely
+be able to find most of the "guessable" names despite any reasonable additional
+iteration count.
+
+Names published in DNS zone files are rarely secret or unpredictable, they are
+published to be used, and often found in certificate transparency logs, links
+on web pages, etc., or simply guessed.  There are diminishing returns and
+performance costs for any additional hash iterations beyond the first.
+
+Although Section 10.3 of {{RFC5155}} specifies upper bounds for the number hash
+iterations to use, there is no published guidance on good values to select.
+Because hashing provides only moderate protection, as shown recently in
+academic studies of NSEC3 protected zones (tbd: insert ref), this document
+recommends using an iteration value of 0 (zero).  This optimises the generation
+and verification of hashes by using just one application of the hashing
+algorithm. 
 
 ## Salt
 
