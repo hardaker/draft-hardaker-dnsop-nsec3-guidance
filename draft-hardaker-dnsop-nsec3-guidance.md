@@ -83,12 +83,12 @@ The algorithm field is not discussed by this document.
 
 ## Flags
 
-The flags field currently contains a single flag, that of the
-"Opt-Out" flag {{RFC5155}}, which specifies whether or not NSEC3
-records provide proof of non-existence or not.  In general, NSEC3 with
+The NSEC3PARAM flags field currently contains no flags, but individual NSEC3
+records contain the "Opt-Out" flag {{RFC5155}}, which specifies whether or not that NSEC3
+record provides proof of non-existence or not.  In general, NSEC3 with
 the Opt-Out flag enabled should only be used in large, highly dynamic
 zones with a small percentage of signed delegations.  Operationally,
-this allows for less signature creations when new delegations are
+this allows for fewer signature creations when new delegations are
 inserted into a zone.  This is typically only necessary for extremely
 large registration points providing zone updates faster than
 real-time signing allows.  Smaller zones, or large but relatively
@@ -168,21 +168,18 @@ presentation format).
 
 # Best-practice for zone publishers
 
-In short, for most zones, the recommended NSEC3 parameters are as
+In short, for all zones, the recommended NSEC3 parameters are as
 shown below:
 
-    ; SHA-1, no opt-out, no extra iterations, empty salt:
+    ; SHA-1, no extra iterations, empty salt:
     ;
     bcp.example. IN NSEC3PARAM 1 0 0 -
 
+For small zones, the use of opt-out NSEC3 records is not recommended.
+
 For very large (e.g. 10 million plus unsigned delegations) and only sparsely
 signed zones, where the majority of the records are insecure delegations, use
-of opt-out may be justified.  In such (large TLD or similar) zones the
-alternative parameters are:
-
-    ; SHA-1, with opt-out, no extra iterations, empty salt:
-    ;
-    example. IN NSEC3PARAM 1 1 0 -
+of opt-out may be justified.
 
 # Recommendation for validating resolvers
 
