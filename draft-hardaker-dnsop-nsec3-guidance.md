@@ -175,11 +175,11 @@ shown below:
     ;
     bcp.example. IN NSEC3PARAM 1 0 0 -
 
-For small zones, the use of opt-out NSEC3 records is not recommended.
+For small zones, the use of opt-out based NSEC3 records is NOT
+RECOMMENDED.
 
-For very large (e.g. 10 million plus unsigned delegations) and only sparsely
-signed zones, where the majority of the records are insecure delegations, use
-of opt-out may be justified.
+For very large and sparsely signed zones, where the majority of the
+records are insecure delegations, opt-out MAY be used.
 
 # Recommendation for validating resolvers
 
