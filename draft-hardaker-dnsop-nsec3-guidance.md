@@ -1,7 +1,7 @@
 ---
 title: "Guidance for NSEC3 parameter settings"
 abbrev: title
-docname: draft-hardaker-dnsop-nsec3-guidance-02
+docname: draft-hardaker-dnsop-nsec3-guidance-03
 category: bcp
 ipr: trust200902
 
@@ -26,6 +26,37 @@ normative:
   RFC4035:
 
 informative:
+  GPUNSEC3:
+    title: GPU-Based NSEC3 Hash Breaking
+    author:
+      -
+        ins: M. Wander
+        name: M. Wander
+      -
+        ins: L. Schwittmann
+        name: L. Schwittmann
+      -
+        ins: C. Boelmann
+        name: C. Boelmann
+      -
+        ins: T. Weis
+        name: T. Weis
+    date: 2014
+    seriesinfo:
+      DOI: 10.1109/NCA.2014.27
+  ZONEENUM:
+    title: An efficient DNSSEC zone enumeration algorithm
+    author:
+      - 
+        ins: Z. Wang
+        name: Zheng Wang
+      - 
+        ins: L. Xiao
+        name: Liyuan Xiao
+      - 
+        ins: R. Wang
+        name: Rui Wang
+
 
 --- abstract
 
@@ -124,10 +155,10 @@ Although Section 10.3 of {{RFC5155}} specifies upper bounds for the
 number of hash iterations to use, there is no published guidance for
 zone owners about good values to select.  Because hashing provides
 only moderate protection, as shown recently in academic studies of
-NSEC3 protected zones (tbd: insert ref), this document recommends that
-zone owners SHOULD use an iteration value of 0 (zero), indicating that
-only the initial hash value should be placed into a DNS zone's NSEC3
-records.
+NSEC3 protected zones {{GPUNSEC3}}{{ZONEENUM}}, this document
+recommends that zone owners SHOULD use an iteration value of 0 (zero),
+indicating that only the initial hash value should be placed into a
+DNS zone's NSEC3 records.
 
 TODO: discuss the authoritative overhead of needing to find the right
 range for new random strings coming in.  Note white-lies online
@@ -188,12 +219,13 @@ validating resolvers that are subject to compute resource constraints
 when handling requests from anonymous clients, this document
 recommends that validating resolvers should change their behaviour
 with respect to large iteration values.  Validating resolvers SHOULD
-return a SERVFAIL when processing NSEC3 records with iterations larger
-than 100.  Note that this significantly decreases the requirements
-originally specified in Section 10.3 of {{RFC5155}}.
+treat the zone as insecure when processing NSEC3 records with
+iterations larger than 100.  Note that this significantly decreases
+the requirements originally specified in Section 10.3 of {{RFC5155}}.
 
-Validating resolvers returning a SERVFAIL in this situation SHOULD
-return an Extended DNS Error (EDE) {RFC8914} EDNS0 option of value [TBD].
+Validating resolvers returning an insecure answer in this situation
+SHOULD return an Extended DNS Error (EDE) {RFC8914} EDNS0 option of
+value [TBD].
 
 # Security Considerations
 
