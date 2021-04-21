@@ -217,7 +217,7 @@ records are insecure delegations, opt-out MAY be used.
 Because there has been a large growth of open (public) DNSSEC
 validating resolvers that are subject to compute resource constraints
 when handling requests from anonymous clients, this document
-recommends that validating resolvers should change their behaviour
+recommends that validating resolvers should change their behavior
 with respect to large iteration values.  Validating resolvers SHOULD
 treat the zone as insecure when processing NSEC3 records with
 iterations larger than 100.  Note that this significantly decreases
