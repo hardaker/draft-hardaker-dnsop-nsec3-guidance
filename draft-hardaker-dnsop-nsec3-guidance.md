@@ -217,15 +217,21 @@ records are insecure delegations, opt-out MAY be used.
 Because there has been a large growth of open (public) DNSSEC
 validating resolvers that are subject to compute resource constraints
 when handling requests from anonymous clients, this document
-recommends that validating resolvers should change their behavior
-with respect to large iteration values.  Validating resolvers SHOULD
-treat the zone as insecure when processing NSEC3 records with
-iterations larger than 100.  Note that this significantly decreases
-the requirements originally specified in Section 10.3 of {{RFC5155}}.
+recommends that validating resolvers should change their behavior with
+respect to large iteration values.  Validating resolvers SHOULD return
+an insecure response when processing NSEC3 records with iterations
+larger than 100.  Validating resolvers MAY return SERVFAIL when
+processing NSEC3 records with iterations larger than 500.  Note that
+this significantly decreases the requirements originally specified in
+Section 10.3 of {{RFC5155}}.
 
-Validating resolvers returning an insecure answer in this situation
-SHOULD return an Extended DNS Error (EDE) {RFC8914} EDNS0 option of
-value [TBD].
+Note that a validating resolver MUST still validate the signature over
+the NSEC3 record to ensure the iteration count was not altered since
+record publication (see {{RFC5155}} section 10.3).
+
+Validating resolvers returning an insecure or SERVFAIL answer in this
+situation SHOULD return an Extended DNS Error (EDE) {RFC8914} EDNS0
+option of value [TBD].
 
 # Security Considerations
 
