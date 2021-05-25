@@ -10,7 +10,7 @@ Expires: August 23, 2021                                 Bloomberg, L.P.
 
 
                  Guidance for NSEC3 parameter settings
-                 draft-hardaker-dnsop-nsec3-guidance-02
+                 draft-ietf-dnsop-nsec3-guidance-02
 
 Abstract
 
@@ -343,7 +343,7 @@ Appendix B.  Github Version of this document
    While this document is under development, it can be viewed, tracked,
    issued, pushed with PRs, ... here:
 
-   https://github.com/hardaker/draft-hardaker-dnsop-nsec3-guidance
+   https://github.com/hardaker/draft-ietf-dnsop-nsec3-guidance
 
 Authors' Addresses
 

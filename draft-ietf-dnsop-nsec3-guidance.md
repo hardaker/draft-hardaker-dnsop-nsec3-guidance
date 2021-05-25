@@ -1,7 +1,7 @@
 ---
 title: "Guidance for NSEC3 parameter settings"
 abbrev: title
-docname: draft-hardaker-dnsop-nsec3-guidance-03
+docname: draft-ietf-dnsop-nsec3-guidance-00
 category: bcp
 ipr: trust200902
 
@@ -264,4 +264,4 @@ dns-operations discussion participants
 While this document is under development, it can be viewed, tracked,
 issued, pushed with PRs, ... here:
 
-https://github.com/hardaker/draft-hardaker-dnsop-nsec3-guidance
+https://github.com/hardaker/draft-ietf-dnsop-nsec3-guidance
