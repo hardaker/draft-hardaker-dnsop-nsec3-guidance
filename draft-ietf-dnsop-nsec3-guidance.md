@@ -172,7 +172,7 @@ DNS domainname) with a randomly generated value.  This prevents
 adversaries from building up and remembering a dictionary of values
 that can translate a hash output back to the value that it derived from.
 
-In the case of DNS, it should be noted the hashed names placed in
+In the case of DNS, it should be noted that the hashed names placed in
 NSEC3 records already include the fully-qualified domain name from
 each zone.  Thus, no single pre-computed table works to speed up
 dictionary attacks against multiple target zones.  An attacker is
