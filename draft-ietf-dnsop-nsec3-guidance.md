@@ -197,7 +197,12 @@ operators are encouraged to forgo the salt entirely by using a
 zero-length salt value instead (represented as a "-" in the 
 presentation format).
 
-# Best-practice for zone publishers
+# Recommendations
+
+The following subsections describe recommendations for the different
+operating realms within the DNS.
+
+## Best-practice for zone publishers
 
 In short, for all zones, the recommended NSEC3 parameters are as
 shown below:
@@ -217,7 +222,7 @@ Since the NSEC3PARAM RR is not used by validating resolvers (see
 without the need to wait for RRsets to expire from caches.  A complete
 new NSEC3 chain needs to be constructed and the zone resigned.
 
-# Recommendation for validating resolvers
+## Recommendation for validating resolvers
 
 Because there has been a large growth of open (public) DNSSEC
 validating resolvers that are subject to compute resource constraints
@@ -238,6 +243,21 @@ Validating resolvers returning an insecure or SERVFAIL answer in this
 situation SHOULD return an Extended DNS Error (EDE) {RFC8914} EDNS0
 option of value [TBD].
 
+## Recommendation for Primary / Secondary relationships
+
+Primary and secondary authoritative servers for a zone that are not
+being run by the same operational staff and/or using the same software
+and configuration must take into account the potential differences in
+NSEC3 iteration support.
+
+Operators of secondary services should advertise the parameter limits
+that their servers support. Correspondingly, operators of primary
+servers need to ensure that their secondaries support the NSEC3
+parameters they expect to use in their zones.  To ensure reliability,
+after primaries change their iteration counts, they should query their
+secondaries with known non-existent labels to verify the secondary
+servers are responding as expected.
+
 # Security Considerations
 
 This entire document discusses security considerations with various
@@ -254,9 +274,9 @@ This document requests a new allocation in the "Extended DNS Error
 Codes" of the "Domain Name System (DNS) Parameters" registration
 table with the following characteristics:
 
-+ INFO-CODE: TBD
++ INFO-CODE: [TBD]
 + Purpose: Unsupported NSEC3 iterations value
-+ Reference: this document
++ Reference: [this document]
 
 --- back
 
@@ -266,7 +286,7 @@ The authors would like to thank the dns-operations discussion
 participants, which took place on mattermost hosted by DNS-OARC.
 
 Additionally, the following people contributed text or review comments
-to the draft: Florian Obser.
+to the draft: Tony Finch and Florian Obser.
 
 # Github Version of this document
 
