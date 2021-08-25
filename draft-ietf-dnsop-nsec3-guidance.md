@@ -305,3 +305,7 @@ their implementation below.
 
 The OpenDNSSEC configuration checking utility will alert the user
 about nsec3 iteration values larger than 100.
+
+## PowerDNS
+
+PowerDNS 4.5.2 changed the default value of nsec3-max-iterations to 150.
