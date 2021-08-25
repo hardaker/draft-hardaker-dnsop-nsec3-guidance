@@ -301,4 +301,7 @@ The following implementations have implemented the guidance in this
 document.  They have graciously provided notes about the details of
 their implementation below.
 
+## OpenDNSSEC
 
+The OpenDNSSEC configuration checking utility will alert the user
+about nsec3 iteration values larger than 100.
