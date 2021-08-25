@@ -90,6 +90,7 @@ Table of Contents
    Appendix B.  Github Version of this document  . . . . . . . . . .   8
    Appendix C.  Implementation Notes . . . . . . . . . . . . . . . .   8
      C.1.  OpenDNSSEC  . . . . . . . . . . . . . . . . . . . . . . .   8
+     C.2.  PowerDNS  . . . . . . . . . . . . . . . . . . . . . . . .   8
    Authors' Addresses  . . . . . . . . . . . . . . . . . . . . . . .   8
 
 1.  Introduction
@@ -105,7 +106,6 @@ Table of Contents
    NSEC3 also provides "opt-out support", allowing for blocks of
    unsigned delegations to be covered by a single NSEC3 record.  Use of
    the opt-out feature allow large registries to only sign as many NSEC3
-   records as there are signed DS or other RRsets in the zone - with
 
 
 
@@ -114,6 +114,7 @@ Hardaker & Dukhovni     Expires 26 February 2022                [Page 2]
 Internet-Draft                    title                      August 2021
 
 
+   records as there are signed DS or other RRsets in the zone - with
    opt-out, unsigned delegations don't require additional NSEC3 records.
    This sacrifices the tamper-resistance proof of non-existence offered
    by NSEC3 in order to reduce memory and CPU overheads.
@@ -157,7 +158,6 @@ Internet-Draft                    title                      August 2021
    signing allows.  Smaller zones, or large but relatively static zones,
    are encouraged to use a Flags value of 0 (zero) and take advantage of
    DNSSEC's proof-of-non-existence support.
-
 
 
 
@@ -420,6 +420,11 @@ C.1.  OpenDNSSEC
    The OpenDNSSEC configuration checking utility will alert the user
    about nsec3 iteration values larger than 100.
 
+C.2.  PowerDNS
+
+   PowerDNS 4.5.2 changed the default value of nsec3-max-iterations to
+   150.
+
 Authors' Addresses
 
    Wes Hardaker
@@ -432,11 +437,6 @@ Authors' Addresses
    Bloomberg, L.P.
 
    Email: ietf-dane@dukhovni.org
-
-
-
-
-
 
 
 
