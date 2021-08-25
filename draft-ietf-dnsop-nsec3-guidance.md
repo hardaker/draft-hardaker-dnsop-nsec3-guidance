@@ -294,3 +294,11 @@ While this document is under development, it can be viewed, tracked,
 issued, pushed with PRs, ... here:
 
 https://github.com/hardaker/draft-ietf-dnsop-nsec3-guidance
+
+# Implementation Notes
+
+The following implementations have implemented the guidance in this
+document.  They have graciously provided notes about the details of
+their implementation below.
+
+
