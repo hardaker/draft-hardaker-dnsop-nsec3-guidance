@@ -5,8 +5,8 @@
 Network Working Group                                        W. Hardaker
 Internet-Draft                                                   USC/ISI
 Intended status: Best Current Practice                       V. Dukhovni
-Expires: 26 February 2022                                Bloomberg, L.P.
-                                                          25 August 2021
+Expires: 14 March 2022                                   Bloomberg, L.P.
+                                                       10 September 2021
 
 
                  Guidance for NSEC3 parameter settings
@@ -36,7 +36,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 26 February 2022.
+   This Internet-Draft will expire on 14 March 2022.
 
 Copyright Notice
 
@@ -53,9 +53,9 @@ Copyright Notice
 
 
 
-Hardaker & Dukhovni     Expires 26 February 2022                [Page 1]
+Hardaker & Dukhovni       Expires 14 March 2022                 [Page 1]
 
-Internet-Draft                    title                      August 2021
+Internet-Draft                    title                   September 2021
 
 
    This document is subject to BCP 78 and the IETF Trust's Legal
@@ -91,6 +91,7 @@ Table of Contents
    Appendix C.  Implementation Notes . . . . . . . . . . . . . . . .   8
      C.1.  OpenDNSSEC  . . . . . . . . . . . . . . . . . . . . . . .   8
      C.2.  PowerDNS  . . . . . . . . . . . . . . . . . . . . . . . .   8
+     C.3.  Knot DNS and Knot Resolver  . . . . . . . . . . . . . . .   8
    Authors' Addresses  . . . . . . . . . . . . . . . . . . . . . . .   8
 
 1.  Introduction
@@ -103,17 +104,19 @@ Table of Contents
    multiple iterations of) hashing via SHA-1. (currently only SHA-1 is
    in use within the Internet).
 
+
+
+
+
+
+Hardaker & Dukhovni       Expires 14 March 2022                 [Page 2]
+
+Internet-Draft                    title                   September 2021
+
+
    NSEC3 also provides "opt-out support", allowing for blocks of
    unsigned delegations to be covered by a single NSEC3 record.  Use of
    the opt-out feature allow large registries to only sign as many NSEC3
-
-
-
-Hardaker & Dukhovni     Expires 26 February 2022                [Page 2]
-
-Internet-Draft                    title                      August 2021
-
-
    records as there are signed DS or other RRsets in the zone - with
    opt-out, unsigned delegations don't require additional NSEC3 records.
    This sacrifices the tamper-resistance proof of non-existence offered
@@ -162,12 +165,9 @@ Internet-Draft                    title                      August 2021
 
 
 
-
-
-
-Hardaker & Dukhovni     Expires 26 February 2022                [Page 3]
+Hardaker & Dukhovni       Expires 14 March 2022                 [Page 3]
 
-Internet-Draft                    title                      August 2021
+Internet-Draft                    title                   September 2021
 
 
 2.3.  Iterations
@@ -221,9 +221,9 @@ Internet-Draft                    title                      August 2021
 
 
 
-Hardaker & Dukhovni     Expires 26 February 2022                [Page 4]
+Hardaker & Dukhovni       Expires 14 March 2022                 [Page 4]
 
-Internet-Draft                    title                      August 2021
+Internet-Draft                    title                   September 2021
 
 
    In the case of DNS, it should be noted that the hashed names placed
@@ -277,9 +277,9 @@ Internet-Draft                    title                      August 2021
 
 
 
-Hardaker & Dukhovni     Expires 26 February 2022                [Page 5]
+Hardaker & Dukhovni       Expires 14 March 2022                 [Page 5]
 
-Internet-Draft                    title                      August 2021
+Internet-Draft                    title                   September 2021
 
 
    Since the NSEC3PARAM RR is not used by validating resolvers (see
@@ -333,9 +333,9 @@ Internet-Draft                    title                      August 2021
 
 
 
-Hardaker & Dukhovni     Expires 26 February 2022                [Page 6]
+Hardaker & Dukhovni       Expires 14 March 2022                 [Page 6]
 
-Internet-Draft                    title                      August 2021
+Internet-Draft                    title                   September 2021
 
 
 5.  Operational Considerations
@@ -389,9 +389,9 @@ Internet-Draft                    title                      August 2021
 
 
 
-Hardaker & Dukhovni     Expires 26 February 2022                [Page 7]
+Hardaker & Dukhovni       Expires 14 March 2022                 [Page 7]
 
-Internet-Draft                    title                      August 2021
+Internet-Draft                    title                   September 2021
 
 
 Appendix A.  Acknowledgments
@@ -425,6 +425,11 @@ C.2.  PowerDNS
    PowerDNS 4.5.2 changed the default value of nsec3-max-iterations to
    150.
 
+C.3.  Knot DNS and Knot Resolver
+
+   Knot DNS 3.0.6 warns when signing with more than 20 NSEC3 iterations.
+   Knot Resolver 5.3.1 treats NSEC3 iterations above 150 as insecure.
+
 Authors' Addresses
 
    Wes Hardaker
@@ -440,9 +445,4 @@ Authors' Addresses
 
 
 
-
-
-
-
-
-Hardaker & Dukhovni     Expires 26 February 2022                [Page 8]
+Hardaker & Dukhovni       Expires 14 March 2022                 [Page 8]
