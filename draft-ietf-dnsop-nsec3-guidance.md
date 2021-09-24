@@ -114,15 +114,16 @@ The algorithm field is not discussed by this document.
 
 ## Flags
 
-The NSEC3PARAM flags field currently contains no flags, but individual NSEC3
-records contain the "Opt-Out" flag {{RFC5155}}, which specifies whether or not that NSEC3
-record provides proof of non-existence or not.  In general, NSEC3 with
-the Opt-Out flag enabled should only be used in large, highly dynamic
-zones with a small percentage of signed delegations.  Operationally,
-this allows for fewer signature creations when new delegations are
-inserted into a zone.  This is typically only necessary for extremely
-large registration points providing zone updates faster than
-real-time signing allows.  Smaller zones, or large but relatively
+The NSEC3PARAM flags field currently contains no flags, but individual
+NSEC3 records contain the "Opt-Out" flag {{RFC5155}}, which specifies
+whether or not that NSEC3 record provides proof of non-existence or
+not.  In general, NSEC3 with the Opt-Out flag enabled should only be
+used in large, highly dynamic zones with a small percentage of signed
+delegations.  Operationally, this allows for fewer signature creations
+when new delegations are inserted into a zone.  This is typically only
+necessary for extremely large registration points providing zone
+updates faster than real-time signing allows or when using
+memory-constrained hardware.  Smaller zones, or large but relatively
 static zones, are encouraged to use a Flags value of 0 (zero) and take
 advantage of DNSSEC's proof-of-non-existence support.
 
@@ -286,7 +287,11 @@ The authors would like to thank the dns-operations discussion
 participants, which took place on mattermost hosted by DNS-OARC.
 
 Additionally, the following people contributed text or review comments
-to the draft: Tony Finch and Florian Obser.
+to the draft:
+
++ Tony Finch
++ Alexander Mayrhofer
++ Florian Obser
 
 # Github Version of this document
 
