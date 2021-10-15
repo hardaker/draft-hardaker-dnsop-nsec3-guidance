@@ -298,7 +298,7 @@ to the draft:
 While this document is under development, it can be viewed, tracked,
 issued, pushed with PRs, ... here:
 
-https://github.com/hardaker/draft-ietf-dnsop-nsec3-guidance
+https://github.com/hardaker/draft-hardaker-dnsop-nsec3-guidance
 
 # Implementation Notes
 
