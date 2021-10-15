@@ -24,6 +24,7 @@ normative:
   RFC2119:
   RFC5155:
   RFC4035:
+  RFC4470:
 
 informative:
   GPUNSEC3:
@@ -161,10 +162,6 @@ recommends that zone owners SHOULD use an iteration value of 0 (zero),
 indicating that only the initial hash value should be placed into a
 DNS zone's NSEC3 records.
 
-TODO: discuss the authoritative overhead of needing to find the right
-range for new random strings coming in.  Note white-lies online
-signing differences.
-
 ## Salt
 
 Salts add yet another layer of protection against offline, stored
@@ -198,15 +195,27 @@ operators are encouraged to forgo the salt entirely by using a
 zero-length salt value instead (represented as a "-" in the 
 presentation format).
 
-# Recommendations
+# Recommendations for deploying and validating NSEC3 records
 
 The following subsections describe recommendations for the different
 operating realms within the DNS.
 
 ## Best-practice for zone publishers
 
-In short, for all zones, the recommended NSEC3 parameters are as
-shown below:
+First, if the operational or security features of NSEC3 are not
+needed, then NSEC SHOULD be used in preference to NSEC3. NSEC3
+requires greater computational power for both authoritative servers
+and validating clients.  Specifically, there is a non trivial
+complexity in finding matching NSEC3 records to randomly generated
+prefixes within a DNS zone.  NSEC mitigates this concern, and if NSEC3
+must be used then selecting a low iterations count will help alleviate
+this computational burden.  Note that deploying NSEC with minimally
+covering NSEC records [RFC4470] also incures a cost, and zone owners
+should measure the computational difference in deploying both RFC4470
+or NSEC3.
+
+In short, for all zones, the recommended NSEC3 parameters are as shown
+below:
 
     ; SHA-1, no extra iterations, empty salt:
     ;
