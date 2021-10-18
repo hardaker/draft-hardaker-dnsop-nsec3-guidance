@@ -210,7 +210,7 @@ complexity in finding matching NSEC3 records to randomly generated
 prefixes within a DNS zone.  NSEC mitigates this concern, and if NSEC3
 must be used then selecting a low iterations count will help alleviate
 this computational burden.  Note that deploying NSEC with minimally
-covering NSEC records [RFC4470] also incures a cost, and zone owners
+covering NSEC records [RFC4470] also incurs a cost, and zone owners
 should measure the computational difference in deploying both RFC4470
 or NSEC3.
 
