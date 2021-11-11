@@ -1,7 +1,7 @@
 ---
 title: "Guidance for NSEC3 parameter settings"
 abbrev: title
-docname: draft-ietf-dnsop-nsec3-guidance-01
+docname: draft-ietf-dnsop-nsec3-guidance-02
 category: bcp
 ipr: trust200902
 
@@ -208,11 +208,11 @@ requires greater computational power for both authoritative servers
 and validating clients.  Specifically, there is a non trivial
 complexity in finding matching NSEC3 records to randomly generated
 prefixes within a DNS zone.  NSEC mitigates this concern, and if NSEC3
-must be used then selecting a low iterations count will help alleviate
-this computational burden.  Note that deploying NSEC with minimally
-covering NSEC records [RFC4470] also incurs a cost, and zone owners
-should measure the computational difference in deploying both RFC4470
-or NSEC3.
+must be used then selecting a low iterations count (preferably 0)
+will help alleviate this computational burden.  Note that deploying
+NSEC with minimally covering NSEC records [RFC4470] also incurs a
+cost, and zone owners should measure the computational difference in
+deploying both RFC4470 or NSEC3.
 
 In short, for all zones, the recommended NSEC3 parameters are as shown
 below:
