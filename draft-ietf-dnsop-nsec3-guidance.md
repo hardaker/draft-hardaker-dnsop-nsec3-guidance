@@ -328,3 +328,8 @@ PowerDNS 4.5.2 changed the default value of nsec3-max-iterations to 150.
 
 Knot DNS 3.0.6 warns when signing with more than 20 NSEC3 iterations.
 Knot Resolver 5.3.1 treats NSEC3 iterations above 150 as insecure.
+
+## Google Cloud DNS
+
+Google Cloud DNS uses 1 iteration and 64-bits of fixed random salt for
+all zones using NSEC3. These parameters cannot be adjusted by users.
