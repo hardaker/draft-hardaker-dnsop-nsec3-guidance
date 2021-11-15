@@ -299,8 +299,10 @@ Additionally, the following people contributed text or review comments
 to the draft:
 
 + Tony Finch
++ Paul Hoffman
 + Alexander Mayrhofer
 + Florian Obser
++ Petr Špaček
 
 # Github Version of this document
 
