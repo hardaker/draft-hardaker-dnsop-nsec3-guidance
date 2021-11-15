@@ -335,3 +335,8 @@ Knot Resolver 5.3.1 treats NSEC3 iterations above 150 as insecure.
 
 Google Public DNS treats NSEC3 iterations above 100 as insecure since
 September 2021.
+
+## Google Cloud DNS
+
+Google Cloud DNS uses 1 iteration and 64-bits of fixed random salt for
+all zones using NSEC3. These parameters cannot be adjusted by users.
