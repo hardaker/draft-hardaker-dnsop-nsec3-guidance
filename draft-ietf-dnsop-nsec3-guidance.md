@@ -204,15 +204,15 @@ operating realms within the DNS.
 
 First, if the operational or security features of NSEC3 are not
 needed, then NSEC SHOULD be used in preference to NSEC3. NSEC3
-requires greater computational power for both authoritative servers
-and validating clients.  Specifically, there is a non trivial
-complexity in finding matching NSEC3 records to randomly generated
-prefixes within a DNS zone.  NSEC mitigates this concern, and if NSEC3
-must be used then selecting a low iterations count (preferably 0)
-will help alleviate this computational burden.  Note that deploying
-NSEC with minimally covering NSEC records [RFC4470] also incurs a
-cost, and zone owners should measure the computational difference in
-deploying both RFC4470 or NSEC3.
+requires greater computational power (see {{computationalburdens}})
+for both authoritative servers and validating clients.  Specifically,
+there is a non trivial complexity in finding matching NSEC3 records to
+randomly generated prefixes within a DNS zone.  NSEC mitigates this
+concern, and if NSEC3 must be used then an iterations count of 0
+SHOULD be used to alleviate computational burdens.  Note that
+deploying NSEC with minimally covering NSEC records [RFC4470] also
+incurs a cost, and zone owners should measure the computational
+difference in deploying both RFC4470 or NSEC3.
 
 In short, for all zones, the recommended NSEC3 parameters are as shown
 below:
@@ -238,20 +238,25 @@ Because there has been a large growth of open (public) DNSSEC
 validating resolvers that are subject to compute resource constraints
 when handling requests from anonymous clients, this document
 recommends that validating resolvers should change their behavior with
-respect to large iteration values.  Validating resolvers SHOULD return
-an insecure response when processing NSEC3 records with iterations
-larger than 100.  Validating resolvers MAY return SERVFAIL when
-processing NSEC3 records with iterations larger than 500.  Note that
-this significantly decreases the requirements originally specified in
-Section 10.3 of {{RFC5155}}.
+respect to large iteration values.  For this reason, validating
+resolver operators and validating resolver software vendors are
+encouraged to continue evaluating NSEC3 iteration count deployments
+and low their default acceptable limits over time.  Similarly, because
+treating a high iterations count as insecure leaves zones subject to
+attack, validating resolver operators and validating resolver software
+vendors are further encouraged to lower their default and acceptable
+limit for returning SERVFAILs when processing NSEC3 parameters
+containing large iteration count values.  See
+{{deploymentmeasurements}} for measurements taken near the time of
+publication and potential starting points.
 
 Note that a validating resolver MUST still validate the signature over
 the NSEC3 record to ensure the iteration count was not altered since
 record publication (see {{RFC5155}} section 10.3).
 
-Validating resolvers returning an insecure or SERVFAIL answer in this
-situation SHOULD return an Extended DNS Error (EDE) {RFC8914} EDNS0
-option of value [TBD].
+Validating resolvers returning an insecure or SERVFAIL answer because
+of unsupported NSEC parameter values SHOULD return an Extended DNS
+Error (EDE) {RFC8914} EDNS0 option of value (RFC EDITOR: TBD).
 
 ## Recommendation for Primary / Secondary relationships
 
@@ -273,6 +278,16 @@ servers are responding as expected.
 This entire document discusses security considerations with various
 parameters selections of NSEC3 and NSEC3PARAM fields.
 
+The point where a validating resolver returns insecure vs the point
+where it returns SERVFAIL must be considered carefully.  Specifically,
+when a validating resolver treats a zone as insecure above a
+particular value (say 100) and returns SERVFAIL above a higher point
+(say 500), it leaves the zone subject to man-it-the-middle attacks as
+if it was unsigned between these values. Thus, validating resolver
+operators and software vendors SHOULD set the point above which a zone
+is treated for certain values of NSEC3 iterations counts to the same
+as the point where a validating resolver begins returning SERVFAIL.
+
 # Operational Considerations
 
 This entire document discusses operational considerations with various
@@ -284,11 +299,39 @@ This document requests a new allocation in the "Extended DNS Error
 Codes" of the "Domain Name System (DNS) Parameters" registration
 table with the following characteristics:
 
-+ INFO-CODE: [TBD]
++ INFO-CODE: (RFC EDITOR: TBD)
 + Purpose: Unsupported NSEC3 iterations value
-+ Reference: [this document]
++ Reference: (RFC EDITOR: this document)
 
 --- back
+
+# Deployment measurements at time of publication {#deploymentmeasurements}
+
+At the time of publication, setting an upper limit of 100 iterations
+for treating a zone as insecure is interoperable without significant
+problems, but at the same time still enables CPU-exhausting DoS
+attacks.
+
+As the time of publication, returning SERVFAIL beyond 500 iterations
+appears to be interoperable without significant problems.
+
+# Computational burdens of processing NSEC3 iterations {#computationalburdens}
+
+The Queries Per Second (QPS) of validating resolvers will decrease due
+to computational overhead when processing DNS requests for zones
+containing higher NSEC3 iteration counts.  The table ({{qps}}) below
+shows the drop in QPS for various iteration counts.
+
+    | Iterations | QPS [% of 0 iterations QPS] |
+    |------------+-----------------------------|
+    |          0 | 100 %                       |
+    |         10 | 89 %                        |
+    |         20 | 82 %                        |
+    |         50 | 64 %                        |
+    |        100 | 47 %                        |
+    |        150 | 38 %                        |
+
+{: #qps title="Effects of NSEC3 iterations on Queries Per Second"}
 
 # Acknowledgments
 
