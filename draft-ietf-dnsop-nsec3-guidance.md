@@ -208,11 +208,12 @@ requires greater computational power (see {{computationalburdens}})
 for both authoritative servers and validating clients.  Specifically,
 there is a non trivial complexity in finding matching NSEC3 records to
 randomly generated prefixes within a DNS zone.  NSEC mitigates this
-concern, and if NSEC3 must be used then an iterations count of 0
-SHOULD be used to alleviate computational burdens.  Note that
-deploying NSEC with minimally covering NSEC records [RFC4470] also
-incurs a cost, and zone owners should measure the computational
-difference in deploying both RFC4470 or NSEC3.
+concern.  If NSEC3 must be used, then an iterations count of 0
+SHOULD be used to alleviate computational burdens.
+
+Note that deploying NSEC with minimally covering NSEC records
+[RFC4470] also incurs a cost, and zone owners should measure the
+computational difference in deploying both RFC4470 or NSEC3.
 
 In short, for all zones, the recommended NSEC3 parameters are as shown
 below:
@@ -228,7 +229,7 @@ For very large and sparsely signed zones, where the majority of the
 records are insecure delegations, opt-out MAY be used.
 
 Since the NSEC3PARAM RR is not used by validating resolvers (see
-[RFC5155] section 4) the iterations and salt parameters can be changed
+[RFC5155] section 4), the iterations and salt parameters can be changed
 without the need to wait for RRsets to expire from caches.  A complete
 new NSEC3 chain needs to be constructed and the zone resigned.
 
