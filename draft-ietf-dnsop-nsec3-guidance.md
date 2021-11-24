@@ -238,15 +238,15 @@ new NSEC3 chain needs to be constructed and the zone resigned.
 Because there has been a large growth of open (public) DNSSEC
 validating resolvers that are subject to compute resource constraints
 when handling requests from anonymous clients, this document
-recommends that validating resolvers should change their behavior with
-respect to large iteration values.  For this reason, validating
+recommends that validating resolvers change their behavior with
+respect to large iteration values.  Specifically, validating
 resolver operators and validating resolver software vendors are
 encouraged to continue evaluating NSEC3 iteration count deployments
-and low their default acceptable limits over time.  Similarly, because
+and lower their default acceptable limits over time.  Similarly, because
 treating a high iterations count as insecure leaves zones subject to
 attack, validating resolver operators and validating resolver software
 vendors are further encouraged to lower their default and acceptable
-limit for returning SERVFAILs when processing NSEC3 parameters
+limit for returning SERVFAIL when processing NSEC3 parameters
 containing large iteration count values.  See
 {{deploymentmeasurements}} for measurements taken near the time of
 publication and potential starting points.
