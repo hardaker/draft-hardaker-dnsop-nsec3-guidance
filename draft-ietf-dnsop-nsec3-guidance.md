@@ -254,12 +254,12 @@ validating resolvers that are subject to compute resource constraints
 when handling requests from anonymous clients, this document
 recommends that validating resolvers change their behavior with
 respect to large iteration values.  Specifically, validating
-resolver operators and validating resolver software vendors are
+resolver operators and validating resolver software implementers are
 encouraged to continue evaluating NSEC3 iteration count deployments
 and lower their default acceptable limits over time.  Similarly, because
 treating a high iterations count as insecure leaves zones subject to
 attack, validating resolver operators and validating resolver software
-vendors are further encouraged to lower their default and acceptable
+implementers are further encouraged to lower their default and acceptable
 limit for returning SERVFAIL when processing NSEC3 parameters
 containing large iteration count values.  See
 {{deploymentmeasurements}} for measurements taken near the time of
@@ -307,7 +307,7 @@ when a validating resolver treats a zone as insecure above a
 particular value (say 100) and returns SERVFAIL above a higher point
 (say 500), it leaves the zone subject to man-it-the-middle attacks as
 if it was unsigned between these values. Thus, validating resolver
-operators and software vendors SHOULD set the point above which a zone
+operators and software implementers SHOULD set the point above which a zone
 is treated for certain values of NSEC3 iterations counts to the same
 as the point where a validating resolver begins returning SERVFAIL.
 
@@ -370,6 +370,7 @@ to the draft:
 + Matthijs Mekking
 + Florian Obser
 + Petr Špaček
++ Paul Vixie
 
 # Github Version of this document
 
