@@ -5,8 +5,8 @@
 Network Working Group                                        W. Hardaker
 Internet-Draft                                                   USC/ISI
 Intended status: Best Current Practice                       V. Dukhovni
-Expires: 28 May 2022                                     Bloomberg, L.P.
-                                                        24 November 2021
+Expires: 13 August 2022                                  Bloomberg, L.P.
+                                                         9 February 2022
 
 
                  Guidance for NSEC3 parameter settings
@@ -36,11 +36,11 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 28 May 2022.
+   This Internet-Draft will expire on 13 August 2022.
 
 Copyright Notice
 
-   Copyright (c) 2021 IETF Trust and the persons identified as the
+   Copyright (c) 2022 IETF Trust and the persons identified as the
    document authors.  All rights reserved.
 
 
@@ -53,9 +53,9 @@ Copyright Notice
 
 
 
-Hardaker & Dukhovni        Expires 28 May 2022                  [Page 1]
+Hardaker & Dukhovni      Expires 13 August 2022                 [Page 1]
 
-Internet-Draft                    title                    November 2021
+Internet-Draft                    title                    February 2022
 
 
    This document is subject to BCP 78 and the IETF Trust's Legal
@@ -76,28 +76,28 @@ Table of Contents
      2.2.  Flags . . . . . . . . . . . . . . . . . . . . . . . . . .   4
      2.3.  Iterations  . . . . . . . . . . . . . . . . . . . . . . .   4
      2.4.  Salt  . . . . . . . . . . . . . . . . . . . . . . . . . .   5
-   3.  Recommendations for deploying and validating NSEC3 records  .   5
+   3.  Recommendations for deploying and validating NSEC3 records  .   6
      3.1.  Best-practice for zone publishers . . . . . . . . . . . .   6
-     3.2.  Recommendation for validating resolvers . . . . . . . . .   6
+     3.2.  Recommendation for validating resolvers . . . . . . . . .   7
      3.3.  Recommendation for Primary / Secondary relationships  . .   7
-   4.  Security Considerations . . . . . . . . . . . . . . . . . . .   7
-   5.  Operational Considerations  . . . . . . . . . . . . . . . . .   7
+   4.  Security Considerations . . . . . . . . . . . . . . . . . . .   8
+   5.  Operational Considerations  . . . . . . . . . . . . . . . . .   8
    6.  IANA Considerations . . . . . . . . . . . . . . . . . . . . .   8
    7.  References  . . . . . . . . . . . . . . . . . . . . . . . . .   8
      7.1.  Normative References  . . . . . . . . . . . . . . . . . .   8
-     7.2.  Informative References  . . . . . . . . . . . . . . . . .   8
+     7.2.  Informative References  . . . . . . . . . . . . . . . . .   9
    Appendix A.  Deployment measurements at time of publication . . .   9
    Appendix B.  Computational burdens of processing NSEC3
            iterations  . . . . . . . . . . . . . . . . . . . . . . .   9
-   Appendix C.  Acknowledgments  . . . . . . . . . . . . . . . . . .   9
-   Appendix D.  Github Version of this document  . . . . . . . . . .   9
+   Appendix C.  Acknowledgments  . . . . . . . . . . . . . . . . . .  10
+   Appendix D.  Github Version of this document  . . . . . . . . . .  10
    Appendix E.  Implementation Notes . . . . . . . . . . . . . . . .  10
      E.1.  OpenDNSSEC  . . . . . . . . . . . . . . . . . . . . . . .  10
      E.2.  PowerDNS  . . . . . . . . . . . . . . . . . . . . . . . .  10
-     E.3.  Knot DNS and Knot Resolver  . . . . . . . . . . . . . . .  10
-     E.4.  Google Public DNS Resolver  . . . . . . . . . . . . . . .  10
-     E.5.  Google Cloud DNS  . . . . . . . . . . . . . . . . . . . .  10
-   Authors' Addresses  . . . . . . . . . . . . . . . . . . . . . . .  10
+     E.3.  Knot DNS and Knot Resolver  . . . . . . . . . . . . . . .  11
+     E.4.  Google Public DNS Resolver  . . . . . . . . . . . . . . .  11
+     E.5.  Google Cloud DNS  . . . . . . . . . . . . . . . . . . . .  11
+   Authors' Addresses  . . . . . . . . . . . . . . . . . . . . . . .  11
 
 
 
@@ -109,9 +109,9 @@ Table of Contents
 
 
 
-Hardaker & Dukhovni        Expires 28 May 2022                  [Page 2]
+Hardaker & Dukhovni      Expires 13 August 2022                 [Page 2]
 
-Internet-Draft                    title                    November 2021
+Internet-Draft                    title                    February 2022
 
 
 1.  Introduction
@@ -165,9 +165,9 @@ Internet-Draft                    title                    November 2021
 
 
 
-Hardaker & Dukhovni        Expires 28 May 2022                  [Page 3]
+Hardaker & Dukhovni      Expires 13 August 2022                 [Page 3]
 
-Internet-Draft                    title                    November 2021
+Internet-Draft                    title                    February 2022
 
 
 2.2.  Flags
@@ -221,9 +221,9 @@ Internet-Draft                    title                    November 2021
 
 
 
-Hardaker & Dukhovni        Expires 28 May 2022                  [Page 4]
+Hardaker & Dukhovni      Expires 13 August 2022                 [Page 4]
 
-Internet-Draft                    title                    November 2021
+Internet-Draft                    title                    February 2022
 
 
    Although Section 10.3 of [RFC5155] specifies upper bounds for the
@@ -237,50 +237,60 @@ Internet-Draft                    title                    November 2021
 
 2.4.  Salt
 
-   Salts add yet another layer of protection against offline, stored
-   dictionary attacks by combining the value to be hashed (in our case,
-   a DNS domainname) with a randomly generated value.  This prevents
-   adversaries from building up and remembering a dictionary of values
-   that can translate a hash output back to the value that it derived
-   from.
+   Operators are encouraged to forget the salt entirely by using a zero-
+   length salt value instead (represented as a "-" in the presentation
+   format).
 
-   In the case of DNS, it should be noted that the hashed names placed
-   in NSEC3 records already include the fully-qualified domain name from
-   each zone.  Thus, no single pre-computed table works to speed up
-   dictionary attacks against multiple target zones.  An attacker is
-   required to compute a complete dictionary per zone, which is
-   expensive in both storage and CPU time.
+   NSEC3 records provide an an additional salt value, which can be
+   combined with an FQDN to influence the resulting hash, but properties
+   of this extra salt are complicated.
 
-   To protect against a dictionary being built and used for a target
-   zone, an additional salt field can be included and changed on a
-   regular basis, forcing a would-be attacker to repeatedly compute a
-   new dictionary (or just do trial and error without the benefits of
-   precomputation).
+   In cryptography, salts generally add a layer of protection against
+   offline, stored dictionary attacks by combining the value to be
+   hashed with a unique "salt" value.  This prevents adversaries from
+   building up and remembering a single dictionary of values that can
+   translate a hash output back to the value that it derived from.
+
+   In the case of DNS, the situation is different because the hashed
+   names placed in NSEC3 records are always implicitly "salted" by
+   hashing the fully-qualified domain name from each zone.  Thus, no
+   single pre-computed table works to speed up dictionary attacks
+   against multiple target zones.  An attacker is always required to
+   compute a complete dictionary per zone, which is expensive in both
+   storage and CPU time.
+
+   To understand role of the additional NSEC3 salt field, we have to
+   consider how a typical zone walking attack works.  Typically the
+   attack has two phases - online and offline.  In the online phase, an
+   attacker "walks the zone" by enumerating (almost) all hashes listed
+   in NSEC3 records and storing them for the offline phase.  Then, in
+   the offline cracking phase, the attacker attempts to crack the
+   underlying hash.  In this phase, the additional salt value raises the
+   cost of the attack only if the salt value changes during the online
+   phase of the attack.  In other words, an additional, constant salt
+   value does not change cost of the attack.
 
    Changing a zone's salt value requires the construction of a complete
    new NSEC3 chain.  This is true both when resigning the entire zone at
-   once, or incrementally signing it in the background where the new
-   salt is only activated once every name in the chain has been
-   completed.
+   once, or when incrementally signing it in the background where the
+   new salt is only activated once every name in the chain has been
 
-   Most users of NSEC3 publish static salt values that never change.
-   This provides no added security benefit (because the complete fully
-   qualified domain name is already unique).  If no rotation is planned,
-   operators are encouraged to forgo the salt entirely by using a zero-
-   length salt value instead (represented as a "-" in the presentation
-   format).
+
+
+Hardaker & Dukhovni      Expires 13 August 2022                 [Page 5]
+
+Internet-Draft                    title                    February 2022
+
+
+   completed.  As a result, re-salting a is very complex operation, with
+   significant CPU time, memory, and bandwidth consumption.  This makes
+   very frequent re-salting unpractical, and renders the additional salt
+   field functionally useless.
 
 3.  Recommendations for deploying and validating NSEC3 records
 
    The following subsections describe recommendations for the different
    operating realms within the DNS.
-
-
-
-Hardaker & Dukhovni        Expires 28 May 2022                  [Page 5]
-
-Internet-Draft                    title                    November 2021
-
 
 3.1.  Best-practice for zone publishers
 
@@ -290,8 +300,11 @@ Internet-Draft                    title                    November 2021
    authoritative servers and validating clients.  Specifically, there is
    a non trivial complexity in finding matching NSEC3 records to
    randomly generated prefixes within a DNS zone.  NSEC mitigates this
-   concern.  If NSEC3 must be used, then an iterations count of 0 SHOULD
-   be used to alleviate computational burdens.
+   concern.  If NSEC3 must be used, then an iterations count of 0 MUST
+   be used to alleviate computational burdens.  Please note that extra
+   iteration counts other than 0 increase impact of resource CPU-
+   exhausting DoS attacks, and also increase risk of interoperability
+   problems.
 
    Note that deploying NSEC with minimally covering NSEC records
    [RFC4470] also incurs a cost, and zone owners should measure the
@@ -316,6 +329,15 @@ Internet-Draft                    title                    November 2021
    complete new NSEC3 chain needs to be constructed and the zone
    resigned.
 
+
+
+
+
+Hardaker & Dukhovni      Expires 13 August 2022                 [Page 6]
+
+Internet-Draft                    title                    February 2022
+
+
 3.2.  Recommendation for validating resolvers
 
    Because there has been a large growth of open (public) DNSSEC
@@ -323,32 +345,32 @@ Internet-Draft                    title                    November 2021
    when handling requests from anonymous clients, this document
    recommends that validating resolvers change their behavior with
    respect to large iteration values.  Specifically, validating resolver
-   operators and validating resolver software vendors are encouraged to
-   continue evaluating NSEC3 iteration count deployments and lower their
-   default acceptable limits over time.  Similarly, because treating a
-   high iterations count as insecure leaves zones subject to attack,
-   validating resolver operators and validating resolver software
-   vendors are further encouraged to lower their default and acceptable
-   limit for returning SERVFAIL when processing NSEC3 parameters
+   operators and validating resolver software implementers are
+   encouraged to continue evaluating NSEC3 iteration count deployments
+   and lower their default acceptable limits over time.  Similarly,
+   because treating a high iterations count as insecure leaves zones
+   subject to attack, validating resolver operators and validating
+   resolver software implementers are further encouraged to lower their
+   default and acceptable limit for returning SERVFAIL when processing
+   NSEC3 parameters containing large iteration count values.  See
+   Appendix A for measurements taken near the time of publication and
+   potential starting points.
 
+   Validating resolvers MAY return an insecure response when processing
+   NSEC3 records with iterations larger than 0.  Validating resolvers
+   MAY also return SERVFAIL when processing NSEC3 records with
+   iterations larger than 0.  This significantly decreases the
+   requirements originally specified in Section 10.3 of [RFC5155].  See
+   the Security Considerations for arguments on how to handle responses
+   with non-zero iteration count.
 
-
-Hardaker & Dukhovni        Expires 28 May 2022                  [Page 6]
-
-Internet-Draft                    title                    November 2021
-
-
-   containing large iteration count values.  See Appendix A for
-   measurements taken near the time of publication and potential
-   starting points.
+   Validating resolvers returning an insecure or SERVFAIL answer because
+   of unsupported NSEC3 parameter values SHOULD return an Extended DNS
+   Error (EDE) {RFC8914} EDNS0 option of value (RFC EDITOR: TBD).
 
    Note that a validating resolver MUST still validate the signature
    over the NSEC3 record to ensure the iteration count was not altered
    since record publication (see [RFC5155] section 10.3).
-
-   Validating resolvers returning an insecure or SERVFAIL answer because
-   of unsupported NSEC parameter values SHOULD return an Extended DNS
-   Error (EDE) {RFC8914} EDNS0 option of value (RFC EDITOR: TBD).
 
 3.3.  Recommendation for Primary / Secondary relationships
 
@@ -365,6 +387,13 @@ Internet-Draft                    title                    November 2021
    their secondaries with known non-existent labels to verify the
    secondary servers are responding as expected.
 
+
+
+Hardaker & Dukhovni      Expires 13 August 2022                 [Page 7]
+
+Internet-Draft                    title                    February 2022
+
+
 4.  Security Considerations
 
    This entire document discusses security considerations with various
@@ -376,8 +405,8 @@ Internet-Draft                    title                    November 2021
    above a particular value (say 100) and returns SERVFAIL above a
    higher point (say 500), it leaves the zone subject to man-it-the-
    middle attacks as if it was unsigned between these values.  Thus,
-   validating resolver operators and software vendors SHOULD set the
-   point above which a zone is treated for certain values of NSEC3
+   validating resolver operators and software implementers SHOULD set
+   the point above which a zone is treated for certain values of NSEC3
    iterations counts to the same as the point where a validating
    resolver begins returning SERVFAIL.
 
@@ -385,14 +414,6 @@ Internet-Draft                    title                    November 2021
 
    This entire document discusses operational considerations with
    various parameters selections of NSEC3 and NSEC3PARAM fields.
-
-
-
-
-Hardaker & Dukhovni        Expires 28 May 2022                  [Page 7]
-
-Internet-Draft                    title                    November 2021
-
 
 6.  IANA Considerations
 
@@ -420,6 +441,15 @@ Internet-Draft                    title                    November 2021
               Extensions", RFC 4035, DOI 10.17487/RFC4035, March 2005,
               <https://www.rfc-editor.org/info/rfc4035>.
 
+
+
+
+
+Hardaker & Dukhovni      Expires 13 August 2022                 [Page 8]
+
+Internet-Draft                    title                    February 2022
+
+
    [RFC4470]  Weiler, S. and J. Ihren, "Minimally Covering NSEC Records
               and DNSSEC On-line Signing", RFC 4470,
               DOI 10.17487/RFC4470, April 2006,
@@ -442,13 +472,6 @@ Internet-Draft                    title                    November 2021
 
    [ZONEENUM] Wang, Z., Xiao, L., and R. Wang, "An efficient DNSSEC zone
               enumeration algorithm", n.d..
-
-
-
-Hardaker & Dukhovni        Expires 28 May 2022                  [Page 8]
-
-Internet-Draft                    title                    November 2021
-
 
 Appendix A.  Deployment measurements at time of publication
 
@@ -476,6 +499,13 @@ Appendix B.  Computational burdens of processing NSEC3 iterations
    |        100 | 47 %                        |
    |        150 | 38 %                        |
 
+
+
+Hardaker & Dukhovni      Expires 13 August 2022                 [Page 9]
+
+Internet-Draft                    title                    February 2022
+
+
 Appendix C.  Acknowledgments
 
    The authors would like to thank the dns-operations discussion
@@ -484,27 +514,26 @@ Appendix C.  Acknowledgments
    Additionally, the following people contributed text or review
    comments to the draft:
 
+   *  Vladimir &#268;unat
+
    *  Tony Finch
 
    *  Paul Hoffman
 
    *  Alexander Mayrhofer
 
+   *  Matthijs Mekking
+
    *  Florian Obser
 
    *  Petr &#352;pa&#269;ek
+
+   *  Paul Vixie
 
 Appendix D.  Github Version of this document
 
    While this document is under development, it can be viewed, tracked,
    issued, pushed with PRs, ... here:
-
-
-
-Hardaker & Dukhovni        Expires 28 May 2022                  [Page 9]
-
-Internet-Draft                    title                    November 2021
-
 
    https://github.com/hardaker/draft-hardaker-dnsop-nsec3-guidance
 
@@ -523,6 +552,15 @@ E.2.  PowerDNS
 
    PowerDNS 4.5.2 changed the default value of nsec3-max-iterations to
    150.
+
+
+
+
+
+Hardaker & Dukhovni      Expires 13 August 2022                [Page 10]
+
+Internet-Draft                    title                    February 2022
+
 
 E.3.  Knot DNS and Knot Resolver
 
@@ -557,4 +595,22 @@ Authors' Addresses
 
 
 
-Hardaker & Dukhovni        Expires 28 May 2022                 [Page 10]
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Hardaker & Dukhovni      Expires 13 August 2022                [Page 11]
