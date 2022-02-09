@@ -364,6 +364,7 @@ participants, which took place on mattermost hosted by DNS-OARC.
 Additionally, the following people contributed text or review comments
 to the draft:
 
++ Vladimír Čunát
 + Tony Finch
 + Paul Hoffman
 + Alexander Mayrhofer
