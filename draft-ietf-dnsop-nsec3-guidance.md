@@ -164,36 +164,47 @@ DNS zone's NSEC3 records.
 
 ## Salt
 
-Salts add yet another layer of protection against offline, stored
-dictionary attacks by combining the value to be hashed (in our case, a
-DNS domainname) with a randomly generated value.  This prevents
-adversaries from building up and remembering a dictionary of values
-that can translate a hash output back to the value that it derived from.
+Operators are encouraged to forget the salt entirely by using a
+zero-length salt value instead (represented as a "-" in the
+presentation format).
 
-In the case of DNS, it should be noted that the hashed names placed in
-NSEC3 records already include the fully-qualified domain name from
-each zone.  Thus, no single pre-computed table works to speed up
-dictionary attacks against multiple target zones.  An attacker is
-required to compute a complete dictionary per zone, which is expensive
-in both storage and CPU time.
+NSEC3 records provide an an additional salt value, which can be
+combined with an FQDN to influence the resulting hash, but properties
+of this extra salt are complicated.
 
-To protect against a dictionary being built and used for a target
-zone, an additional salt field can be included and changed on a
-regular basis, forcing a would-be attacker to repeatedly compute a new
-dictionary (or just do trial and error without the benefits of
-precomputation).
+In cryptography, salts generally add a layer of protection against
+offline, stored dictionary attacks by combining the value to be hashed
+with a unique "salt" value. This prevents adversaries from building up
+and remembering a single dictionary of values that can translate a
+hash output back to the value that it derived from.
+
+In the case of DNS, the situation is different because the hashed
+names placed in NSEC3 records are always implicitly "salted" by
+hashing the fully-qualified domain name from each zone. Thus, no
+single pre-computed table works to speed up dictionary attacks
+against multiple target zones. An attacker is always required to
+compute a complete dictionary per zone, which is expensive in both
+storage and CPU time.
+
+To understand role of the additional NSEC3 salt field, we have to
+consider how a typical zone walking attack works. Typically the attack
+has two phases - online and offline. In the online phase, an attacker
+"walks the zone" by enumerating (almost) all hashes listed in NSEC3
+records and storing them for the offline phase. Then, in the offline
+cracking phase, the attacker attempts to crack the underlying hash. In
+this phase, the additional salt value raises the cost of the attack
+only if the salt value changes during the online phase of the
+attack. In other words, an additional, constant salt value does not
+change cost of the attack.
 
 Changing a zone's salt value requires the construction of a complete
 new NSEC3 chain.  This is true both when resigning the entire zone at
-once, or incrementally signing it in the background where the new salt
-is only activated once every name in the chain has been completed.
-
-Most users of NSEC3 publish static salt values that never change.
-This provides no added security benefit (because the complete fully
-qualified domain name is already unique).  If no rotation is planned,
-operators are encouraged to forgo the salt entirely by using a
-zero-length salt value instead (represented as a "-" in the 
-presentation format).
+once, or when incrementally signing it in the background where the new
+salt is only activated once every name in the chain has been
+completed. As a result, re-salting a is very complex operation, with
+significant CPU time, memory, and bandwidth consumption. This makes
+very frequent re-salting unpractical, and renders the additional salt
+field functionally useless.
 
 # Recommendations for deploying and validating NSEC3 records
 
@@ -259,7 +270,7 @@ the NSEC3 record to ensure the iteration count was not altered since
 record publication (see {{RFC5155}} section 10.3).
 
 Validating resolvers returning an insecure or SERVFAIL answer because
-of unsupported NSEC parameter values SHOULD return an Extended DNS
+of unsupported NSEC3 parameter values SHOULD return an Extended DNS
 Error (EDE) {RFC8914} EDNS0 option of value (RFC EDITOR: TBD).
 
 ## Recommendation for Primary / Secondary relationships
