@@ -10,7 +10,7 @@ Expires: 13 August 2022                                  Bloomberg, L.P.
 
 
                  Guidance for NSEC3 parameter settings
-                   draft-ietf-dnsop-nsec3-guidance-02
+                   draft-ietf-dnsop-nsec3-guidance-03
 
 Abstract
 
