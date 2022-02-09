@@ -187,7 +187,7 @@ against multiple target zones. An attacker is always required to
 compute a complete dictionary per zone, which is expensive in both
 storage and CPU time.
 
-To understand role of the additional NSEC3 salt field, we have to
+To understand the role of the additional NSEC3 salt field, we have to
 consider how a typical zone walking attack works. Typically the attack
 has two phases - online and offline. In the online phase, an attacker
 "walks the zone" by enumerating (almost) all hashes listed in NSEC3
@@ -196,7 +196,7 @@ cracking phase, the attacker attempts to crack the underlying hash. In
 this phase, the additional salt value raises the cost of the attack
 only if the salt value changes during the online phase of the
 attack. In other words, an additional, constant salt value does not
-change cost of the attack.
+change the cost of the attack.
 
 Changing a zone's salt value requires the construction of a complete
 new NSEC3 chain.  This is true both when resigning the entire zone at
@@ -204,7 +204,7 @@ once, or when incrementally signing it in the background where the new
 salt is only activated once every name in the chain has been
 completed. As a result, re-salting a is very complex operation, with
 significant CPU time, memory, and bandwidth consumption. This makes
-very frequent re-salting unpractical, and renders the additional salt
+very frequent re-salting impractical, and renders the additional salt
 field functionally useless.
 
 # Recommendations for deploying and validating NSEC3 records
