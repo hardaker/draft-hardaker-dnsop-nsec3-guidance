@@ -78,7 +78,7 @@ non-existence that consists of signed DNS records establishing the
 non-existence of a given name or associated Resource Record Type
 (RRTYPE) in a DNSSEC {{RFC4035}} signed zone.  In the case of NSEC3,
 however, the names of valid nodes in the zone are obfuscated through
-(possibly multiple iterations of) hashing via SHA-1. (currently only
+(possibly multiple iterations of) hashing (currently only
 SHA-1 is in use within the Internet).
 
 NSEC3 also provides "opt-out support", allowing for blocks of unsigned
