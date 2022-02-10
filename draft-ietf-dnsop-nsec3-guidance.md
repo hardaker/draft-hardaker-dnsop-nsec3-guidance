@@ -341,7 +341,7 @@ appears to be interoperable without significant problems.
 
 # Computational burdens of processing NSEC3 iterations {#computationalburdens}
 
-The Queries Per Second (QPS) of validating resolvers will decrease due
+The Queries Per Second (QPS) of authoritative servers will decrease due
 to computational overhead when processing DNS requests for zones
 containing higher NSEC3 iteration counts.  The table ({{qps}}) below
 shows the drop in QPS for various iteration counts.
