@@ -158,10 +158,7 @@ Although Section 10.3 of {{RFC5155}} specifies upper bounds for the
 number of hash iterations to use, there is no published guidance for
 zone owners about good values to select.  Because hashing provides
 only moderate protection, as shown recently in academic studies of
-NSEC3 protected zones {{GPUNSEC3}}{{ZONEENUM}}, this document
-recommends that zone owners SHOULD use an iteration value of 0 (zero),
-indicating that only the initial hash value should be placed into a
-DNS zone's NSEC3 records.
+NSEC3 protected zones {{GPUNSEC3}}{{ZONEENUM}}.
 
 ## Salt
 
