@@ -105,7 +105,7 @@ parameters.
    in BCP 14 {{RFC2119}} {{?RFC8174}} when, and only when, they appear
    in all capitals, as shown here.
 
-# Recommendation for zone publishers
+# NSEC3 Parameter Value Considerations
 
 The following sections describe recommendations for setting parameters
 for NSEC3 and NSEC3PARAM.
