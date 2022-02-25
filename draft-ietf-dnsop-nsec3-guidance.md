@@ -97,7 +97,7 @@ that impact both zone owners and validating resolvers.  This document
 provides some best-practice recommendations for setting the NSEC3
 parameters.
 
-## Requirements notation
+## Requirements Notation
 
    The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT",
    "SHOULD", "SHOULD NOT", "RECOMMENDED", "NOT RECOMMENDED", "MAY",
@@ -204,12 +204,12 @@ significant CPU time, memory, and bandwidth consumption. This makes
 very frequent re-salting impractical, and renders the additional salt
 field functionally useless.
 
-# Recommendations for deploying and validating NSEC3 records
+# Recommendations for Deploying and Validating NSEC3 Records
 
 The following subsections describe recommendations for the different
 operating realms within the DNS.
 
-## Best-practice for zone publishers
+## Best-practice for Zone Publishers
 
 First, if the operational or security features of NSEC3 are not
 needed, then NSEC SHOULD be used in preference to NSEC3. NSEC3
@@ -245,7 +245,7 @@ Since the NSEC3PARAM RR is not used by validating resolvers (see
 without the need to wait for RRsets to expire from caches.  A complete
 new NSEC3 chain needs to be constructed and the zone resigned.
 
-## Recommendation for validating resolvers
+## Recommendation for Validating Resolvers
 
 Because there has been a large growth of open (public) DNSSEC
 validating resolvers that are subject to compute resource constraints
@@ -281,7 +281,7 @@ still validate the signature over the NSEC3 record to ensure the
 iteration count was not altered since record publication (see
 {{RFC5155}} section 10.3).
 
-## Recommendation for Primary / Secondary relationships
+## Recommendation for Primary / Secondary Relationships
 
 Primary and secondary authoritative servers for a zone that are not
 being run by the same operational staff and/or using the same software
@@ -373,7 +373,7 @@ to the draft:
 + Petr Špaček
 + Paul Vixie
 
-# Github Version of this document
+# Github Version of This Document
 
 While this document is under development, it can be viewed, tracked,
 issued, pushed with PRs, ... here:
