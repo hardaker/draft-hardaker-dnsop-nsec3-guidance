@@ -274,7 +274,7 @@ the iteration count was not altered since record publication (see
 Validating resolvers MAY also return a SERVFAIL response when
 processing NSEC3 records with iterations larger than 0.  Validating
 resolvers MAY choose to ignore authoritative server responses with
-iteration counts greater than 0, which will likely resulting in
+iteration counts greater than 0, which will likely result in
 returning a SERVFAIL to the client when no processed responses are
 received from authoritative servers. 
 
