@@ -213,9 +213,9 @@ Internet-Draft                    title                       March 2022
 
    Although Section 10.3 of [RFC5155] specifies upper bounds for the
    number of hash iterations to use, there is no published guidance for
-   zone owners about good values to select.  Because hashing provides
-   only moderate protection, as shown recently in academic studies of
-   NSEC3 protected zones [GPUNSEC3][ZONEENUM].
+   zone owners about good values to select.  Recent academic studies
+   have shown that NSEC3 hashing provides only moderate protection
+   [GPUNSEC3][ZONEENUM].
 
 
 
@@ -228,9 +228,9 @@ Internet-Draft                    title                       March 2022
 
 2.4.  Salt
 
-   Operators are encouraged to forget the salt entirely by using a zero-
-   length salt value instead (represented as a "-" in the presentation
-   format).
+   Operators are encouraged to forgo using a salt entirely by using a
+   zero-length salt value instead (represented as a "-" in the
+   presentation format).
 
    NSEC3 records provide an an additional salt value, which can be
    combined with an FQDN to influence the resulting hash, but properties
@@ -367,10 +367,10 @@ Internet-Draft                    title                       March 2022
    unsupported iterations count (and do not validate the signature) MUST
    NOT return this EDE option.
 
-   Note that this specification significantly decreases the requirements
-   originally specified in Section 10.3 of [RFC5155].  See the Security
-   Considerations for arguments on how to handle responses with non-zero
-   iteration count.
+   Note that this specification updates [RFC5155] by significantly
+   decreasing the requirements originally specified in Section 10.3 of
+   [RFC5155].  See the Security Considerations for arguments on how to
+   handle responses with non-zero iteration count.
 
 3.3.  Recommendation for Primary / Secondary Relationships
 
@@ -403,12 +403,12 @@ Internet-Draft                    title                       March 2022
    where it returns SERVFAIL must be considered carefully.
    Specifically, when a validating resolver treats a zone as insecure
    above a particular value (say 100) and returns SERVFAIL above a
-   higher point (say 500), it leaves the zone subject to man-it-the-
-   middle attacks as if it was unsigned between these values.  Thus,
+   higher point (say 500), it leaves the zone subject to attacker-in-
+   the-middle attacks as if it was unsigned between these values.  Thus,
    validating resolver operators and software implementers SHOULD set
-   the point above which a zone is treated for certain values of NSEC3
-   iterations counts to the same as the point where a validating
-   resolver begins returning SERVFAIL.
+   the point above which a zone is treated as insecure for certain
+   values of NSEC3 iterations counts to the same as the point where a
+   validating resolver begins returning SERVFAIL.
 
 5.  Operational Considerations
 
