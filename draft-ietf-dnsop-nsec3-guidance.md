@@ -263,23 +263,30 @@ containing large iteration count values.  See
 {{deploymentmeasurements}} for measurements taken near the time of
 publication and potential starting points.
 
-Validating resolvers MAY return an insecure response when processing
-NSEC3 records with iterations larger than 0. Validating resolvers MAY
-also return SERVFAIL when processing NSEC3 records with iterations
-larger than 0. Validating resolvers MAY choose to not respond to NSEC3
-records with iterations larger than 0.  This significantly decreases
-the requirements originally specified in Section 10.3 of
-[RFC5155]. See the Security Considerations for arguments on how to
-handle responses with non-zero iteration count.
+Validating resolvers MAY return an insecure response to their clients
+when processing NSEC3 records with iterations larger
+than 0. Validating resolvers MAY also return a SERVFAIL response when
+processing NSEC3 records with iterations larger than 0.  Validating
+resolvers MAY choose to ignore responses with iteration counts greater
+than 0.
 
-Validating resolvers returning an insecure or SERVFAIL answer because
-of unsupported NSEC3 parameter values SHOULD return an Extended DNS
-Error (EDE) {RFC8914} EDNS0 option of value (RFC EDITOR: TBD).
+Note that this specification significantly decreases the requirements
+originally specified in Section 10.3 of [RFC5155]. See the Security
+Considerations for arguments on how to handle responses with non-zero
+iteration count.
 
-Note that a validating resolver returning an insecure response MUST
-still validate the signature over the NSEC3 record to ensure the
-iteration count was not altered since record publication (see
+Note also that a validating resolver returning an insecure response
+SHOULD still validate the signature over the NSEC3 record to ensure
+the iteration count was not altered since record publication (see
 {{RFC5155}} section 10.3).
+
+Validating resolvers returning an insecure or SERVFAIL answer to their
+client after receiving and validating an unsupported NSEC3 parameter
+from the authoritative server(s) values SHOULD return an Extended DNS
+Error (EDE) {RFC8914} EDNS0 option of value (RFC EDITOR: TBD).
+Validating resolvers that choose to ignore a response with an
+unsupported iterations count (and do not validate the signature) MUST
+NOT return this EDE option.
 
 ## Recommendation for Primary / Secondary Relationships
 
