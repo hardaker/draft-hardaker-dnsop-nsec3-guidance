@@ -5,12 +5,12 @@
 Network Working Group                                        W. Hardaker
 Internet-Draft                                                   USC/ISI
 Intended status: Best Current Practice                       V. Dukhovni
-Expires: 7 September 2022                                Bloomberg, L.P.
-                                                            6 March 2022
+Expires: 8 September 2022                                Bloomberg, L.P.
+                                                            7 March 2022
 
 
                  Guidance for NSEC3 parameter settings
-                   draft-ietf-dnsop-nsec3-guidance-05
+                   draft-ietf-dnsop-nsec3-guidance-06
 
 Abstract
 
@@ -36,7 +36,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 7 September 2022.
+   This Internet-Draft will expire on 8 September 2022.
 
 Copyright Notice
 
@@ -53,7 +53,7 @@ Copyright Notice
 
 
 
-Hardaker & Dukhovni     Expires 7 September 2022                [Page 1]
+Hardaker & Dukhovni     Expires 8 September 2022                [Page 1]
 
 Internet-Draft                    title                       March 2022
 
@@ -109,7 +109,7 @@ Table of Contents
 
 
 
-Hardaker & Dukhovni     Expires 7 September 2022                [Page 2]
+Hardaker & Dukhovni     Expires 8 September 2022                [Page 2]
 
 Internet-Draft                    title                       March 2022
 
@@ -165,7 +165,7 @@ Internet-Draft                    title                       March 2022
 
 
 
-Hardaker & Dukhovni     Expires 7 September 2022                [Page 3]
+Hardaker & Dukhovni     Expires 8 September 2022                [Page 3]
 
 Internet-Draft                    title                       March 2022
 
@@ -221,7 +221,7 @@ Internet-Draft                    title                       March 2022
 
 
 
-Hardaker & Dukhovni     Expires 7 September 2022                [Page 4]
+Hardaker & Dukhovni     Expires 8 September 2022                [Page 4]
 
 Internet-Draft                    title                       March 2022
 
@@ -277,7 +277,7 @@ Internet-Draft                    title                       March 2022
 
 
 
-Hardaker & Dukhovni     Expires 7 September 2022                [Page 5]
+Hardaker & Dukhovni     Expires 8 September 2022                [Page 5]
 
 Internet-Draft                    title                       March 2022
 
@@ -333,7 +333,7 @@ Internet-Draft                    title                       March 2022
 
 
 
-Hardaker & Dukhovni     Expires 7 September 2022                [Page 6]
+Hardaker & Dukhovni     Expires 8 September 2022                [Page 6]
 
 Internet-Draft                    title                       March 2022
 
@@ -346,21 +346,18 @@ Internet-Draft                    title                       March 2022
    potential starting points.
 
    Validating resolvers MAY return an insecure response to their clients
-   when processing NSEC3 records with iterations larger than 0.
+   when processing NSEC3 records with iterations larger than 0.  Note
+   also that a validating resolver returning an insecure response MUST
+   still validate the signature over the NSEC3 record to ensure the
+   iteration count was not altered since record publication (see
+   [RFC5155] section 10.3).
+
    Validating resolvers MAY also return a SERVFAIL response when
    processing NSEC3 records with iterations larger than 0.  Validating
-   resolvers MAY choose to ignore responses with iteration counts
-   greater than 0.
-
-   Note that this specification significantly decreases the requirements
-   originally specified in Section 10.3 of [RFC5155].  See the Security
-   Considerations for arguments on how to handle responses with non-zero
-   iteration count.
-
-   Note also that a validating resolver returning an insecure response
-   SHOULD still validate the signature over the NSEC3 record to ensure
-   the iteration count was not altered since record publication (see
-   [RFC5155] section 10.3).
+   resolvers MAY choose to ignore authoritative server responses with
+   iteration counts greater than 0, which will likely resulting in
+   returning a SERVFAIL to the client when no processed responses are
+   received from authoritative servers.
 
    Validating resolvers returning an insecure or SERVFAIL answer to
    their client after receiving and validating an unsupported NSEC3
@@ -369,6 +366,11 @@ Internet-Draft                    title                       March 2022
    TBD).  Validating resolvers that choose to ignore a response with an
    unsupported iterations count (and do not validate the signature) MUST
    NOT return this EDE option.
+
+   Note that this specification significantly decreases the requirements
+   originally specified in Section 10.3 of [RFC5155].  See the Security
+   Considerations for arguments on how to handle responses with non-zero
+   iteration count.
 
 3.3.  Recommendation for Primary / Secondary Relationships
 
@@ -387,9 +389,7 @@ Internet-Draft                    title                       March 2022
 
 
 
-
-
-Hardaker & Dukhovni     Expires 7 September 2022                [Page 7]
+Hardaker & Dukhovni     Expires 8 September 2022                [Page 7]
 
 Internet-Draft                    title                       March 2022
 
@@ -445,7 +445,7 @@ Internet-Draft                    title                       March 2022
 
 
 
-Hardaker & Dukhovni     Expires 7 September 2022                [Page 8]
+Hardaker & Dukhovni     Expires 8 September 2022                [Page 8]
 
 Internet-Draft                    title                       March 2022
 
@@ -501,7 +501,7 @@ Appendix B.  Computational burdens of processing NSEC3 iterations
 
 
 
-Hardaker & Dukhovni     Expires 7 September 2022                [Page 9]
+Hardaker & Dukhovni     Expires 8 September 2022                [Page 9]
 
 Internet-Draft                    title                       March 2022
 
@@ -557,7 +557,7 @@ E.2.  PowerDNS
 
 
 
-Hardaker & Dukhovni     Expires 7 September 2022               [Page 10]
+Hardaker & Dukhovni     Expires 8 September 2022               [Page 10]
 
 Internet-Draft                    title                       March 2022
 
@@ -613,4 +613,4 @@ Authors' Addresses
 
 
 
-Hardaker & Dukhovni     Expires 7 September 2022               [Page 11]
+Hardaker & Dukhovni     Expires 8 September 2022               [Page 11]
