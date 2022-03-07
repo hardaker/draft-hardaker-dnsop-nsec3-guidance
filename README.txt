@@ -5,12 +5,12 @@
 Network Working Group                                        W. Hardaker
 Internet-Draft                                                   USC/ISI
 Intended status: Best Current Practice                       V. Dukhovni
-Expires: 29 August 2022                                  Bloomberg, L.P.
-                                                        25 February 2022
+Expires: 7 September 2022                                Bloomberg, L.P.
+                                                            6 March 2022
 
 
                  Guidance for NSEC3 parameter settings
-                   draft-ietf-dnsop-nsec3-guidance-04
+                   draft-ietf-dnsop-nsec3-guidance-05
 
 Abstract
 
@@ -36,7 +36,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 29 August 2022.
+   This Internet-Draft will expire on 7 September 2022.
 
 Copyright Notice
 
@@ -53,9 +53,9 @@ Copyright Notice
 
 
 
-Hardaker & Dukhovni      Expires 29 August 2022                 [Page 1]
+Hardaker & Dukhovni     Expires 7 September 2022                [Page 1]
 
-Internet-Draft                    title                    February 2022
+Internet-Draft                    title                       March 2022
 
 
    This document is subject to BCP 78 and the IETF Trust's Legal
@@ -80,7 +80,7 @@ Table of Contents
      3.1.  Best-practice for Zone Publishers . . . . . . . . . . . .   6
      3.2.  Recommendation for Validating Resolvers . . . . . . . . .   6
      3.3.  Recommendation for Primary / Secondary Relationships  . .   7
-   4.  Security Considerations . . . . . . . . . . . . . . . . . . .   7
+   4.  Security Considerations . . . . . . . . . . . . . . . . . . .   8
    5.  Operational Considerations  . . . . . . . . . . . . . . . . .   8
    6.  IANA Considerations . . . . . . . . . . . . . . . . . . . . .   8
    7.  References  . . . . . . . . . . . . . . . . . . . . . . . . .   8
@@ -89,13 +89,13 @@ Table of Contents
    Appendix A.  Deployment measurements at time of publication . . .   9
    Appendix B.  Computational burdens of processing NSEC3
            iterations  . . . . . . . . . . . . . . . . . . . . . . .   9
-   Appendix C.  Acknowledgments  . . . . . . . . . . . . . . . . . .   9
+   Appendix C.  Acknowledgments  . . . . . . . . . . . . . . . . . .  10
    Appendix D.  Github Version of This Document  . . . . . . . . . .  10
    Appendix E.  Implementation Notes . . . . . . . . . . . . . . . .  10
      E.1.  OpenDNSSEC  . . . . . . . . . . . . . . . . . . . . . . .  10
      E.2.  PowerDNS  . . . . . . . . . . . . . . . . . . . . . . . .  10
-     E.3.  Knot DNS and Knot Resolver  . . . . . . . . . . . . . . .  10
-     E.4.  Google Public DNS Resolver  . . . . . . . . . . . . . . .  10
+     E.3.  Knot DNS and Knot Resolver  . . . . . . . . . . . . . . .  11
+     E.4.  Google Public DNS Resolver  . . . . . . . . . . . . . . .  11
      E.5.  Google Cloud DNS  . . . . . . . . . . . . . . . . . . . .  11
    Authors' Addresses  . . . . . . . . . . . . . . . . . . . . . . .  11
 
@@ -109,9 +109,9 @@ Table of Contents
 
 
 
-Hardaker & Dukhovni      Expires 29 August 2022                 [Page 2]
+Hardaker & Dukhovni     Expires 7 September 2022                [Page 2]
 
-Internet-Draft                    title                    February 2022
+Internet-Draft                    title                       March 2022
 
 
 1.  Introduction
@@ -165,9 +165,9 @@ Internet-Draft                    title                    February 2022
 
 
 
-Hardaker & Dukhovni      Expires 29 August 2022                 [Page 3]
+Hardaker & Dukhovni     Expires 7 September 2022                [Page 3]
 
-Internet-Draft                    title                    February 2022
+Internet-Draft                    title                       March 2022
 
 
 2.2.  Flags
@@ -221,9 +221,9 @@ Internet-Draft                    title                    February 2022
 
 
 
-Hardaker & Dukhovni      Expires 29 August 2022                 [Page 4]
+Hardaker & Dukhovni     Expires 7 September 2022                [Page 4]
 
-Internet-Draft                    title                    February 2022
+Internet-Draft                    title                       March 2022
 
 
 2.4.  Salt
@@ -277,9 +277,9 @@ Internet-Draft                    title                    February 2022
 
 
 
-Hardaker & Dukhovni      Expires 29 August 2022                 [Page 5]
+Hardaker & Dukhovni     Expires 7 September 2022                [Page 5]
 
-Internet-Draft                    title                    February 2022
+Internet-Draft                    title                       March 2022
 
 
 3.1.  Best-practice for Zone Publishers
@@ -333,9 +333,9 @@ Internet-Draft                    title                    February 2022
 
 
 
-Hardaker & Dukhovni      Expires 29 August 2022                 [Page 6]
+Hardaker & Dukhovni     Expires 7 September 2022                [Page 6]
 
-Internet-Draft                    title                    February 2022
+Internet-Draft                    title                       March 2022
 
 
    subject to attack, validating resolver operators and validating
@@ -345,23 +345,30 @@ Internet-Draft                    title                    February 2022
    Appendix A for measurements taken near the time of publication and
    potential starting points.
 
-   Validating resolvers MAY return an insecure response when processing
-   NSEC3 records with iterations larger than 0.  Validating resolvers
-   MAY also return SERVFAIL when processing NSEC3 records with
-   iterations larger than 0.  Validating resolvers MAY choose to not
-   respond to NSEC3 records with iterations larger than 0.  This
-   significantly decreases the requirements originally specified in
-   Section 10.3 of [RFC5155].  See the Security Considerations for
-   arguments on how to handle responses with non-zero iteration count.
+   Validating resolvers MAY return an insecure response to their clients
+   when processing NSEC3 records with iterations larger than 0.
+   Validating resolvers MAY also return a SERVFAIL response when
+   processing NSEC3 records with iterations larger than 0.  Validating
+   resolvers MAY choose to ignore responses with iteration counts
+   greater than 0.
 
-   Validating resolvers returning an insecure or SERVFAIL answer because
-   of unsupported NSEC3 parameter values SHOULD return an Extended DNS
-   Error (EDE) {RFC8914} EDNS0 option of value (RFC EDITOR: TBD).
+   Note that this specification significantly decreases the requirements
+   originally specified in Section 10.3 of [RFC5155].  See the Security
+   Considerations for arguments on how to handle responses with non-zero
+   iteration count.
 
-   Note that a validating resolver returning an insecure response MUST
-   still validate the signature over the NSEC3 record to ensure the
-   iteration count was not altered since record publication (see
+   Note also that a validating resolver returning an insecure response
+   SHOULD still validate the signature over the NSEC3 record to ensure
+   the iteration count was not altered since record publication (see
    [RFC5155] section 10.3).
+
+   Validating resolvers returning an insecure or SERVFAIL answer to
+   their client after receiving and validating an unsupported NSEC3
+   parameter from the authoritative server(s) values SHOULD return an
+   Extended DNS Error (EDE) {RFC8914} EDNS0 option of value (RFC EDITOR:
+   TBD).  Validating resolvers that choose to ignore a response with an
+   unsupported iterations count (and do not validate the signature) MUST
+   NOT return this EDE option.
 
 3.3.  Recommendation for Primary / Secondary Relationships
 
@@ -378,6 +385,15 @@ Internet-Draft                    title                    February 2022
    their secondaries with known non-existent labels to verify the
    secondary servers are responding as expected.
 
+
+
+
+
+Hardaker & Dukhovni     Expires 7 September 2022                [Page 7]
+
+Internet-Draft                    title                       March 2022
+
+
 4.  Security Considerations
 
    This entire document discusses security considerations with various
@@ -386,14 +402,6 @@ Internet-Draft                    title                    February 2022
    The point where a validating resolver returns insecure vs the point
    where it returns SERVFAIL must be considered carefully.
    Specifically, when a validating resolver treats a zone as insecure
-
-
-
-Hardaker & Dukhovni      Expires 29 August 2022                 [Page 7]
-
-Internet-Draft                    title                    February 2022
-
-
    above a particular value (say 100) and returns SERVFAIL above a
    higher point (say 500), it leaves the zone subject to man-it-the-
    middle attacks as if it was unsigned between these values.  Thus,
@@ -433,6 +441,15 @@ Internet-Draft                    title                    February 2022
               Extensions", RFC 4035, DOI 10.17487/RFC4035, March 2005,
               <https://www.rfc-editor.org/info/rfc4035>.
 
+
+
+
+
+Hardaker & Dukhovni     Expires 7 September 2022                [Page 8]
+
+Internet-Draft                    title                       March 2022
+
+
    [RFC4470]  Weiler, S. and J. Ihren, "Minimally Covering NSEC Records
               and DNSSEC On-line Signing", RFC 4470,
               DOI 10.17487/RFC4470, April 2006,
@@ -442,13 +459,6 @@ Internet-Draft                    title                    February 2022
               Security (DNSSEC) Hashed Authenticated Denial of
               Existence", RFC 5155, DOI 10.17487/RFC5155, March 2008,
               <https://www.rfc-editor.org/info/rfc5155>.
-
-
-
-Hardaker & Dukhovni      Expires 29 August 2022                 [Page 8]
-
-Internet-Draft                    title                    February 2022
-
 
 7.2.  Informative References
 
@@ -489,6 +499,13 @@ Appendix B.  Computational burdens of processing NSEC3 iterations
    |        100 | 47 %                        |
    |        150 | 38 %                        |
 
+
+
+Hardaker & Dukhovni     Expires 7 September 2022                [Page 9]
+
+Internet-Draft                    title                       March 2022
+
+
 Appendix C.  Acknowledgments
 
    The authors would like to thank the dns-operations discussion
@@ -498,13 +515,6 @@ Appendix C.  Acknowledgments
    comments to the draft:
 
    *  Vladimir &#268;unat
-
-
-
-Hardaker & Dukhovni      Expires 29 August 2022                 [Page 9]
-
-Internet-Draft                    title                    February 2022
-
 
    *  Tony Finch
 
@@ -543,6 +553,15 @@ E.2.  PowerDNS
    PowerDNS 4.5.2 changed the default value of nsec3-max-iterations to
    150.
 
+
+
+
+
+Hardaker & Dukhovni     Expires 7 September 2022               [Page 10]
+
+Internet-Draft                    title                       March 2022
+
+
 E.3.  Knot DNS and Knot Resolver
 
    Knot DNS 3.0.6 warns when signing with more than 20 NSEC3 iterations.
@@ -552,15 +571,6 @@ E.4.  Google Public DNS Resolver
 
    Google Public DNS treats NSEC3 iterations above 100 as insecure since
    September 2021.
-
-
-
-
-
-Hardaker & Dukhovni      Expires 29 August 2022                [Page 10]
-
-Internet-Draft                    title                    February 2022
-
 
 E.5.  Google Cloud DNS
 
@@ -603,14 +613,4 @@ Authors' Addresses
 
 
 
-
-
-
-
-
-
-
-
-
-
-Hardaker & Dukhovni      Expires 29 August 2022                [Page 11]
+Hardaker & Dukhovni     Expires 7 September 2022               [Page 11]
