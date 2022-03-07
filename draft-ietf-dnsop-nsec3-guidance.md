@@ -156,8 +156,8 @@ additional hash iterations beyond the first.
 
 Although Section 10.3 of {{RFC5155}} specifies upper bounds for the
 number of hash iterations to use, there is no published guidance for
-zone owners about good values to select.  Recent in academic studies
-have shown that NSEC3 hashing provides only provides moderate
+zone owners about good values to select.  Recent academic studies
+have shown that NSEC3 hashing provides only moderate
 protection {{GPUNSEC3}}{{ZONEENUM}}.
 
 ## Salt
