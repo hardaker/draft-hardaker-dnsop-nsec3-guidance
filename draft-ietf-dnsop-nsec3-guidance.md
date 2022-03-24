@@ -275,7 +275,7 @@ Validating resolvers MAY also return a SERVFAIL response when
 processing NSEC3 records with iterations larger than 0.  Validating
 resolvers MAY choose to ignore authoritative server responses with
 iteration counts greater than 0, which will likely result in
-returning a SERVFAIL to the client when no processed responses are
+returning a SERVFAIL to the client when no acceptable responses are
 received from authoritative servers. 
 
 Validating resolvers returning an insecure or SERVFAIL answer to their
