@@ -133,7 +133,7 @@ advantage of DNSSEC's proof-of-non-existence support.
 
 NSEC3 records are created by first hashing the input domain and then
 repeating that hashing algorithm a number of times based on the
-iterations parameter in the NSEC3PARM and NSEC3 records.  The first
+iteration parameter in the NSEC3PARM and NSEC3 records.  The first
 hash is typically sufficient to discourage zone enumeration performed
 by "zone walking" an NSEC or NSEC3 chain.  Only determined parties
 with significant resources are likely to try and uncover hashed
@@ -166,7 +166,7 @@ Operators are encouraged to forgo using a salt entirely by using a
 zero-length salt value instead (represented as a "-" in the
 presentation format).
 
-NSEC3 records provide an an additional salt value, which can be
+NSEC3 records provide an additional salt value, which can be
 combined with an FQDN to influence the resulting hash, but properties
 of this extra salt are complicated.
 
@@ -185,7 +185,7 @@ compute a complete dictionary per zone, which is expensive in both
 storage and CPU time.
 
 To understand the role of the additional NSEC3 salt field, we have to
-consider how a typical zone walking attack works. Typically the attack
+consider how a typical zone walking attack works. Typically, the attack
 has two phases - online and offline. In the online phase, an attacker
 "walks the zone" by enumerating (almost) all hashes listed in NSEC3
 records and storing them for the offline phase. Then, in the offline
@@ -199,7 +199,7 @@ Changing a zone's salt value requires the construction of a complete
 new NSEC3 chain.  This is true both when resigning the entire zone at
 once, or when incrementally signing it in the background where the new
 salt is only activated once every name in the chain has been
-completed. As a result, re-salting a is very complex operation, with
+completed. As a result, re-salting is very complex operation, with
 significant CPU time, memory, and bandwidth consumption. This makes
 very frequent re-salting impractical, and renders the additional salt
 field functionally useless.
@@ -215,7 +215,7 @@ First, if the operational or security features of NSEC3 are not
 needed, then NSEC SHOULD be used in preference to NSEC3. NSEC3
 requires greater computational power (see {{computationalburdens}})
 for both authoritative servers and validating clients.  Specifically,
-there is a non trivial complexity in finding matching NSEC3 records to
+there is a nontrivial complexity in finding matching NSEC3 records to
 randomly generated prefixes within a DNS zone.  NSEC mitigates this
 concern.  If NSEC3 must be used, then an iterations count of 0 MUST be
 used to alleviate computational burdens.  Please note that extra
@@ -283,7 +283,7 @@ client after receiving and validating an unsupported NSEC3 parameter
 from the authoritative server(s) values SHOULD return an Extended DNS
 Error (EDE) {RFC8914} EDNS0 option of value (RFC EDITOR: TBD).
 Validating resolvers that choose to ignore a response with an
-unsupported iterations count (and do not validate the signature) MUST
+unsupported iteration count (and do not validate the signature) MUST
 NOT return this EDE option.
 
 Note that this specification updates [RFC5155] by significantly
