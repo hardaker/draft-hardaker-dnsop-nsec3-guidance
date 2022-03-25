@@ -199,7 +199,7 @@ Changing a zone's salt value requires the construction of a complete
 new NSEC3 chain.  This is true both when resigning the entire zone at
 once, or when incrementally signing it in the background where the new
 salt is only activated once every name in the chain has been
-completed. As a result, re-salting is very complex operation, with
+completed. As a result, re-salting is a very complex operation, with
 significant CPU time, memory, and bandwidth consumption. This makes
 very frequent re-salting impractical, and renders the additional salt
 field functionally useless.
