@@ -279,7 +279,7 @@ received from authoritative servers.
 
 Validating resolvers returning an insecure or SERVFAIL answer to their
 client after receiving and validating an unsupported NSEC3 parameter
-from the authoritative server(s) values SHOULD return an Extended DNS
+from the authoritative server(s) SHOULD return an Extended DNS
 Error (EDE) {RFC8914} EDNS0 option of value (RFC EDITOR: TBD).
 Validating resolvers that choose to ignore a response with an
 unsupported iteration count (and do not validate the signature) MUST
