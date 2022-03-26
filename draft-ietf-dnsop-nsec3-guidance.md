@@ -345,7 +345,7 @@ for treating a zone as insecure is interoperable without significant
 problems, but at the same time still enables CPU-exhausting DoS
 attacks.
 
-As the time of publication, returning SERVFAIL beyond 500 iterations
+At the time of publication, returning SERVFAIL beyond 500 iterations
 appears to be interoperable without significant problems.
 
 # Computational burdens of processing NSEC3 iterations {#computationalburdens}
