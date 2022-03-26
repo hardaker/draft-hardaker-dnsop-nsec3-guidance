@@ -218,10 +218,9 @@ for both authoritative servers and validating clients.  Specifically,
 there is a nontrivial complexity in finding matching NSEC3 records to
 randomly generated prefixes within a DNS zone.  NSEC mitigates this
 concern.  If NSEC3 must be used, then an iterations count of 0 MUST be
-used to alleviate computational burdens.  Please note that extra
-iteration counts other than 0 increase impact of resource
-CPU-exhausting DoS attacks, and also increase risk of interoperability
-problems.
+used to alleviate computational burdens.  Note that extra iteration
+counts other than 0 increase the impact of CPU-exhausting DoS attacks,
+and also increase the risk of interoperability problems.
 
 Note that deploying NSEC with minimally covering NSEC records
 [RFC4470] also incurs a cost, and zone owners should measure the
