@@ -218,10 +218,9 @@ for both authoritative servers and validating clients.  Specifically,
 there is a nontrivial complexity in finding matching NSEC3 records to
 randomly generated prefixes within a DNS zone.  NSEC mitigates this
 concern.  If NSEC3 must be used, then an iterations count of 0 MUST be
-used to alleviate computational burdens.  Please note that extra
-iteration counts other than 0 increase impact of resource
-CPU-exhausting DoS attacks, and also increase risk of interoperability
-problems.
+used to alleviate computational burdens.  Note that extra iteration
+counts other than 0 increase the impact of CPU-exhausting DoS attacks,
+and also increase the risk of interoperability problems.
 
 Note that deploying NSEC with minimally covering NSEC records
 [RFC4470] also incurs a cost, and zone owners should measure the
@@ -280,7 +279,7 @@ received from authoritative servers.
 
 Validating resolvers returning an insecure or SERVFAIL answer to their
 client after receiving and validating an unsupported NSEC3 parameter
-from the authoritative server(s) values SHOULD return an Extended DNS
+from the authoritative server(s) SHOULD return an Extended DNS
 Error (EDE) {RFC8914} EDNS0 option of value (RFC EDITOR: TBD).
 Validating resolvers that choose to ignore a response with an
 unsupported iteration count (and do not validate the signature) MUST
@@ -346,7 +345,7 @@ for treating a zone as insecure is interoperable without significant
 problems, but at the same time still enables CPU-exhausting DoS
 attacks.
 
-As the time of publication, returning SERVFAIL beyond 500 iterations
+At the time of publication, returning SERVFAIL beyond 500 iterations
 appears to be interoperable without significant problems.
 
 # Computational burdens of processing NSEC3 iterations {#computationalburdens}
