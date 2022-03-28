@@ -5,8 +5,8 @@
 Network Working Group                                        W. Hardaker
 Internet-Draft                                                   USC/ISI
 Intended status: Best Current Practice                       V. Dukhovni
-Expires: 8 September 2022                                Bloomberg, L.P.
-                                                            7 March 2022
+Expires: 29 September 2022                               Bloomberg, L.P.
+                                                           28 March 2022
 
 
                  Guidance for NSEC3 parameter settings
@@ -36,7 +36,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 8 September 2022.
+   This Internet-Draft will expire on 29 September 2022.
 
 Copyright Notice
 
@@ -53,7 +53,7 @@ Copyright Notice
 
 
 
-Hardaker & Dukhovni     Expires 8 September 2022                [Page 1]
+Hardaker & Dukhovni     Expires 29 September 2022               [Page 1]
 
 Internet-Draft                    title                       March 2022
 
@@ -109,7 +109,7 @@ Table of Contents
 
 
 
-Hardaker & Dukhovni     Expires 8 September 2022                [Page 2]
+Hardaker & Dukhovni     Expires 29 September 2022               [Page 2]
 
 Internet-Draft                    title                       March 2022
 
@@ -165,7 +165,7 @@ Internet-Draft                    title                       March 2022
 
 
 
-Hardaker & Dukhovni     Expires 8 September 2022                [Page 3]
+Hardaker & Dukhovni     Expires 29 September 2022               [Page 3]
 
 Internet-Draft                    title                       March 2022
 
@@ -190,7 +190,7 @@ Internet-Draft                    title                       March 2022
 
    NSEC3 records are created by first hashing the input domain and then
    repeating that hashing algorithm a number of times based on the
-   iterations parameter in the NSEC3PARM and NSEC3 records.  The first
+   iteration parameter in the NSEC3PARM and NSEC3 records.  The first
    hash is typically sufficient to discourage zone enumeration performed
    by "zone walking" an NSEC or NSEC3 chain.  Only determined parties
    with significant resources are likely to try and uncover hashed
@@ -221,7 +221,7 @@ Internet-Draft                    title                       March 2022
 
 
 
-Hardaker & Dukhovni     Expires 8 September 2022                [Page 4]
+Hardaker & Dukhovni     Expires 29 September 2022               [Page 4]
 
 Internet-Draft                    title                       March 2022
 
@@ -232,9 +232,9 @@ Internet-Draft                    title                       March 2022
    zero-length salt value instead (represented as a "-" in the
    presentation format).
 
-   NSEC3 records provide an an additional salt value, which can be
-   combined with an FQDN to influence the resulting hash, but properties
-   of this extra salt are complicated.
+   NSEC3 records provide an additional salt value, which can be combined
+   with an FQDN to influence the resulting hash, but properties of this
+   extra salt are complicated.
 
    In cryptography, salts generally add a layer of protection against
    offline, stored dictionary attacks by combining the value to be
@@ -251,7 +251,7 @@ Internet-Draft                    title                       March 2022
    storage and CPU time.
 
    To understand the role of the additional NSEC3 salt field, we have to
-   consider how a typical zone walking attack works.  Typically the
+   consider how a typical zone walking attack works.  Typically, the
    attack has two phases - online and offline.  In the online phase, an
    attacker "walks the zone" by enumerating (almost) all hashes listed
    in NSEC3 records and storing them for the offline phase.  Then, in
@@ -265,7 +265,7 @@ Internet-Draft                    title                       March 2022
    new NSEC3 chain.  This is true both when resigning the entire zone at
    once, or when incrementally signing it in the background where the
    new salt is only activated once every name in the chain has been
-   completed.  As a result, re-salting a is very complex operation, with
+   completed.  As a result, re-salting is a very complex operation, with
    significant CPU time, memory, and bandwidth consumption.  This makes
    very frequent re-salting impractical, and renders the additional salt
    field functionally useless.
@@ -277,7 +277,7 @@ Internet-Draft                    title                       March 2022
 
 
 
-Hardaker & Dukhovni     Expires 8 September 2022                [Page 5]
+Hardaker & Dukhovni     Expires 29 September 2022               [Page 5]
 
 Internet-Draft                    title                       March 2022
 
@@ -288,13 +288,12 @@ Internet-Draft                    title                       March 2022
    needed, then NSEC SHOULD be used in preference to NSEC3.  NSEC3
    requires greater computational power (see Appendix B) for both
    authoritative servers and validating clients.  Specifically, there is
-   a non trivial complexity in finding matching NSEC3 records to
-   randomly generated prefixes within a DNS zone.  NSEC mitigates this
-   concern.  If NSEC3 must be used, then an iterations count of 0 MUST
-   be used to alleviate computational burdens.  Please note that extra
-   iteration counts other than 0 increase impact of resource CPU-
-   exhausting DoS attacks, and also increase risk of interoperability
-   problems.
+   a nontrivial complexity in finding matching NSEC3 records to randomly
+   generated prefixes within a DNS zone.  NSEC mitigates this concern.
+   If NSEC3 must be used, then an iterations count of 0 MUST be used to
+   alleviate computational burdens.  Note that extra iteration counts
+   other than 0 increase the impact of CPU-exhausting DoS attacks, and
+   also increase the risk of interoperability problems.
 
    Note that deploying NSEC with minimally covering NSEC records
    [RFC4470] also incurs a cost, and zone owners should measure the
@@ -330,15 +329,15 @@ Internet-Draft                    title                       March 2022
    encouraged to continue evaluating NSEC3 iteration count deployments
    and lower their default acceptable limits over time.  Similarly,
    because treating a high iterations count as insecure leaves zones
+   subject to attack, validating resolver operators and validating
 
 
 
-Hardaker & Dukhovni     Expires 8 September 2022                [Page 6]
+Hardaker & Dukhovni     Expires 29 September 2022               [Page 6]
 
 Internet-Draft                    title                       March 2022
 
 
-   subject to attack, validating resolver operators and validating
    resolver software implementers are further encouraged to lower their
    default and acceptable limit for returning SERVFAIL when processing
    NSEC3 parameters containing large iteration count values.  See
@@ -355,16 +354,16 @@ Internet-Draft                    title                       March 2022
    Validating resolvers MAY also return a SERVFAIL response when
    processing NSEC3 records with iterations larger than 0.  Validating
    resolvers MAY choose to ignore authoritative server responses with
-   iteration counts greater than 0, which will likely resulting in
-   returning a SERVFAIL to the client when no processed responses are
+   iteration counts greater than 0, which will likely result in
+   returning a SERVFAIL to the client when no acceptable responses are
    received from authoritative servers.
 
    Validating resolvers returning an insecure or SERVFAIL answer to
    their client after receiving and validating an unsupported NSEC3
-   parameter from the authoritative server(s) values SHOULD return an
-   Extended DNS Error (EDE) {RFC8914} EDNS0 option of value (RFC EDITOR:
-   TBD).  Validating resolvers that choose to ignore a response with an
-   unsupported iterations count (and do not validate the signature) MUST
+   parameter from the authoritative server(s) SHOULD return an Extended
+   DNS Error (EDE) {RFC8914} EDNS0 option of value (RFC EDITOR: TBD).
+   Validating resolvers that choose to ignore a response with an
+   unsupported iteration count (and do not validate the signature) MUST
    NOT return this EDE option.
 
    Note that this specification updates [RFC5155] by significantly
@@ -389,7 +388,8 @@ Internet-Draft                    title                       March 2022
 
 
 
-Hardaker & Dukhovni     Expires 8 September 2022                [Page 7]
+
+Hardaker & Dukhovni     Expires 29 September 2022               [Page 7]
 
 Internet-Draft                    title                       March 2022
 
@@ -445,7 +445,7 @@ Internet-Draft                    title                       March 2022
 
 
 
-Hardaker & Dukhovni     Expires 8 September 2022                [Page 8]
+Hardaker & Dukhovni     Expires 29 September 2022               [Page 8]
 
 Internet-Draft                    title                       March 2022
 
@@ -480,7 +480,7 @@ Appendix A.  Deployment measurements at time of publication
    problems, but at the same time still enables CPU-exhausting DoS
    attacks.
 
-   As the time of publication, returning SERVFAIL beyond 500 iterations
+   At the time of publication, returning SERVFAIL beyond 500 iterations
    appears to be interoperable without significant problems.
 
 Appendix B.  Computational burdens of processing NSEC3 iterations
@@ -501,7 +501,7 @@ Appendix B.  Computational burdens of processing NSEC3 iterations
 
 
 
-Hardaker & Dukhovni     Expires 8 September 2022                [Page 9]
+Hardaker & Dukhovni     Expires 29 September 2022               [Page 9]
 
 Internet-Draft                    title                       March 2022
 
@@ -530,6 +530,8 @@ Appendix C.  Acknowledgments
 
    *  Paul Vixie
 
+   *  Tim Wicinski
+
 Appendix D.  Github Version of This Document
 
    While this document is under development, it can be viewed, tracked,
@@ -555,9 +557,7 @@ E.2.  PowerDNS
 
 
 
-
-
-Hardaker & Dukhovni     Expires 8 September 2022               [Page 10]
+Hardaker & Dukhovni     Expires 29 September 2022              [Page 10]
 
 Internet-Draft                    title                       March 2022
 
@@ -613,4 +613,4 @@ Authors' Addresses
 
 
 
-Hardaker & Dukhovni     Expires 8 September 2022               [Page 11]
+Hardaker & Dukhovni     Expires 29 September 2022              [Page 11]
