@@ -91,8 +91,8 @@ by NSEC3 in order to reduce memory and CPU overheads.
 
 NSEC3 records have a number of tunable parameters that are specified
 via an NSEC3PARAM record at the zone apex.  These parameters are the
-Hash Algorithm, processing Flags, the number of hash Iterations and
-the Salt.  Each of these has security and operational considerations
+hash algorithm, processing flags, the number of hash iterations and
+the salt.  Each of these has security and operational considerations
 that impact both zone owners and validating resolvers.  This document
 provides some best-practice recommendations for setting the NSEC3
 parameters.
@@ -126,7 +126,7 @@ when new delegations are inserted into a zone.  This is typically only
 necessary for extremely large registration points providing zone
 updates faster than real-time signing allows or when using
 memory-constrained hardware.  Smaller zones, or large but relatively
-static zones, are encouraged to use a Flags value of 0 (zero) and take
+static zones, are encouraged to use a flags value of 0 (zero) and take
 advantage of DNSSEC's proof-of-non-existence support.
 
 ## Iterations
@@ -350,7 +350,7 @@ appears to be interoperable without significant problems.
 
 # Computational burdens of processing NSEC3 iterations {#computationalburdens}
 
-The Queries Per Second (QPS) of authoritative servers will decrease due
+The queries per second (QPS) of authoritative servers will decrease due
 to computational overhead when processing DNS requests for zones
 containing higher NSEC3 iteration counts.  The table ({{qps}}) below
 shows the drop in QPS for various iteration counts.
