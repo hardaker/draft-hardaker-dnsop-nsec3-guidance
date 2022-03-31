@@ -162,10 +162,6 @@ protection {{GPUNSEC3}}{{ZONEENUM}}.
 
 ## Salt
 
-Operators are encouraged to forgo using a salt entirely by using a
-zero-length salt value instead (represented as a "-" in the
-presentation format).
-
 NSEC3 records provide an additional salt value, which can be
 combined with an FQDN to influence the resulting hash, but properties
 of this extra salt are complicated.
@@ -239,10 +235,15 @@ RECOMMENDED.
 For very large and sparsely signed zones, where the majority of the
 records are insecure delegations, opt-out MAY be used.
 
-Since the NSEC3PARAM RR is not used by validating resolvers (see
-[RFC5155] section 4), the iterations and salt parameters can be changed
-without the need to wait for RRsets to expire from caches.  A complete
-new NSEC3 chain needs to be constructed and the zone resigned.
+Operators are encouraged to forgo using a salt entirely by using a
+zero-length salt value instead (represented as a "-" in the
+presentation format).
+
+If salts are used, note that since the NSEC3PARAM RR is not used by
+validating resolvers (see [RFC5155] section 4), the iterations and
+salt parameters can be changed without the need to wait for RRsets to
+expire from caches.  A complete new NSEC3 chain needs to be
+constructed and the zone resigned.
 
 ## Recommendation for Validating Resolvers
 
