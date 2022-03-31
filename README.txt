@@ -5,8 +5,8 @@
 Network Working Group                                        W. Hardaker
 Internet-Draft                                                   USC/ISI
 Intended status: Best Current Practice                       V. Dukhovni
-Expires: 29 September 2022                               Bloomberg, L.P.
-                                                           28 March 2022
+Expires: 2 October 2022                                  Bloomberg, L.P.
+                                                           31 March 2022
 
 
                  Guidance for NSEC3 parameter settings
@@ -36,7 +36,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 29 September 2022.
+   This Internet-Draft will expire on 2 October 2022.
 
 Copyright Notice
 
@@ -53,7 +53,7 @@ Copyright Notice
 
 
 
-Hardaker & Dukhovni     Expires 29 September 2022               [Page 1]
+Hardaker & Dukhovni      Expires 2 October 2022                 [Page 1]
 
 Internet-Draft                    title                       March 2022
 
@@ -92,8 +92,8 @@ Table of Contents
    Appendix C.  Acknowledgments  . . . . . . . . . . . . . . . . . .  10
    Appendix D.  Github Version of This Document  . . . . . . . . . .  10
    Appendix E.  Implementation Notes . . . . . . . . . . . . . . . .  10
-     E.1.  OpenDNSSEC  . . . . . . . . . . . . . . . . . . . . . . .  10
-     E.2.  PowerDNS  . . . . . . . . . . . . . . . . . . . . . . . .  10
+     E.1.  OpenDNSSEC  . . . . . . . . . . . . . . . . . . . . . . .  11
+     E.2.  PowerDNS  . . . . . . . . . . . . . . . . . . . . . . . .  11
      E.3.  Knot DNS and Knot Resolver  . . . . . . . . . . . . . . .  11
      E.4.  Google Public DNS Resolver  . . . . . . . . . . . . . . .  11
      E.5.  Google Cloud DNS  . . . . . . . . . . . . . . . . . . . .  11
@@ -109,7 +109,7 @@ Table of Contents
 
 
 
-Hardaker & Dukhovni     Expires 29 September 2022               [Page 2]
+Hardaker & Dukhovni      Expires 2 October 2022                 [Page 2]
 
 Internet-Draft                    title                       March 2022
 
@@ -134,8 +134,8 @@ Internet-Draft                    title                       March 2022
 
    NSEC3 records have a number of tunable parameters that are specified
    via an NSEC3PARAM record at the zone apex.  These parameters are the
-   Hash Algorithm, processing Flags, the number of hash Iterations and
-   the Salt.  Each of these has security and operational considerations
+   hash algorithm, processing flags, the number of hash iterations and
+   the salt.  Each of these has security and operational considerations
    that impact both zone owners and validating resolvers.  This document
    provides some best-practice recommendations for setting the NSEC3
    parameters.
@@ -165,7 +165,7 @@ Internet-Draft                    title                       March 2022
 
 
 
-Hardaker & Dukhovni     Expires 29 September 2022               [Page 3]
+Hardaker & Dukhovni      Expires 2 October 2022                 [Page 3]
 
 Internet-Draft                    title                       March 2022
 
@@ -183,7 +183,7 @@ Internet-Draft                    title                       March 2022
    registration points providing zone updates faster than real-time
    signing allows or when using memory-constrained hardware.  Smaller
    zones, or large but relatively static zones, are encouraged to use a
-   Flags value of 0 (zero) and take advantage of DNSSEC's proof-of-non-
+   flags value of 0 (zero) and take advantage of DNSSEC's proof-of-non-
    existence support.
 
 2.3.  Iterations
@@ -221,16 +221,12 @@ Internet-Draft                    title                       March 2022
 
 
 
-Hardaker & Dukhovni     Expires 29 September 2022               [Page 4]
+Hardaker & Dukhovni      Expires 2 October 2022                 [Page 4]
 
 Internet-Draft                    title                       March 2022
 
 
 2.4.  Salt
-
-   Operators are encouraged to forgo using a salt entirely by using a
-   zero-length salt value instead (represented as a "-" in the
-   presentation format).
 
    NSEC3 records provide an additional salt value, which can be combined
    with an FQDN to influence the resulting hash, but properties of this
@@ -277,7 +273,11 @@ Internet-Draft                    title                       March 2022
 
 
 
-Hardaker & Dukhovni     Expires 29 September 2022               [Page 5]
+
+
+
+
+Hardaker & Dukhovni      Expires 2 October 2022                 [Page 5]
 
 Internet-Draft                    title                       March 2022
 
@@ -312,11 +312,15 @@ Internet-Draft                    title                       March 2022
    For very large and sparsely signed zones, where the majority of the
    records are insecure delegations, opt-out MAY be used.
 
-   Since the NSEC3PARAM RR is not used by validating resolvers (see
-   [RFC5155] section 4), the iterations and salt parameters can be
-   changed without the need to wait for RRsets to expire from caches.  A
-   complete new NSEC3 chain needs to be constructed and the zone
-   resigned.
+   Operators are encouraged to forgo using a salt entirely by using a
+   zero-length salt value instead (represented as a "-" in the
+   presentation format).
+
+   If salts are used, note that since the NSEC3PARAM RR is not used by
+   validating resolvers (see [RFC5155] section 4), the iterations and
+   salt parameters can be changed without the need to wait for RRsets to
+   expire from caches.  A complete new NSEC3 chain needs to be
+   constructed and the zone resigned.
 
 3.2.  Recommendation for Validating Resolvers
 
@@ -326,18 +330,18 @@ Internet-Draft                    title                       March 2022
    recommends that validating resolvers change their behavior with
    respect to large iteration values.  Specifically, validating resolver
    operators and validating resolver software implementers are
-   encouraged to continue evaluating NSEC3 iteration count deployments
-   and lower their default acceptable limits over time.  Similarly,
-   because treating a high iterations count as insecure leaves zones
-   subject to attack, validating resolver operators and validating
 
 
 
-Hardaker & Dukhovni     Expires 29 September 2022               [Page 6]
+Hardaker & Dukhovni      Expires 2 October 2022                 [Page 6]
 
 Internet-Draft                    title                       March 2022
 
 
+   encouraged to continue evaluating NSEC3 iteration count deployments
+   and lower their default acceptable limits over time.  Similarly,
+   because treating a high iterations count as insecure leaves zones
+   subject to attack, validating resolver operators and validating
    resolver software implementers are further encouraged to lower their
    default and acceptable limit for returning SERVFAIL when processing
    NSEC3 parameters containing large iteration count values.  See
@@ -382,17 +386,17 @@ Internet-Draft                    title                       March 2022
    that their servers support.  Correspondingly, operators of primary
    servers need to ensure that their secondaries support the NSEC3
    parameters they expect to use in their zones.  To ensure reliability,
-   after primaries change their iteration counts, they should query
-   their secondaries with known non-existent labels to verify the
-   secondary servers are responding as expected.
 
 
 
-
-Hardaker & Dukhovni     Expires 29 September 2022               [Page 7]
+Hardaker & Dukhovni      Expires 2 October 2022                 [Page 7]
 
 Internet-Draft                    title                       March 2022
 
+
+   after primaries change their iteration counts, they should query
+   their secondaries with known non-existent labels to verify the
+   secondary servers are responding as expected.
 
 4.  Security Considerations
 
@@ -436,19 +440,20 @@ Internet-Draft                    title                       March 2022
               DOI 10.17487/RFC2119, March 1997,
               <https://www.rfc-editor.org/info/rfc2119>.
 
+
+
+
+
+
+Hardaker & Dukhovni      Expires 2 October 2022                 [Page 8]
+
+Internet-Draft                    title                       March 2022
+
+
    [RFC4035]  Arends, R., Austein, R., Larson, M., Massey, D., and S.
               Rose, "Protocol Modifications for the DNS Security
               Extensions", RFC 4035, DOI 10.17487/RFC4035, March 2005,
               <https://www.rfc-editor.org/info/rfc4035>.
-
-
-
-
-
-Hardaker & Dukhovni     Expires 29 September 2022               [Page 8]
-
-Internet-Draft                    title                       March 2022
-
 
    [RFC4470]  Weiler, S. and J. Ihren, "Minimally Covering NSEC Records
               and DNSSEC On-line Signing", RFC 4470,
@@ -485,10 +490,21 @@ Appendix A.  Deployment measurements at time of publication
 
 Appendix B.  Computational burdens of processing NSEC3 iterations
 
-   The Queries Per Second (QPS) of authoritative servers will decrease
+   The queries per second (QPS) of authoritative servers will decrease
    due to computational overhead when processing DNS requests for zones
    containing higher NSEC3 iteration counts.  The table (Appendix C)
    below shows the drop in QPS for various iteration counts.
+
+
+
+
+
+
+
+Hardaker & Dukhovni      Expires 2 October 2022                 [Page 9]
+
+Internet-Draft                    title                       March 2022
+
 
    | Iterations | QPS [% of 0 iterations QPS] |
    |------------+-----------------------------|
@@ -498,13 +514,6 @@ Appendix B.  Computational burdens of processing NSEC3 iterations
    |         50 | 64 %                        |
    |        100 | 47 %                        |
    |        150 | 38 %                        |
-
-
-
-Hardaker & Dukhovni     Expires 29 September 2022               [Page 9]
-
-Internet-Draft                    title                       March 2022
-
 
 Appendix C.  Acknowledgments
 
@@ -545,6 +554,14 @@ Appendix E.  Implementation Notes
    document.  They have graciously provided notes about the details of
    their implementation below.
 
+
+
+
+Hardaker & Dukhovni      Expires 2 October 2022                [Page 10]
+
+Internet-Draft                    title                       March 2022
+
+
 E.1.  OpenDNSSEC
 
    The OpenDNSSEC configuration checking utility will alert the user
@@ -554,13 +571,6 @@ E.2.  PowerDNS
 
    PowerDNS 4.5.2 changed the default value of nsec3-max-iterations to
    150.
-
-
-
-Hardaker & Dukhovni     Expires 29 September 2022              [Page 10]
-
-Internet-Draft                    title                       March 2022
-
 
 E.3.  Knot DNS and Knot Resolver
 
@@ -603,14 +613,4 @@ Authors' Addresses
 
 
 
-
-
-
-
-
-
-
-
-
-
-Hardaker & Dukhovni     Expires 29 September 2022              [Page 11]
+Hardaker & Dukhovni      Expires 2 October 2022                [Page 11]
