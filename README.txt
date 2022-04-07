@@ -5,12 +5,12 @@
 Network Working Group                                        W. Hardaker
 Internet-Draft                                                   USC/ISI
 Intended status: Best Current Practice                       V. Dukhovni
-Expires: 2 October 2022                                  Bloomberg, L.P.
-                                                           31 March 2022
+Expires: 9 October 2022                                  Bloomberg, L.P.
+                                                            7 April 2022
 
 
                  Guidance for NSEC3 parameter settings
-                   draft-ietf-dnsop-nsec3-guidance-06
+                   draft-ietf-dnsop-nsec3-guidance-07
 
 Abstract
 
@@ -36,7 +36,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 2 October 2022.
+   This Internet-Draft will expire on 9 October 2022.
 
 Copyright Notice
 
@@ -53,9 +53,9 @@ Copyright Notice
 
 
 
-Hardaker & Dukhovni      Expires 2 October 2022                 [Page 1]
+Hardaker & Dukhovni      Expires 9 October 2022                 [Page 1]
 
-Internet-Draft                    title                       March 2022
+Internet-Draft                    title                       April 2022
 
 
    This document is subject to BCP 78 and the IETF Trust's Legal
@@ -109,9 +109,9 @@ Table of Contents
 
 
 
-Hardaker & Dukhovni      Expires 2 October 2022                 [Page 2]
+Hardaker & Dukhovni      Expires 9 October 2022                 [Page 2]
 
-Internet-Draft                    title                       March 2022
+Internet-Draft                    title                       April 2022
 
 
 1.  Introduction
@@ -165,9 +165,9 @@ Internet-Draft                    title                       March 2022
 
 
 
-Hardaker & Dukhovni      Expires 2 October 2022                 [Page 3]
+Hardaker & Dukhovni      Expires 9 October 2022                 [Page 3]
 
-Internet-Draft                    title                       March 2022
+Internet-Draft                    title                       April 2022
 
 
 2.2.  Flags
@@ -221,9 +221,9 @@ Internet-Draft                    title                       March 2022
 
 
 
-Hardaker & Dukhovni      Expires 2 October 2022                 [Page 4]
+Hardaker & Dukhovni      Expires 9 October 2022                 [Page 4]
 
-Internet-Draft                    title                       March 2022
+Internet-Draft                    title                       April 2022
 
 
 2.4.  Salt
@@ -277,9 +277,9 @@ Internet-Draft                    title                       March 2022
 
 
 
-Hardaker & Dukhovni      Expires 2 October 2022                 [Page 5]
+Hardaker & Dukhovni      Expires 9 October 2022                 [Page 5]
 
-Internet-Draft                    title                       March 2022
+Internet-Draft                    title                       April 2022
 
 
 3.1.  Best-practice for Zone Publishers
@@ -333,9 +333,9 @@ Internet-Draft                    title                       March 2022
 
 
 
-Hardaker & Dukhovni      Expires 2 October 2022                 [Page 6]
+Hardaker & Dukhovni      Expires 9 October 2022                 [Page 6]
 
-Internet-Draft                    title                       March 2022
+Internet-Draft                    title                       April 2022
 
 
    encouraged to continue evaluating NSEC3 iteration count deployments
@@ -389,9 +389,9 @@ Internet-Draft                    title                       March 2022
 
 
 
-Hardaker & Dukhovni      Expires 2 October 2022                 [Page 7]
+Hardaker & Dukhovni      Expires 9 October 2022                 [Page 7]
 
-Internet-Draft                    title                       March 2022
+Internet-Draft                    title                       April 2022
 
 
    after primaries change their iteration counts, they should query
@@ -445,9 +445,9 @@ Internet-Draft                    title                       March 2022
 
 
 
-Hardaker & Dukhovni      Expires 2 October 2022                 [Page 8]
+Hardaker & Dukhovni      Expires 9 October 2022                 [Page 8]
 
-Internet-Draft                    title                       March 2022
+Internet-Draft                    title                       April 2022
 
 
    [RFC4035]  Arends, R., Austein, R., Larson, M., Massey, D., and S.
@@ -501,9 +501,9 @@ Appendix B.  Computational burdens of processing NSEC3 iterations
 
 
 
-Hardaker & Dukhovni      Expires 2 October 2022                 [Page 9]
+Hardaker & Dukhovni      Expires 9 October 2022                 [Page 9]
 
-Internet-Draft                    title                       March 2022
+Internet-Draft                    title                       April 2022
 
 
    | Iterations | QPS [% of 0 iterations QPS] |
@@ -557,9 +557,9 @@ Appendix E.  Implementation Notes
 
 
 
-Hardaker & Dukhovni      Expires 2 October 2022                [Page 10]
+Hardaker & Dukhovni      Expires 9 October 2022                [Page 10]
 
-Internet-Draft                    title                       March 2022
+Internet-Draft                    title                       April 2022
 
 
 E.1.  OpenDNSSEC
@@ -613,4 +613,4 @@ Authors' Addresses
 
 
 
-Hardaker & Dukhovni      Expires 2 October 2022                [Page 11]
+Hardaker & Dukhovni      Expires 9 October 2022                [Page 11]
