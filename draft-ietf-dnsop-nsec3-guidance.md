@@ -63,9 +63,9 @@ informative:
 --- abstract
 
 NSEC3 is a DNSSEC mechanism providing proof of non-existence by
-promising there are no names that exist between two domainnames within
+asserting that there are no names that exist between two domain names within
 a zone.  Unlike its counterpart NSEC, NSEC3 avoids directly disclosing
-the bounding domainname pairs.  This document provides guidance on
+the bounding domain name pairs.  This document provides guidance on
 setting NSEC3 parameters based on recent operational deployment
 experience.
 
@@ -83,8 +83,8 @@ SHA-1 is in use within the Internet).
 
 NSEC3 also provides "opt-out support", allowing for blocks of unsigned
 delegations to be covered by a single NSEC3 record.  Use of the
-opt-out feature allow large registries to only sign as many NSEC3
-records as there are signed DS or other RRsets in the zone -- with
+opt-out feature allows large registries to only sign as many NSEC3
+records as there are signed DS or other RRsets in the zone; with
 opt-out, unsigned delegations don't require additional NSEC3 records.
 This sacrifices the tamper-resistance proof of non-existence offered
 by NSEC3 in order to reduce memory and CPU overheads.
@@ -193,7 +193,7 @@ change the cost of the attack.
 
 Changing a zone's salt value requires the construction of a complete
 new NSEC3 chain.  This is true both when resigning the entire zone at
-once, or when incrementally signing it in the background where the new
+once, and when incrementally signing it in the background where the new
 salt is only activated once every name in the chain has been
 completed. As a result, re-salting is a very complex operation, with
 significant CPU time, memory, and bandwidth consumption. This makes
