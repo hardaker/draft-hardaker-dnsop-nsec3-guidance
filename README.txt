@@ -5,19 +5,19 @@
 Network Working Group                                        W. Hardaker
 Internet-Draft                                                   USC/ISI
 Intended status: Best Current Practice                       V. Dukhovni
-Expires: 9 October 2022                                  Bloomberg, L.P.
-                                                            7 April 2022
+Expires: 18 October 2022                                 Bloomberg, L.P.
+                                                           16 April 2022
 
 
                  Guidance for NSEC3 parameter settings
-                   draft-ietf-dnsop-nsec3-guidance-07
+                   draft-ietf-dnsop-nsec3-guidance-08
 
 Abstract
 
    NSEC3 is a DNSSEC mechanism providing proof of non-existence by
-   promising there are no names that exist between two domainnames
+   asserting that there are no names that exist between two domain names
    within a zone.  Unlike its counterpart NSEC, NSEC3 avoids directly
-   disclosing the bounding domainname pairs.  This document provides
+   disclosing the bounding domain name pairs.  This document provides
    guidance on setting NSEC3 parameters based on recent operational
    deployment experience.
 
@@ -36,7 +36,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 9 October 2022.
+   This Internet-Draft will expire on 18 October 2022.
 
 Copyright Notice
 
@@ -53,7 +53,7 @@ Copyright Notice
 
 
 
-Hardaker & Dukhovni      Expires 9 October 2022                 [Page 1]
+Hardaker & Dukhovni      Expires 18 October 2022                [Page 1]
 
 Internet-Draft                    title                       April 2022
 
@@ -91,7 +91,7 @@ Table of Contents
            iterations  . . . . . . . . . . . . . . . . . . . . . . .   9
    Appendix C.  Acknowledgments  . . . . . . . . . . . . . . . . . .  10
    Appendix D.  Github Version of This Document  . . . . . . . . . .  10
-   Appendix E.  Implementation Notes . . . . . . . . . . . . . . . .  10
+   Appendix E.  Implementation Notes . . . . . . . . . . . . . . . .  11
      E.1.  OpenDNSSEC  . . . . . . . . . . . . . . . . . . . . . . .  11
      E.2.  PowerDNS  . . . . . . . . . . . . . . . . . . . . . . . .  11
      E.3.  Knot DNS and Knot Resolver  . . . . . . . . . . . . . . .  11
@@ -109,7 +109,7 @@ Table of Contents
 
 
 
-Hardaker & Dukhovni      Expires 9 October 2022                 [Page 2]
+Hardaker & Dukhovni      Expires 18 October 2022                [Page 2]
 
 Internet-Draft                    title                       April 2022
 
@@ -126,11 +126,12 @@ Internet-Draft                    title                       April 2022
 
    NSEC3 also provides "opt-out support", allowing for blocks of
    unsigned delegations to be covered by a single NSEC3 record.  Use of
-   the opt-out feature allow large registries to only sign as many NSEC3
-   records as there are signed DS or other RRsets in the zone - with
-   opt-out, unsigned delegations don't require additional NSEC3 records.
-   This sacrifices the tamper-resistance proof of non-existence offered
-   by NSEC3 in order to reduce memory and CPU overheads.
+   the opt-out feature allows large registries to only sign as many
+   NSEC3 records as there are signed DS or other RRsets in the zone;
+   with opt-out, unsigned delegations don't require additional NSEC3
+   records.  This sacrifices the tamper-resistance proof of non-
+   existence offered by NSEC3 in order to reduce memory and CPU
+   overheads.
 
    NSEC3 records have a number of tunable parameters that are specified
    via an NSEC3PARAM record at the zone apex.  These parameters are the
@@ -164,8 +165,7 @@ Internet-Draft                    title                       April 2022
 
 
 
-
-Hardaker & Dukhovni      Expires 9 October 2022                 [Page 3]
+Hardaker & Dukhovni      Expires 18 October 2022                [Page 3]
 
 Internet-Draft                    title                       April 2022
 
@@ -221,7 +221,7 @@ Internet-Draft                    title                       April 2022
 
 
 
-Hardaker & Dukhovni      Expires 9 October 2022                 [Page 4]
+Hardaker & Dukhovni      Expires 18 October 2022                [Page 4]
 
 Internet-Draft                    title                       April 2022
 
@@ -259,7 +259,7 @@ Internet-Draft                    title                       April 2022
 
    Changing a zone's salt value requires the construction of a complete
    new NSEC3 chain.  This is true both when resigning the entire zone at
-   once, or when incrementally signing it in the background where the
+   once, and when incrementally signing it in the background where the
    new salt is only activated once every name in the chain has been
    completed.  As a result, re-salting is a very complex operation, with
    significant CPU time, memory, and bandwidth consumption.  This makes
@@ -277,7 +277,7 @@ Internet-Draft                    title                       April 2022
 
 
 
-Hardaker & Dukhovni      Expires 9 October 2022                 [Page 5]
+Hardaker & Dukhovni      Expires 18 October 2022                [Page 5]
 
 Internet-Draft                    title                       April 2022
 
@@ -333,7 +333,7 @@ Internet-Draft                    title                       April 2022
 
 
 
-Hardaker & Dukhovni      Expires 9 October 2022                 [Page 6]
+Hardaker & Dukhovni      Expires 18 October 2022                [Page 6]
 
 Internet-Draft                    title                       April 2022
 
@@ -389,7 +389,7 @@ Internet-Draft                    title                       April 2022
 
 
 
-Hardaker & Dukhovni      Expires 9 October 2022                 [Page 7]
+Hardaker & Dukhovni      Expires 18 October 2022                [Page 7]
 
 Internet-Draft                    title                       April 2022
 
@@ -445,7 +445,7 @@ Internet-Draft                    title                       April 2022
 
 
 
-Hardaker & Dukhovni      Expires 9 October 2022                 [Page 8]
+Hardaker & Dukhovni      Expires 18 October 2022                [Page 8]
 
 Internet-Draft                    title                       April 2022
 
@@ -501,7 +501,7 @@ Appendix B.  Computational burdens of processing NSEC3 iterations
 
 
 
-Hardaker & Dukhovni      Expires 9 October 2022                 [Page 9]
+Hardaker & Dukhovni      Expires 18 October 2022                [Page 9]
 
 Internet-Draft                    title                       April 2022
 
@@ -529,6 +529,8 @@ Appendix C.  Acknowledgments
 
    *  Paul Hoffman
 
+   *  Warren Kumari
+
    *  Alexander Mayrhofer
 
    *  Matthijs Mekking
@@ -548,19 +550,23 @@ Appendix D.  Github Version of This Document
 
    https://github.com/hardaker/draft-hardaker-dnsop-nsec3-guidance
 
+
+
+
+
+
+
+
+Hardaker & Dukhovni      Expires 18 October 2022               [Page 10]
+
+Internet-Draft                    title                       April 2022
+
+
 Appendix E.  Implementation Notes
 
    The following implementations have implemented the guidance in this
    document.  They have graciously provided notes about the details of
    their implementation below.
-
-
-
-
-Hardaker & Dukhovni      Expires 9 October 2022                [Page 10]
-
-Internet-Draft                    title                       April 2022
-
 
 E.1.  OpenDNSSEC
 
@@ -607,10 +613,4 @@ Authors' Addresses
 
 
 
-
-
-
-
-
-
-Hardaker & Dukhovni      Expires 9 October 2022                [Page 11]
+Hardaker & Dukhovni      Expires 18 October 2022               [Page 11]
