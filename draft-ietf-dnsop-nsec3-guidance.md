@@ -118,9 +118,9 @@ The algorithm field is not discussed by this document.
 
 The NSEC3PARAM flags field currently contains no flags, but individual
 NSEC3 records contain the "Opt-Out" flag {{RFC5155}}, which specifies
-whether or not that NSEC3 record provides proof of non-existence or
-not.  In general, NSEC3 with the Opt-Out flag enabled should only be
-used in large, highly dynamic zones with a small percentage of signed
+whether or not that NSEC3 record provides proof of non-existence.  In
+general, NSEC3 with the Opt-Out flag enabled should only be used in
+large, highly dynamic zones with a small percentage of signed
 delegations.  Operationally, this allows for fewer signature creations
 when new delegations are inserted into a zone.  This is typically only
 necessary for extremely large registration points providing zone
