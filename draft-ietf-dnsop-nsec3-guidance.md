@@ -329,9 +329,10 @@ parameters selections of NSEC3 and NSEC3PARAM fields.
 
 # IANA Considerations
 
-This document requests a new allocation in the "Extended DNS Error
-Codes" of the "Domain Name System (DNS) Parameters" registration
-table with the following characteristics:
+This document requests a new allocation in the First Come First Served
+range of the "Extended DNS Error Codes" of the "Domain Name System
+(DNS) Parameters" registration table with the following
+characteristics:
 
 + INFO-CODE: (RFC EDITOR: TBD)
 + Purpose: Unsupported NSEC3 iterations value
