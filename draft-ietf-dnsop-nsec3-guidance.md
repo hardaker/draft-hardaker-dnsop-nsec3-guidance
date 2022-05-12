@@ -87,8 +87,8 @@ delegations to be covered by a single NSEC3 record.  Use of the
 opt-out feature allows large registries to only sign as many NSEC3
 records as there are signed DS or other RRsets in the zone; with
 opt-out, unsigned delegations don't require additional NSEC3 records.
-This sacrifices the tamper-resistance proof of non-existence offered
-by NSEC3 in order to reduce memory and CPU overheads.
+This sacrifices the tamper-resistance of the proof of non-existence
+offered by NSEC3 in order to reduce memory and CPU overheads.
 
 NSEC3 records have a number of tunable parameters that are specified
 via an NSEC3PARAM record at the zone apex.  These parameters are the
@@ -193,7 +193,7 @@ attack. In other words, an additional, constant salt value does not
 change the cost of the attack.
 
 Changing a zone's salt value requires the construction of a complete
-new NSEC3 chain.  This is true both when resigning the entire zone at
+new NSEC3 chain.  This is true both when re-signing the entire zone at
 once, and when incrementally signing it in the background where the new
 salt is only activated once every name in the chain has been
 completed. As a result, re-salting is a very complex operation, with
@@ -244,7 +244,7 @@ If salts are used, note that since the NSEC3PARAM RR is not used by
 validating resolvers (see [RFC5155] section 4), the iterations and
 salt parameters can be changed without the need to wait for RRsets to
 expire from caches.  A complete new NSEC3 chain needs to be
-constructed and the zone resigned.
+constructed and the zone re-signed.
 
 ## Recommendation for Validating Resolvers
 
@@ -355,7 +355,7 @@ appears to be interoperable without significant problems.
 
 The queries per second (QPS) of authoritative servers will decrease due
 to computational overhead when processing DNS requests for zones
-containing higher NSEC3 iteration counts.  The table ({{qps}}) below
+containing higher NSEC3 iteration counts.  The table below
 shows the drop in QPS for various iteration counts.
 
     | Iterations | QPS [% of 0 iterations QPS] |
