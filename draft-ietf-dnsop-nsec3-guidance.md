@@ -26,6 +26,7 @@ normative:
   RFC5155:
   RFC4035:
   RFC4470:
+  RFC8174:
 
 informative:
   GPUNSEC3:
@@ -103,10 +104,10 @@ parameters.
    The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT",
    "SHOULD", "SHOULD NOT", "RECOMMENDED", "NOT RECOMMENDED", "MAY",
    and "OPTIONAL" in this document are to be interpreted as described
-   in BCP 14 {{RFC2119}} {{?RFC8174}} when, and only when, they appear
+   in BCP 14 {{RFC2119}} {{RFC8174}} when, and only when, they appear
    in all capitals, as shown here.
 
-# NSEC3 Parameter Value Considerations
+# NSEC3 Parameter Value Discussions
 
 The following sections describe recommendations for setting parameters
 for NSEC3 and NSEC3PARAM.
@@ -119,7 +120,7 @@ The algorithm field is not discussed by this document.
 
 The NSEC3PARAM flags field currently contains no flags, but individual
 NSEC3 records contain the "Opt-Out" flag {{RFC5155}}, which specifies
-whether or not that NSEC3 record provides proof of non-existence.  In
+whether that NSEC3 record provides proof of non-existence.  In
 general, NSEC3 with the Opt-Out flag enabled should only be used in
 large, highly dynamic zones with a small percentage of signed
 delegations.  Operationally, this allows for fewer signature creations
@@ -150,7 +151,7 @@ are often recorded in many other network logs such as email logs,
 certificate transparency logs, web page links, intrusion detection
 systems, malware scanners, email archives, etc.  Many times a simple
 dictionary of commonly used domain names prefixes (www, ftp, mail,
-imap, login, database, etc) can be used to quickly reveal a large
+imap, login, database, etc.) can be used to quickly reveal a large
 number of labels within a zone.  Because of this, there are increasing
 performance costs yet diminishing returns associated with applying
 additional hash iterations beyond the first.
@@ -262,7 +263,7 @@ implementers are further encouraged to lower their default and acceptable
 limit for returning SERVFAIL when processing NSEC3 parameters
 containing large iteration count values.  See
 {{deploymentmeasurements}} for measurements taken near the time of
-publication and potential starting points.
+publication of this document and potential starting points.
 
 Validating resolvers MAY return an insecure response to their clients
 when processing NSEC3 records with iterations larger
@@ -282,7 +283,7 @@ received from authoritative servers.
 Validating resolvers returning an insecure or SERVFAIL answer to their
 client after receiving and validating an unsupported NSEC3 parameter
 from the authoritative server(s) SHOULD return an Extended DNS
-Error (EDE) {RFC8914} EDNS0 option of value (RFC EDITOR: TBD).
+Error (EDE) {{RFC8914}} EDNS0 option of value (RFC EDITOR: TBD).
 Validating resolvers that choose to ignore a response with an
 unsupported iteration count (and do not validate the signature) MUST
 NOT return this EDE option.
@@ -388,7 +389,9 @@ to the draft:
 + Paul Vixie
 + Tim Wicinski
 
-# Github Version of This Document
+# GitHub Version of This Document
+
+[RFCEditor: remove this section]
 
 While this document is under development, it can be viewed, tracked,
 issued, pushed with PRs, ... here:
