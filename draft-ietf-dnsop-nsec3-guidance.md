@@ -4,7 +4,7 @@ abbrev: title
 docname: draft-ietf-dnsop-nsec3-guidance-08
 category: bcp
 ipr: trust200902
-
+updates: 5155
 stand_alone: yes
 pi: [toc, sortrefs, symrefs, docmapping]
 consensus: true
@@ -63,11 +63,12 @@ informative:
 --- abstract
 
 NSEC3 is a DNSSEC mechanism providing proof of non-existence by
-asserting that there are no names that exist between two domain names within
-a zone.  Unlike its counterpart NSEC, NSEC3 avoids directly disclosing
-the bounding domain name pairs.  This document provides guidance on
-setting NSEC3 parameters based on recent operational deployment
-experience.
+asserting that there are no names that exist between two domain names
+within a zone.  Unlike its counterpart NSEC, NSEC3 avoids directly
+disclosing the bounding domain name pairs.  This document provides
+guidance on setting NSEC3 parameters based on recent operational
+deployment experience.  This document updates {{RFC5155}} with
+guidance about selecting NSEC3 iteration and salt parameters.
 
 --- middle
 
