@@ -81,14 +81,14 @@ non-existence of a given name or associated Resource Record Type
 (RRTYPE) in a DNSSEC {{RFC4035}} signed zone.  In the case of NSEC3,
 however, the names of valid nodes in the zone are obfuscated through
 (possibly multiple iterations of) hashing (currently only
-SHA-1 is in use within the Internet).
+SHA-1 is in use on the Internet).
 
 NSEC3 also provides "opt-out support", allowing for blocks of unsigned
 delegations to be covered by a single NSEC3 record.  Use of the
 opt-out feature allows large registries to only sign as many NSEC3
 records as there are signed DS or other RRsets in the zone; with
 opt-out, unsigned delegations don't require additional NSEC3 records.
-This sacrifices the tamper-resistance of the proof of non-existence
+This sacrifices the tamper-resistance proof of non-existence
 offered by NSEC3 in order to reduce memory and CPU overheads.
 
 NSEC3 records have a number of tunable parameters that are specified
@@ -114,37 +114,43 @@ the NSEC3 and NSEC3PARAM resource record types.
 
 ## Algorithms
 
-The algorithm field is not discussed by this document.
+The algorithm field is not discussed by this document.  Readers are
+encouraged to read {{?RFC8624}} for guidance about DNSSEC algorithm
+usage.
 
 ## Flags
 
-The NSEC3PARAM flags field currently contains no flags, but individual
-NSEC3 records contain the "Opt-Out" flag {{RFC5155}}, which specifies
-whether that NSEC3 record provides proof of non-existence.  In
-general, NSEC3 with the Opt-Out flag enabled should only be used in
-large, highly dynamic zones with a small percentage of signed
-delegations.  Operationally, this allows for fewer signature creations
-when new delegations are inserted into a zone.  This is typically only
-necessary for extremely large registration points providing zone
-updates faster than real-time signing allows or when using
-memory-constrained hardware.
-<!-- -->
-Operators considering the use of NSEC3 are advised to fully test
-their zones deployment architectures and authoritative servers under
-both regular operational loads to determine the tradeoffs using
-NSEC3 instead of NSEC.
-<!-- -->
-Smaller zones, or large but relatively
-static zones, are encouraged to use a flags value of 0 (zero) and take
-advantage of DNSSEC's proof-of-non-existence support.
+The NSEC3PARAM flags field currently contains only reserved and
+unassigned flags.  Individual NSEC3 records, however, contain the
+"Opt-Out" flag {{RFC5155}}, which specifies whether that NSEC3 record
+provides proof of non-existence.  In general, NSEC3 with the Opt-Out
+flag enabled should only be used in large, highly dynamic zones with a
+small percentage of signed delegations.  Operationally, this allows
+for fewer signature creations when new delegations are inserted into a
+zone.  This is typically only necessary for extremely large
+registration points providing zone updates faster than real-time
+signing allows or when using memory-constrained hardware.  
+Operators considering the use of NSEC3 are advised to fully test their
+zones deployment architectures and authoritative servers under both
+regular operational loads to determine the tradeoffs using NSEC3
+instead of NSEC.  Smaller zones, or large but relatively static zones,
+are encouraged to not use a the opt-opt flag and to take advantage of
+DNSSEC's proof-of-non-existence support.
 
 ## Iterations
 
 NSEC3 records are created by first hashing the input domain and then
-repeating that hashing algorithm a number of times based on the
-iteration parameter in the NSEC3PARM and NSEC3 records.  The first
-hash is typically sufficient to discourage zone enumeration performed
-by "zone walking" an NSEC or NSEC3 chain.  Only determined parties
+repeating that hashing using the same algorithm a number of times based on the
+iteration parameter in the NSEC3PARM and NSEC3 records.
+The first hash with NSEC3 is typically sufficient to discourage zone
+enumeration performed by "zone walking" an unhashed NSEC chain.
+
+Note that {{RFC5155}} describes the Iterations field to be "The
+Iterations field defines the number of additional times the hash
+function has been performed."  This means that an NSEC3 record with an
+Iterations field of 0 actually requires one hash iteration.
+
+Only determined parties
 with significant resources are likely to try and uncover hashed
 values, regardless of the number of additional iterations performed.
 If an adversary really wants to expend significant CPU resources to
@@ -157,7 +163,7 @@ They are published to be memorable, used and consumed by humans.  They
 are often recorded in many other network logs such as email logs,
 certificate transparency logs, web page links, intrusion detection
 systems, malware scanners, email archives, etc.  Many times a simple
-dictionary of commonly used domain names prefixes (www, ftp, mail,
+dictionary of commonly used domain names prefixes (www, mail,
 imap, login, database, etc.) can be used to quickly reveal a large
 number of labels within a zone.  Because of this, there are increasing
 performance costs yet diminishing returns associated with applying
@@ -229,7 +235,7 @@ and also increase the risk of interoperability problems.
 
 Note that deploying NSEC with minimally covering NSEC records
 [RFC4470] also incurs a cost, and zone owners should measure the
-computational difference in deploying both RFC4470 or NSEC3.
+computational difference in deploying either RFC4470 or NSEC3.
 
 In short, for all zones, the recommended NSEC3 parameters are as shown
 below:
@@ -251,7 +257,7 @@ If salts are used, note that since the NSEC3PARAM RR is not used by
 validating resolvers (see [RFC5155] section 4), the iterations and
 salt parameters can be changed without the need to wait for RRsets to
 expire from caches.  A complete new NSEC3 chain needs to be
-constructed and the zone re-signed.
+constructed and the full zone needs to be re-signed.
 
 ## Recommendation for Validating Resolvers
 
@@ -262,7 +268,7 @@ recommends that validating resolvers change their behavior with
 respect to large iteration values.  Specifically, validating
 resolver operators and validating resolver software implementers are
 encouraged to continue evaluating NSEC3 iteration count deployments
-and lower their default acceptable limits over time.  Similarly, because
+but lower their default acceptable limits over time.  Similarly, because
 treating a high iterations count as insecure leaves zones subject to
 attack, validating resolver operators and validating resolver software
 implementers are further encouraged to lower their default and acceptable
@@ -405,6 +411,8 @@ issued, pushed with PRs, ... here:
 https://github.com/hardaker/draft-hardaker-dnsop-nsec3-guidance
 
 # Implementation Notes
+
+[RFCEditor: remove this section]
 
 The following implementations have implemented the guidance in this
 document.  They have graciously provided notes about the details of
