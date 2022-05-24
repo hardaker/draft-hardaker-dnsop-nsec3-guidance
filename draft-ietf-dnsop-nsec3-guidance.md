@@ -109,8 +109,8 @@ parameters.
 
 # NSEC3 Parameter Value Discussions
 
-The following sections describe recommendations for setting parameters
-for NSEC3 and NSEC3PARAM.
+The following sections describes the background of the parameters for
+the NSEC3 and NSEC3PARAM resource record types.
 
 ## Algorithms
 
@@ -127,7 +127,14 @@ delegations.  Operationally, this allows for fewer signature creations
 when new delegations are inserted into a zone.  This is typically only
 necessary for extremely large registration points providing zone
 updates faster than real-time signing allows or when using
-memory-constrained hardware.  Smaller zones, or large but relatively
+memory-constrained hardware.
+<!-- -->
+Operators considering the use of NSEC3 are advised to fully test
+their zones deployment architectures and authoritative servers under
+both regular operational loads to determine the tradeoffs using
+NSEC3 instead of NSEC.
+<!-- -->
+Smaller zones, or large but relatively
 static zones, are encouraged to use a flags value of 0 (zero) and take
 advantage of DNSSEC's proof-of-non-existence support.
 
@@ -237,9 +244,8 @@ RECOMMENDED.
 For very large and sparsely signed zones, where the majority of the
 records are insecure delegations, opt-out MAY be used.
 
-Operators are encouraged to forgo using a salt entirely by using a
-zero-length salt value instead (represented as a "-" in the
-presentation format).
+Operators SHOULD NOT use a salt by indicating a zero-length salt value
+instead (represented as a "-" in the presentation format).
 
 If salts are used, note that since the NSEC3PARAM RR is not used by
 validating resolvers (see [RFC5155] section 4), the iterations and
