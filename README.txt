@@ -10,7 +10,7 @@ Expires: 25 November 2022                                    24 May 2022
 
 
                  Guidance for NSEC3 parameter settings
-                   draft-ietf-dnsop-nsec3-guidance-08
+                   draft-ietf-dnsop-nsec3-guidance-09
 
 Abstract
 
