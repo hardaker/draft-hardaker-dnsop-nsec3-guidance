@@ -27,6 +27,7 @@ normative:
   RFC4035:
   RFC4470:
   RFC8174:
+  RFC8914:
 
 informative:
   GPUNSEC3:
@@ -403,7 +404,7 @@ to the draft:
 
 # GitHub Version of This Document
 
-[RFCEditor: remove this section]
+(RFCEditor: remove this section)
 
 While this document is under development, it can be viewed, tracked,
 issued, pushed with PRs, ... here:
@@ -412,7 +413,7 @@ https://github.com/hardaker/draft-hardaker-dnsop-nsec3-guidance
 
 # Implementation Notes
 
-[RFCEditor: remove this section]
+(RFCEditor: remove this section)
 
 The following implementations have implemented the guidance in this
 document.  They have graciously provided notes about the details of
