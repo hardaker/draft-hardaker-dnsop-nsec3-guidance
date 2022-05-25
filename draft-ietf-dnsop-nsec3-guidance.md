@@ -1,7 +1,7 @@
 ---
 title: "Guidance for NSEC3 parameter settings"
 abbrev: title
-docname: draft-ietf-dnsop-nsec3-guidance-09
+docname: draft-ietf-dnsop-nsec3-guidance-10
 category: bcp
 ipr: trust200902
 updates: 5155

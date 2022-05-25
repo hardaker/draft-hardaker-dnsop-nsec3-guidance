@@ -6,11 +6,11 @@ Network Working Group                                        W. Hardaker
 Internet-Draft                                                   USC/ISI
 Updates: 5155 (if approved)                                  V. Dukhovni
 Intended status: Best Current Practice                   Bloomberg, L.P.
-Expires: 25 November 2022                                    24 May 2022
+Expires: 26 November 2022                                    25 May 2022
 
 
                  Guidance for NSEC3 parameter settings
-                   draft-ietf-dnsop-nsec3-guidance-09
+                   draft-ietf-dnsop-nsec3-guidance-10
 
 Abstract
 
@@ -37,7 +37,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 25 November 2022.
+   This Internet-Draft will expire on 26 November 2022.
 
 Copyright Notice
 
@@ -53,7 +53,7 @@ Copyright Notice
 
 
 
-Hardaker & Dukhovni     Expires 25 November 2022                [Page 1]
+Hardaker & Dukhovni     Expires 26 November 2022                [Page 1]
 
 Internet-Draft                    title                         May 2022
 
@@ -109,7 +109,7 @@ Table of Contents
 
 
 
-Hardaker & Dukhovni     Expires 25 November 2022                [Page 2]
+Hardaker & Dukhovni     Expires 26 November 2022                [Page 2]
 
 Internet-Draft                    title                         May 2022
 
@@ -165,7 +165,7 @@ Internet-Draft                    title                         May 2022
 
 
 
-Hardaker & Dukhovni     Expires 25 November 2022                [Page 3]
+Hardaker & Dukhovni     Expires 26 November 2022                [Page 3]
 
 Internet-Draft                    title                         May 2022
 
@@ -174,20 +174,20 @@ Internet-Draft                    title                         May 2022
 
    The NSEC3PARAM flags field currently contains only reserved and
    unassigned flags.  Individual NSEC3 records, however, contain the
-   "Opt-Out" flag Operators considering the use of NSEC3 are advised to
-   fully test their zones deployment architectures and authoritative
-   servers under both regular operational loads to determine the
-   tradeoffs using NSEC3 instead of NSEC.  Smaller zones, or large but
-   relatively static zones, are encouraged to not use a the opt-opt flag
-   and to take advantage of DNSSEC's proof-of-non-existence
-   support.[RFC5155], which specifies whether that NSEC3 record provides
-   proof of non-existence.  In general, NSEC3 with the Opt-Out flag
-   enabled should only be used in large, highly dynamic zones with a
-   small percentage of signed delegations.  Operationally, this allows
+   "Opt-Out" flag [RFC5155], which specifies whether that NSEC3 record
+   provides proof of non-existence.  In general, NSEC3 with the Opt-Out
+   flag enabled should only be used in large, highly dynamic zones with
+   a small percentage of signed delegations.  Operationally, this allows
    for fewer signature creations when new delegations are inserted into
    a zone.  This is typically only necessary for extremely large
    registration points providing zone updates faster than real-time
-   signing allows or when using memory-constrained hardware.
+   signing allows or when using memory-constrained hardware.  Operators
+   considering the use of NSEC3 are advised to fully test their zones
+   deployment architectures and authoritative servers under both regular
+   operational loads to determine the tradeoffs using NSEC3 instead of
+   NSEC.  Smaller zones, or large but relatively static zones, are
+   encouraged to not use a the opt-opt flag and to take advantage of
+   DNSSEC's proof-of-non-existence support.
 
 2.3.  Iterations
 
@@ -221,7 +221,7 @@ Internet-Draft                    title                         May 2022
 
 
 
-Hardaker & Dukhovni     Expires 25 November 2022                [Page 4]
+Hardaker & Dukhovni     Expires 26 November 2022                [Page 4]
 
 Internet-Draft                    title                         May 2022
 
@@ -277,7 +277,7 @@ Internet-Draft                    title                         May 2022
 
 
 
-Hardaker & Dukhovni     Expires 25 November 2022                [Page 5]
+Hardaker & Dukhovni     Expires 26 November 2022                [Page 5]
 
 Internet-Draft                    title                         May 2022
 
@@ -333,7 +333,7 @@ Internet-Draft                    title                         May 2022
 
 
 
-Hardaker & Dukhovni     Expires 25 November 2022                [Page 6]
+Hardaker & Dukhovni     Expires 26 November 2022                [Page 6]
 
 Internet-Draft                    title                         May 2022
 
@@ -389,7 +389,7 @@ Internet-Draft                    title                         May 2022
 
 
 
-Hardaker & Dukhovni     Expires 25 November 2022                [Page 7]
+Hardaker & Dukhovni     Expires 26 November 2022                [Page 7]
 
 Internet-Draft                    title                         May 2022
 
@@ -445,7 +445,7 @@ Internet-Draft                    title                         May 2022
 
 
 
-Hardaker & Dukhovni     Expires 25 November 2022                [Page 8]
+Hardaker & Dukhovni     Expires 26 November 2022                [Page 8]
 
 Internet-Draft                    title                         May 2022
 
@@ -501,7 +501,7 @@ Internet-Draft                    title                         May 2022
 
 
 
-Hardaker & Dukhovni     Expires 25 November 2022                [Page 9]
+Hardaker & Dukhovni     Expires 26 November 2022                [Page 9]
 
 Internet-Draft                    title                         May 2022
 
@@ -557,7 +557,7 @@ Appendix C.  Acknowledgments
 
 
 
-Hardaker & Dukhovni     Expires 25 November 2022               [Page 10]
+Hardaker & Dukhovni     Expires 26 November 2022               [Page 10]
 
 Internet-Draft                    title                         May 2022
 
@@ -613,7 +613,7 @@ E.3.  Knot DNS and Knot Resolver
 
 
 
-Hardaker & Dukhovni     Expires 25 November 2022               [Page 11]
+Hardaker & Dukhovni     Expires 26 November 2022               [Page 11]
 
 Internet-Draft                    title                         May 2022
 
@@ -669,4 +669,4 @@ Authors' Addresses
 
 
 
-Hardaker & Dukhovni     Expires 25 November 2022               [Page 12]
+Hardaker & Dukhovni     Expires 26 November 2022               [Page 12]
