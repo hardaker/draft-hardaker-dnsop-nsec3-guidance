@@ -548,7 +548,7 @@ Appendix C.  Acknowledgments
    Additionally, the following people contributed text or review
    comments to the draft:
 
-   *  Vladimir &#268;unat
+   *  Vladimir Cunat
 
    *  Tony Finch
 
@@ -570,7 +570,7 @@ Internet-Draft                    title                         May 2022
 
    *  Florian Obser
 
-   *  Petr &#352;pa&#269;ek
+   *  Petr Spacek
 
    *  Paul Vixie
 
