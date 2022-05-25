@@ -51,13 +51,13 @@ informative:
   ZONEENUM:
     title: An efficient DNSSEC zone enumeration algorithm
     author:
-      - 
+      -
         ins: Z. Wang
         name: Zheng Wang
-      - 
+      -
         ins: L. Xiao
         name: Liyuan Xiao
-      - 
+      -
         ins: R. Wang
         name: Rui Wang
 
@@ -130,7 +130,7 @@ small percentage of signed delegations.  Operationally, this allows
 for fewer signature creations when new delegations are inserted into a
 zone.  This is typically only necessary for extremely large
 registration points providing zone updates faster than real-time
-signing allows or when using memory-constrained hardware.  
+signing allows or when using memory-constrained hardware.
 Operators considering the use of NSEC3 are advised to fully test their
 zones deployment architectures and authoritative servers under both
 regular operational loads to determine the tradeoffs using NSEC3
@@ -280,7 +280,7 @@ publication of this document and potential starting points.
 
 Validating resolvers MAY return an insecure response to their clients
 when processing NSEC3 records with iterations larger
-than 0. 
+than 0.
 Note also that a validating resolver returning an insecure response
 MUST still validate the signature over the NSEC3 record to ensure
 the iteration count was not altered since record publication (see
@@ -291,7 +291,7 @@ processing NSEC3 records with iterations larger than 0.  Validating
 resolvers MAY choose to ignore authoritative server responses with
 iteration counts greater than 0, which will likely result in
 returning a SERVFAIL to the client when no acceptable responses are
-received from authoritative servers. 
+received from authoritative servers.
 
 Validating resolvers returning an insecure or SERVFAIL answer to their
 client after receiving and validating an unsupported NSEC3 parameter
