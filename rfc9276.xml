@@ -16,6 +16,7 @@
     <seriesInfo name="RFC" value="9276"/>
 <!-- [rfced] We have assigned a new BCP number to this document, as we do not see other BCPs related to NSEC. Please confirm that this is correct.  A complete list of BCPs is available here: https://www.rfc-editor.org/bcps
 -->
+<!-- Wes: correct, this would need a new one -->
 
     <seriesInfo name="BCP" value="236"/>
     <author initials="W." surname="Hardaker" fullname="Wes Hardaker">
@@ -37,8 +38,13 @@
 	 
 <!-- [rfced] Please insert any keywords (beyond those that appear in
 the title) for use on https://www.rfc-editor.org/search. -->
+<!-- Wes: Added: -->
 
-<keyword>example</keyword>
+<keyword>DNSSEC</keyword>
+<keyword>DNS</keyword>
+<keyword>NSEC3</keyword>
+<keyword>NSEC</keyword>
+<keyword>Denial of Existence</keyword>
 
     <abstract>
       <t>NSEC3 is a DNSSEC mechanism providing proof of nonexistence by
@@ -79,6 +85,8 @@ Current:
    These parameters are the hash algorithm, the processing flags, the number of hash iterations, 
     and the salt.
 -->
+<!-- Wes: The change looks good -->
+
       <t>NSEC3 records have a number of tunable parameters that are specified
 via an NSEC3PARAM record at the zone apex.  These parameters are the
 hash algorithm, the processing flags, the number of hash iterations, and
@@ -142,9 +150,10 @@ Suggested B:
    regular operational loads to determine the trade-offs using NSEC3
    instead of NSEC.
 -->
+<!-- Wes: selected A below, thank you. -->
 
 Operators considering the use of NSEC3 are advised to fully test their
-zones deployment architectures and authoritative servers under both
+zones' deployment architectures and authoritative servers under both
 regular operational loads to determine the trade-offs using NSEC3
 instead of NSEC.  Smaller zones, or large but relatively static zones,
 are encouraged not to use the opt-opt flag and to take advantage of
@@ -163,6 +172,9 @@ Original:
    The first hash with NSEC3 is typically sufficient to discourage zone
    enumeration performed by "zone walking" an unhashed NSEC chain.
 -->
+
+<!-- Wes: NSEC is correct here, as the weakness discussed is in NSEC
+     not NSEC3 -->
 
 The first hash with NSEC3 is typically sufficient to discourage zone
 enumeration performed by "zone walking" an unhashed NSEC chain.</t>
@@ -266,6 +278,9 @@ Original:
    ;
    bcp.example. IN NSEC3PARAM 1 0 0 -
 -->
+<!-- Wes: The type should probably be "dns-rr", though the ;'s are
+     comments about the NSEC3PARAM RR (comment format comes fro the
+     DNS zone file format in much earlier DNS RFCs). -->
 
         <artwork><![CDATA[
 ; SHA-1, no extra iterations, empty salt:
@@ -305,14 +320,18 @@ Original:
    default and acceptable limit for returning SERVFAIL when processing
    NSEC3 parameters containing large iteration count values.
 -->
+<!-- Wes: that's an interesting and good catch.  Operators don't set
+     defaults, so below I removed the first instance of "default".
+     I've removed "and acceptable" limit in the second instance.  I
+     think this is cleaner. -->
 
 Specifically, validating
 resolver operators and validating resolver software implementers are
 encouraged to continue to evaluate NSEC3 iteration count deployments
-but lower their default acceptable limits over time.  Similarly, because
+but lower their acceptable limits over time.  Similarly, because
 treating a high iterations count as insecure leaves zones subject to
 attack, validating resolver operators and validating resolver software
-implementers are further encouraged to lower their default and acceptable
+implementers are further encouraged to lower their default 
 limit for returning SERVFAIL when processing NSEC3 parameters
 containing large iteration count values.  See
 <xref target="deploymentmeasurements"/> for measurements taken near the time of
@@ -346,8 +365,13 @@ Original:
    [RFC5155].  See the Security Considerations for arguments on how to
    handle responses with non-zero iteration count.
 -->
+<!-- Wes: It refers to this document, but could easily be
+     misunderstood.  I added a reference xref-->
+
         <t>Note that this specification updates <xref target="RFC5155"/> by significantly
-decreasing the requirements originally specified in <xref target="RFC5155" sectionFormat="of" section="10.3"/>. See the Security Considerations for arguments on how to
+decreasing the requirements originally specified in <xref
+target="RFC5155" sectionFormat="of" section="10.3"/>. See the Security
+Considerations (<xref target="security-considerations"/>) for arguments on how to
 handle responses with non-zero iteration count.</t>
       </section>
       <section anchor="recommendation-for-primary-secondary-relationships">
@@ -379,9 +403,11 @@ Original text from Section 5:
    various parameters selections of NSEC3 and NSEC3PARAM fields.
 -->
 
+<!--  Wes: I think it should be "parameter selections" (note the lack
+     of plural in parameter).  Changed in both places -->
 
       <t>This entire document discusses security considerations with various
-parameters selections of NSEC3 and NSEC3PARAM fields.</t>
+parameter selections of NSEC3 and NSEC3PARAM fields.</t>
       <t>The point where a validating resolver returns insecure versus the point
 where it returns SERVFAIL must be considered carefully.  Specifically,
 when a validating resolver treats a zone as insecure above a
@@ -396,7 +422,7 @@ begins returning SERVFAIL.</t>
     <section anchor="operational-considerations">
       <name>Operational Considerations</name>
       <t>This entire document discusses operational considerations with various
-parameters selections of NSEC3 and NSEC3PARAM fields.</t>
+parameter selections of NSEC3 and NSEC3PARAM fields.</t>
     </section>
     <section anchor="iana-considerations">
       <name>IANA Considerations</name>
@@ -407,6 +433,7 @@ Current:
    range [RFC8126] of the "Extended DNS Error Codes" registry within the
    "Domain Name System (DNS) Parameters" registry:
 -->
+<!-- Wes: sounds good -->
       <t>IANA has allocated the following code in the First Come First Served
       range <xref target="RFC8126"/> of the "Extended DNS Error Codes" registry within the "Domain Name System
 (DNS) Parameters" registry:</t>
@@ -557,6 +584,9 @@ to this document:</t>
 <!-- [rfced] Please review the "Inclusive Language" portion of the online 
 Style Guide <https://www.rfc-editor.org/styleguide/part2/#inclusive_language>
 and let us know if any changes are needed. -->
-
+<!-- Wes: not that I'm aware of.  If you spotted something we should
+     consider, please do let us know as I care deeply about that
+     subject (and discussed it with the IESG before they published
+     their statement). -->
 
 </rfc>
