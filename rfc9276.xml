@@ -329,7 +329,7 @@ Specifically, validating
 resolver operators and validating resolver software implementers are
 encouraged to continue evaluating NSEC3 iteration count deployment
 trends and lower their acceptable iteration limits over time.
-<!-- -->
+<!-- viktor wanted to drop: -->
 Similarly, because
 treating a high iterations count as insecure leaves zones subject to
 attack, validating resolver operators and validating resolver software
