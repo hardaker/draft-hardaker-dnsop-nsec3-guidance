@@ -304,8 +304,8 @@ constructed and the full zone needs to be re-signed.</t>
         <t>Because there has been a large growth of open (public) DNSSEC
 validating resolvers that are subject to compute resource constraints
 when handling requests from anonymous clients, this document
-recommends that validating resolvers change their behavior with
-respect to large iteration values.  
+recommends that validating resolvers reduce their iteration count
+limits over time.  
 
 <!-- [rfced] Please clarify "default acceptable limits" because the "default limit" and "acceptable limit" are not necessarily the same. Are they the same in this case?  
 
@@ -327,13 +327,17 @@ Original:
 
 Specifically, validating
 resolver operators and validating resolver software implementers are
-encouraged to continue to evaluate NSEC3 iteration count deployments
-but lower their acceptable limits over time.  Similarly, because
+encouraged to continue evaluating NSEC3 iteration count deployment
+trends and lower their acceptable iteration limits over time.
+<!-- -->
+Similarly, because
 treating a high iterations count as insecure leaves zones subject to
 attack, validating resolver operators and validating resolver software
 implementers are further encouraged to lower their default 
 limit for returning SERVFAIL when processing NSEC3 parameters
-containing large iteration count values.  See
+containing large iteration count values.  
+<!-- -->
+See
 <xref target="deploymentmeasurements"/> for measurements taken near the time of
 publication of this document and potential starting points.</t>
         <t>Validating resolvers <bcp14>MAY</bcp14> return an insecure response to their clients
