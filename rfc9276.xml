@@ -324,19 +324,19 @@ Original:
      defaults, so below I removed the first instance of "default".
      I've removed "and acceptable" limit in the second instance.  I
      think this is cleaner. -->
+<!-- Wes: after iterations and discussions over mail and in person, we
+     believe the following text is now sufficient -->
 
 Specifically, validating
 resolver operators and validating resolver software implementers are
 encouraged to continue evaluating NSEC3 iteration count deployment
 trends and lower their acceptable iteration limits over time.
-<!-- viktor wanted to drop: -->
-Similarly, because
+Because
 treating a high iterations count as insecure leaves zones subject to
 attack, validating resolver operators and validating resolver software
 implementers are further encouraged to lower their default 
 limit for returning SERVFAIL when processing NSEC3 parameters
 containing large iteration count values.  
-<!-- -->
 See
 <xref target="deploymentmeasurements"/> for measurements taken near the time of
 publication of this document and potential starting points.</t>
